@@ -1,0 +1,64 @@
+/** @format */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	// border: 0.05em solid black !important;
+}
+
+
+
+body {
+	font-family: $font;
+	font-size: 1.8em;
+	margin: 0;
+    background-color: $black;
+}
+
+.container {
+	display: block;
+	width: 90%;
+	margin: auto;
+}
+
+.divider {
+	display: block;
+	width: 100%;
+	height: 2vh;
+	margin: 0em;
+	background-color: none;
+}
+
+// mobile
+@include lt-md {
+	.container {
+		width: 100%;
+		margin: 0;
+	}
+}
+
+// rotate 180
+.rot180 {
+	transform: rotate(180deg);
+}
+
+// rotate 180 on hover
+.rot180hover{
+	&:hover{
+		transform: rotate(180deg);
+	}
+}
+
+// rotate 360
+.rot360 {
+	transform: rotate(360deg);
+}
+
+// rotate 360 on hover
+.rot360hover{
+	&:hover{
+		transform: rotate(360deg);
+		transition: .5s;
+	}
+}
