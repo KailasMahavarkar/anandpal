@@ -1,0 +1,122 @@
+.contact_us_container {
+  background: url(../../images/contactUs.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+.contact_overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  padding-top: 2.5rem;
+}
+
+.contact_us {
+  background: white;
+  display: grid;
+  grid-template-columns: 0.75fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 5rem;
+  padding: 3rem;
+
+  &_header {
+    color: white;
+    text-transform: uppercase;
+    padding-left: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  &_form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-areas:
+      "one two"
+      "three three"
+      "four four";
+    row-gap: 1rem;
+    column-gap: 2rem;
+    .input_text {
+      border: none;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+      outline: none;
+      &:focus {
+        border-bottom: 2px solid yellowgreen;
+        animation-name: inputActive;
+        animation-duration: 0.5s;
+      }
+    }
+    input:nth-of-type(1) {
+      grid-area: one;
+      @extend .input_text;
+    }
+    input:nth-of-type(2) {
+      grid-area: two;
+      @extend .input_text;
+    }
+    input:nth-of-type(3) {
+      border: none;
+      padding: 0.5rem;
+      grid-area: four;
+
+      &:hover {
+        animation-name: submitButtonHover;
+        animation-duration: 0.5s;
+        background-color: yellowgreen;
+      }
+    }
+    textarea {
+      border: none;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+      outline: none;
+      width: 100%;
+      resize: none;
+      grid-area: three;
+      &:focus {
+        animation-name: inputActive;
+        animation-duration: 0.5s;
+        border-bottom: 2px solid yellowgreen;
+      }
+    }
+  }
+}
+
+@keyframes inputActive {
+  0% {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  }
+
+  100% {
+    border-bottom: 2px solid yellowgreen;
+  }
+}
+@keyframes submitButtonHover {
+  0% {
+    background-color: initial;
+  }
+
+  100% {
+    background-color: yellowgreen;
+  }
+}
+
+.contact_us h1 {
+  text-transform: uppercase;
+}
+.contact_us p {
+  font-size: 0.8rem;
+  padding-right: 3rem;
+}
+
+.green {
+  color: yellowgreen;
+}
+
+.contact_map {
+  padding: 1.5rem 1rem 1rem 1rem;
+  width: 100%;
+  height: 315px;
+  border: none;
+}

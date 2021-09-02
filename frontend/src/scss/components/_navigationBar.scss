@@ -1,0 +1,65 @@
+.nav_bar {
+  position: sticky;
+  top: 0;
+  background: black;
+  height: 3rem;
+  text-transform: uppercase;
+  color: white;
+  font-size: 0.8rem;
+  z-index: 100;
+}
+.company {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.2rem;
+  padding-top: 0.2rem;
+  @extend .textVerticalAlignCenter;
+  display: flex;
+  &_logo {
+    height: 2rem;
+    width: 2rem;
+    background: url(../../images/ap_logo.webp);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 400px;
+    // @extend .textVerticalAlignCenter;
+  }
+  &_text {
+    @extend .textVerticalAlignCenter;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+.nav_items {
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  grid-template-rows: 1fr;
+  font-weight: 600;
+  @extend .textVerticalAlignCenter;
+}
+.nav_item {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.2rem;
+  padding-top: 0.2rem;
+  border-bottom: 2px solid transparent;
+  color: white;
+
+  &:hover {
+    border-bottom: 2px solid white;
+    animation-name: nav_hover;
+    animation-duration: 0.5s;
+  }
+  @keyframes nav_hover {
+    0% {
+      border-bottom: 2px solid transparent;
+    }
+
+    100% {
+      border-bottom: 2px solid white;
+    }
+  }
+}

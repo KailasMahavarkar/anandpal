@@ -1,0 +1,46 @@
+.business_page_lander {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 20rem;
+  display: flex;
+
+  &-left {
+    width: 30%;
+    background: rgba(0, 0, 0, 0.9);
+    position: relative;
+  }
+
+  &-right {
+    width: 70%;
+    background: url(../../../images/BusinessPage/lander1.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  &-content {
+    color: white;
+    text-transform: capitalize;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    @extend .textVerticalAlignCenter;
+
+    & h1 {
+    }
+    & p {
+      font-size: 0.8rem;
+    }
+    & button {
+      color: black;
+      background: rgb(29, 163, 224);
+      padding: 5px;
+      outline: none;
+      border: none;
+      border-radius: 100px;
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}

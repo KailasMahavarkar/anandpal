@@ -1,0 +1,31 @@
+.business_intro_container {
+  background: url(../../../images/businessintroBG.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.business_overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5rem;
+}
+
+.business_intro {
+  width: 40rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem;
+
+  &_header {
+    text-transform: uppercase;
+    border-bottom: 2px solid white;
+  }
+  &_content {
+    font-size: 0.8rem;
+  }
+}
