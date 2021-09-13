@@ -1,27 +1,47 @@
 // container > main > navbar
 .navbar {
-	// @include test;
+	@include test;
 
 	display: flex;
 	flex-direction: row;
-    justify-content: end;
+    justify-content: space-between;
 
-    flex: 1 0 0;
 
 	overflow: none;
     box-shadow: $shadow-100;
 
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+
+	&__logo {
+        flex-grow: 1;
+
+        // @include test;
+        margin-left: 50px;
+
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        font-weight: bold;
+        font-size: 2em;
+        color: $purple;
+        text-decoration: underline;
+        
+        cursor: pointer;
+        text-underline-position: under;
+	}
 
     &__menu{
-        flex: 80vw 0 0;
+        // @include test;
 
         display: flex;
         flex-direction: row;
         justify-content: right;
-
+        align-items: center;
 
         &__item{
-            color: $white;
+            // @include test;
+            color: white;
             background-color: $purple;
 
             display: flex;
@@ -33,15 +53,15 @@
 
             box-sizing: border-box;
 
-            font-size: .7em;
-            padding: 0px 20px 0px 20px;
+            // font-size: 1.2em;
+            padding: 10px;
             margin: 10px 15px 10px 15px ;
             cursor: pointer;
             transition: all ease-out 250ms;
 
             &:hover{
                 // inverse current color with background color
-                @include inverse($white, $purple);
+                @include inverse(white, $purple);
                 transition: all ease-in 250ms;
             }
             
@@ -54,19 +74,5 @@
     }
 
 
-	&__logo {
-        // @include test;
-        flex: 20vw 0 0;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        color: $purple;
-        margin-bottom: 10px;
-        text-decoration: underline;
-        
-        cursor: pointer;
-        text-underline-position: under;
-	}
 }

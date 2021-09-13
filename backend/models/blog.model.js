@@ -10,23 +10,14 @@ const blogSchema = new Schema({
 		type: String,
 		requried: true,
 	},
-	info: {
+	data: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	author: {
 		type: String,
 		required: true,
 	},
-    tags: {
-        type: String,
-        required: false,
-        default: 'active'
-    },
-    header_image_url: {
-        type: String,
-        required: true,
-    },
 	create_ts: {
 		type: Number,
 		required: false,

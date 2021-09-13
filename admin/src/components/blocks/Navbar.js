@@ -9,7 +9,7 @@ const Navbar = (props) => {
     return (
         <div className="navbar">
             <div className="navbar__logo" onClick={()=>setChoice("home")}>
-                AnandPal
+                <a href="/" className="alink">AnandPal</a> 
             </div>
 
             <div className="navbar__menu">

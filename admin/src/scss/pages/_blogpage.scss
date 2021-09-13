@@ -6,9 +6,6 @@
 	grid-auto-rows: minmax(300px, auto);
 	grid-template-columns: repeat(4, 1fr);
 
-	* {
-		font-size: 0.9em;
-	}
 
 	&__item {
 		display: flex;

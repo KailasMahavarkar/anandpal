@@ -33,6 +33,24 @@
 	background-color: $color;
 }
 
+@mixin button-outline($outline, $textcolor){
+    border: 1px solid $outline;
+    color: $outline;
+
+    &:hover{
+        background-color: $outline;
+        color: $textcolor;
+    }
+}
+
+@mixin button-solid($color, $textcolor) {
+	color: $textcolor;
+    background-color: $color;
+    border: 1px solid $color;
+}
+
+
+
 @mixin swap($foreground, $background) {
 	color: $foreground;
 	background-color: $background;

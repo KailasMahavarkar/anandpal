@@ -15,7 +15,10 @@ const _singleFileUpload = require("../middlewares/_singleFileUpload")._singleFil
 const blogCreate = require("../controllers/Blog/blogCreate").blogCreate;
 
 
-router.route("/create").post(upload.single('image'), _singleFileUpload, blogCreate);
+// router.route("/create").post(upload.single('image'), _singleFileUpload, blogCreate);
+
+
+router.route("/create").post(blogCreate);
 
 
 module.exports = router;

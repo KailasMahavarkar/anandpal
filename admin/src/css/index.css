@@ -340,13 +340,13 @@ template {
 /** @format */
 * {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 30px;
 }
 
 body {
-  background-color: #eeeeee;
-  color: white;
+  background-color: white;
+  color: black;
   margin: 0;
+  font-size: 1em;
 }
 
 .main {
@@ -444,23 +444,39 @@ body {
 }
 
 .navbar {
+  border: 1px solid violet;
   display: flex;
   flex-direction: row;
-  justify-content: end;
-  flex: 1 0 0;
+  justify-content: space-between;
   overflow: none;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.navbar__logo {
+  flex-grow: 1;
+  margin-left: 50px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  font-weight: bold;
+  font-size: 2em;
+  color: #7727d8;
+  text-decoration: underline;
+  cursor: pointer;
+  text-underline-position: under;
 }
 
 .navbar__menu {
-  flex: 80vw 0 0;
   display: flex;
   flex-direction: row;
   justify-content: right;
+  align-items: center;
 }
 
 .navbar__menu__item {
-  color: #eeeeee;
+  color: white;
   background-color: #7727d8;
   display: flex;
   justify-content: center;
@@ -468,8 +484,7 @@ body {
   border: 1px solid #7727d8;
   border-radius: 5px;
   box-sizing: border-box;
-  font-size: .7em;
-  padding: 0px 20px 0px 20px;
+  padding: 10px;
   margin: 10px 15px 10px 15px;
   cursor: pointer;
   transition: all ease-out 250ms;
@@ -477,25 +492,12 @@ body {
 
 .navbar__menu__item:hover {
   color: #7727d8;
-  background-color: #eeeeee;
+  background-color: white;
   transition: all ease-in 250ms;
 }
 
 .navbar__menu__logout {
   color: #FF4C29;
-}
-
-.navbar__logo {
-  flex: 20vw 0 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  color: #7727d8;
-  margin-bottom: 10px;
-  text-decoration: underline;
-  cursor: pointer;
-  text-underline-position: under;
 }
 
 .sidebar {
@@ -607,7 +609,6 @@ body {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  flex: 11 0 0;
 }
 
 .blogposts {
@@ -616,10 +617,6 @@ body {
   grid-gap: 20px;
   grid-auto-rows: minmax(300px, auto);
   grid-template-columns: repeat(4, 1fr);
-}
-
-.blogposts * {
-  font-size: 0.9em;
 }
 
 .blogposts__item {
@@ -709,102 +706,124 @@ body {
   font-size: 0.8em;
 }
 
-.blogposts {
-  display: grid;
-  margin: 50px;
-  grid-gap: 20px;
-  grid-auto-rows: minmax(300px, auto);
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.blogposts * {
-  font-size: 0.9em;
-}
-
-.blogposts__item {
+.editorjs__wrapper {
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-self: center;
+  width: 100vw !important;
+  max-width: 100vw !important;
+}
+
+#editorjs {
+  font-size: 20px;
+}
+
+.ce-block__content,
+.ce-toolbar__content {
+  padding: 5px;
+  max-width: calc(100vw - 100px) !important;
+}
+
+.cdx-block {
+  padding: 5px;
+  max-width: 100vw !important;
+}
+
+.ce-toolbox__button {
+  padding: 10px;
+  display: flex;
   align-items: center;
-  border: 1px solid #d9d9d9;
-  border-radius: 5px;
+  justify-content: center;
+}
+
+.ce-block__content {
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-  margin: 10px;
-  padding: 10px;
-  color: #7727d8;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.options__save, .options__delete, .options__status {
+  border-radius: 3px;
+  padding: 8px;
+  margin: 5px;
   cursor: pointer;
+  font-size: 1.3em;
+  transition: all 250ms ease-out;
 }
 
-.blogposts__item > div {
+.options__save:hover, .options__delete:hover, .options__status:hover {
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  transition: all 250ms ease-in;
+}
+
+.options__save {
+  border: 1px solid #4abe65;
+  color: #4abe65;
+}
+
+.options__save:hover {
+  background-color: #4abe65;
+  color: white;
+}
+
+.options__delete {
+  border: 1px solid #FF4C29;
+  color: #FF4C29;
+}
+
+.options__delete:hover {
+  background-color: #FF4C29;
+  color: white;
+}
+
+.options__status {
+  border: 1px solid #f2c438;
+  color: #f2c438;
+}
+
+.options__status:hover {
+  background-color: #f2c438;
+  color: white;
+}
+
+.options__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 5px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+
+.options__main > input {
   width: 100%;
+  height: 30px;
+  padding: 5px;
+  outline: none;
+  border: none;
+  border: 1px solid #e6e6e6;
 }
 
-.blogposts__item:hover {
-  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.15);
+.options__main > input::placeholder {
+  color: #e6e6e6;
 }
 
-.blogposts__item__title {
-  flex: 1 0 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 1em;
-  color: #7727d8;
-  padding: 10px;
-  border-bottom: 3px solid #d6bef3;
-}
-
-.blogposts__item__main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.blogposts__item__main__createicon {
-  transform: rotate(-90deg);
-  transition: transform ease-out 500ms;
-}
-
-.blogposts__item__main__createicon:hover {
-  transform: rotate(90deg);
-  transition: transform ease-in 500ms;
-}
-
-.blogposts__item__main__createtext {
-  color: #7727d8;
-  font-weight: bold;
-}
-
-.blogposts__item__inner {
+.options__title {
   flex: 2 0 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
 }
 
-.blogposts__item__inner__edit, .blogposts__item__inner__delete {
+.options__author {
   flex: 1 0 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: scale(1);
-  transition: transform 250ms ease-out;
-}
-
-.blogposts__item__inner__edit:hover, .blogposts__item__inner__delete:hover {
-  transform: scale(1.1);
-  transition: transform 250ms ease-in;
-}
-
-.blogposts__item__timestamp {
-  flex: 1 0 0;
-  display: flex;
-  justify-content: end;
-  align-items: end;
-  font-size: 0.8em;
 }
 /*# sourceMappingURL=index.css.map */
