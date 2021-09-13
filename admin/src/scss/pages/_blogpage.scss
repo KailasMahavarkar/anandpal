@@ -1,0 +1,113 @@
+.blogposts {
+	display: grid;
+	margin: 50px;
+
+	grid-gap: 20px;
+	grid-auto-rows: minmax(300px, auto);
+	grid-template-columns: repeat(4, 1fr);
+
+	* {
+		font-size: 0.9em;
+	}
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		border: 1px solid tint(black, 85);
+		border-radius: 5px;
+		box-shadow: $shadow-100;
+
+		margin: 10px;
+		padding: 10px;
+		color: $purple;
+
+		cursor: pointer;
+
+		> div {
+			// @include test;
+			width: 100%;
+		}
+
+        &:hover{
+            box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.15);
+        }
+
+		&__title {
+			flex: 1 0 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+
+			font-size: 1em;
+			color: $purple;
+
+            padding: 10px;
+
+			border-bottom: 3px solid tint($purple, 70);
+		}
+
+		&__main {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+
+
+			&__createicon {
+                transform: rotate(-90deg);
+                transition: transform ease-out 500ms;
+				&:hover{
+                    transform: rotate(90deg);
+                    transition: transform ease-in 500ms;
+                }
+			}
+            
+			&__createtext {
+				color: $purple;
+                font-weight: bold;
+			}
+		}
+
+		&__inner {
+			flex: 2 0 0;
+
+			display: flex;
+			flex-direction: row;
+
+			justify-content: center;
+			align-items: center;
+
+
+			&__edit,
+			&__delete {
+				flex: 1 0 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				// @include test2;
+				transform: scale(1);
+				transition: transform 250ms ease-out;
+
+				&:hover {
+					transform: scale(1.1);
+					transition: transform 250ms ease-in;
+				}
+			}
+		}
+
+		&__timestamp {
+			flex: 1 0 0;
+			display: flex;
+			justify-content: end;
+			align-items: end;
+
+			font-size: 0.8em;
+		}
+	}
+}

@@ -1,72 +1,43 @@
-import logo from "./logo.svg";
-import "./App.css";
-import axios from "axios";
-import { useState } from "react";
-import FormData from "form-data";
+import "../src/css/loop.css";
+import "../src/css/index.css";
 
-import EditorJs from "react-editor-js";
-import { EDITOR_JS_TOOLS } from "./tools";
+import Newblog from "./components/pages/Newblog";
+import Blogpage from "./components/pages/Blogpage";
+import Adminpage from "./components/pages/Adminpage";
+import Navbar from "./components/blocks/Navbar";
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Redirect,
+	Link,
+	useHistory,
+} from "react-router-dom";
+
+
+const log = console.log;
 
 function App() {
-	const [author, setAuthor] = useState("");
-	const [title, setTitle] = useState("");
-	const [data, setData] = useState("");
-
-	const authorChangeHandler = (e) => {
-		setAuthor(e.target.value);
-		console.log(author);
-	};
-
-	const titleChangeHandler = (e) => {
-		setTitle(e.target.value);
-		console.log(title);
-	};
+	let history = useHistory();
 
 	return (
 		<div className="App">
-            <div className="wrapper_editorjs">
-                <div id="editorjs">
-                    <EditorJs data={data} tools={EDITOR_JS_TOOLS} />
-                </div>
-            </div>
-
-
-			<input
-				type="submit"
-				value="submit"
-				onClick={() => {
-					console.log("submit clicked");
-				}}
-			/>
-
-			{/* <form
-				action="http://localhost:1000/blog/create"
-				method="post"
-				enctype="multipart/form-data"
-			>
-				<div className="author">
-					author:{" "}
-					<input
-						type="text"
-						name="author"
-						value={author}
-						onChange={authorChangeHandler}
-					/>
-				</div>
-				<div className="title">
-					title:{" "}
-					<input
-						type="text"
-						name="title"
-						value={title}
-						onChange={titleChangeHandler}
-					/>
-				</div>
-				<div className="file">
-					<input type="file" name="avatar" />
-				</div>
-				
-			</form> */}
+			<div className="container">
+                <Navbar />
+				<Router>
+					<Switch>
+						<Route path="/admin">
+							<Adminpage history={history} />
+						</Route>
+						<Route path="/newblog">
+							<Newblog history={history} />
+						</Route>
+						<Route path="/">
+							<Blogpage history={history} />
+						</Route>
+					</Switch>
+				</Router>
+			</div>
 		</div>
 	);
 }
