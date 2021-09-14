@@ -35,7 +35,7 @@
 }
 
 .ce-block__content {
-	box-shadow: $shadow-50;
+	box-shadow: $shadow-100;
 	padding: 10px;
 }
 
@@ -50,7 +50,7 @@
     margin-left: 40px;
     margin-right: 40px;
     
-    &__save, &__delete, &__status {
+    &__save, &__delete, &__status, &__clear {
         border-radius: 3px;
         padding: 8px;
         margin: 5px;
@@ -76,6 +76,10 @@
         @include button-outline(shade($warning, 5), white);
     }
 
+    &__clear{
+        @include button-outline(tint(blue, 50), white);
+    }
+
     &__main{
         display: flex;
         flex-direction: column;
@@ -93,7 +97,7 @@
             padding: 5px;
             outline: none;
             border: none;
-            border: 1px solid tint(black, 90%);
+            border: 1px solid tint(black, 95%);
 
             &::placeholder{
                 color: shade(white, 10%);
