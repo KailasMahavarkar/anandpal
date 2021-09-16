@@ -13,30 +13,6 @@ const Newblog = (props) => {
 	const [blogUndo, setBlogUndo] = useState();
 	const instanceRef = useRef(null);
 
-
-
-    // useEffect(()=>{
-    //     timeState.present['current'] = 0;
-    // }, [])
-
-	const [
-		timeState,
-		{
-			set: setValue,
-			reset: resetValue,
-			undo: undoValue,
-			redo: redoValue,
-			canUndo,
-			canRedo,
-		},
-	] = useUndo({
-        "title": '',
-        "current": 0
-    });
-
-    let { present } = timeState
-
-
 	const blogStateHandler = () => {
 		blogState == "publish"
 			? setBlogState("unpublish")
@@ -44,7 +20,6 @@ const Newblog = (props) => {
 		console.log(blogState);
 	};
 
-	// console.log("present -->", timeState);
 
 	const titleChangeHandler = ({ target: { value } }) => {
 		setBlogTitle(value);
@@ -56,34 +31,18 @@ const Newblog = (props) => {
 	};
 
 	const dataSaveHandler = async () => {
-        // setValue({
-        //     "title": blogTitle,
-        //     "current": timeState.present.current + 1
-        // })
-        present.current += 1;
-
-
-        // setValue(timeState);
-
-		// const savedData = await instanceRef.current.save();
+        const savedData = await instanceRef.current.save()
+        console.log(JSON.stringify(savedData))
 	};
 
 	const dataUndoHandler = async () => {
-		// setBlogTitle(timeState.present[presentCount]);
-
-        present.current -= 1
-
-        setValue(present)
-        // setBlogTitle(timeState.past[present.current - 1])
-        console.log(timeState)
-
-	};
+	
+    };
 
 	const dataClearHandler = async () => {
 		await instanceRef.current.clear();
 		setBlogTitle("");
 		setBlogAuthor("");
-        // setCount(0);
 	};
 
 	return (

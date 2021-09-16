@@ -1,30 +1,53 @@
-import React from 'react';
-import { useState } from 'react';
-
+import React from "react";
+import { useState } from "react";
+import axios from "axios";
+import { url } from "../../helper";
+import { Link, useHistory } from "react-router-dom";
+import Logoutpage from "../pages/Logoutpage";
 
 const Navbar = (props) => {
-    
-    const [choice, setChoice] = useState('');
 
-    return (
-        <div className="navbar">
-            <div className="navbar__logo" onClick={()=>setChoice("home")}>
-                <a href="/" className="alink">AnandPal</a> 
-            </div>
+    let history = useHistory()
 
-            <div className="navbar__menu">
-                <div className="navbar__menu__item" onClick={props.handleHistory}>
-                    Blogs
+	const logoutHandler = () => {
+        props.removeAccessToken();
+		props.removeRefreshToken();
+        history.push('/login');
+	};
+
+	const blogHandler = () => {};
+    const adminHandler = () => {
+        props.protect(props.accessToken, props.refreshToken);
+    };
+
+	return (
+		<div className="navbar">
+			<div className="navbar__logo" onClick={history.push('/')}>
+				<a href="/" className="alink">
+					AnandPal
+				</a>
+			</div>
+
+			<div className="navbar__menu">
+				<Link to="/blogs">
+					<div className="navbar__menu__item" onClick={blogHandler}>
+						Blogs
+					</div>
+				</Link>
+
+                <Link to="/admin">
+					<div className="navbar__menu__item" onClick={adminHandler}>
+						Admin
+					</div>
+				</Link>
+
+                {/* handle -> admin logout */}
+                <div className="navbar__menu__item" onClick={logoutHandler}>
+                    Logout
                 </div>
-                <div className="navbar__menu__item" onClick={()=>setChoice("admin")}>
-                    Admin
-                    </div>
-                <div className="navbar__menu__item" onClick={()=>setChoice("logout")}>
-                    logout
-                </div>
-            </div>
-        </div>
-    )
-}
+			</div>
+		</div>
+	);
+};
 
-export default Navbar
+export default Navbar;

@@ -1,0 +1,28 @@
+.loginwrapper{
+    @include test;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 600px;
+
+
+}
+
+.centerwrapper{
+    display: flex;
+    flex-direction: column;
+
+    &__login{
+        color: $red;
+        font-size: 1.5em;
+        text-align: center;
+        padding: 10px;
+        text
+    }
+
+    > label {
+        background-color:  red
+    }
+}

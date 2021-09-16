@@ -4,26 +4,28 @@ import editIcon from '../../../src/assets/editIcon.svg'
 import deleteIcon from '../../../src/assets/deleteIcon.svg'
 import createIcon from '../../../src/assets/createIcon.svg'
 
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Navbar from "../blocks/Navbar";
 
 
 const Blogpage = (props) => {
-	let history = props.history;
 
 	return (
 		<div className="view">
             <div className="blogposts">
-                <a href="/newblog" class='alink blogposts__item'>
-                    <div className="blogposts__item__main" >
-                        <div className="blogposts__item__main__createicon" >
-                            <img src={createIcon} alt="edit-icon" width='150px' height='150px' />
-                        </div>
-                        <div className="blogposts__item__main__createtext">
-                            Create New Blog
+                <Link to='/newblog'>
+                    <div className='alink blogposts__item'>
+                        <div className="blogposts__item__main" >
+                            <div className="blogposts__item__main__createicon" >
+                                <img src={createIcon} alt="edit-icon" width='150px' height='150px' />
+                            </div>
+                            <div className="blogposts__item__main__createtext">
+                                Create New Blog
+                            </div>
                         </div>
                     </div>
-                </a>
+                </Link>
+                
 				<div className="blogposts__item">
 					<div className="blogposts__item__title">Hi this is my blog with some random title </div>
 					<div className="blogposts__item__inner">

@@ -836,4 +836,29 @@ body {
 .options__author {
   flex: 1 0 0;
 }
+
+.loginwrapper {
+  border: 1px solid violet;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 600px;
+}
+
+.centerwrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.centerwrapper__login {
+  color: #FF4C29;
+  font-size: 1.5em;
+  text-align: center;
+  padding: 10px;
+}
+
+.centerwrapper > label {
+  background-color: red;
+}
 /*# sourceMappingURL=index.css.map */
