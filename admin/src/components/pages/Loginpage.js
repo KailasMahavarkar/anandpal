@@ -30,13 +30,23 @@ const Loginpage = (props) => {
 
 	const loginHandler = async () => {
 
-        await login().then(()=>{
-            console.log('logged in')
-        })
+        // await login().then(()=>{
+        //     console.log('logged in')
+        // })
 
-        console.log(props.authed)
+        const loginResult = await axios.post(
+            url("/auth/login"), 
+            {
+                username,
+                password
+            }
+        );
 
-
+        if (loginResult.status === 200 && loginResult.data.msg === 'success') {
+            Cookies.set("accessToken", loginResult.data.accessToken);
+            Cookies.set("refreshToken", loginResult.data.refreshToken);
+        }
+    
 		
 	};
 

@@ -27,32 +27,38 @@ const hasAccess = async (accessToken, refreshToken) => {
 const useAuth = () => {
 	let [authed, setAuthed] = useState(false);
 
-	const login = async () => {
-		setAuthed(true);
-		let accessToken = Cookies.get("accessToken");
-		let refreshToken = Cookies.get("refreshToken");
-		const accessResult = await hasAccess(accessToken, refreshToken);
+    const verifyAccess = async (accessToken) => {
+        const loginResult = await axios.post(
+            url("/auth/verify"), 
+            {
+                headers: {
+                    'Authorization': "Bearer " + accessToken
+                }
+            }
+        );
 
-		if (!accessResult) {
-			setAuthed(false);
-		} else {
-			const loginResult = await axios.post(
-                url("/auth/verify"), 
-                {
-                    headers: {
-                        'Authorization': accessToken
-                    }
-			    }
-            );
-			if (loginResult.status === 200) {
-				console.log("success login", loginResult);
-				Cookies.set("accessToken", loginResult.data.accessToken);
-				Cookies.set("refreshToken", loginResult.data.refreshToken);
-                setAuthed(true);
-			} else {
-				setAuthed(false);
-			}
-		}
+        if (loginResult.status === 200 && loginResult.data.msg === 'success') {
+            console.log("success login", loginResult);
+            Cookies.set("accessToken", loginResult.data.accessToken);
+            Cookies.set("refreshToken", loginResult.data.refreshToken);
+            return true
+        }
+        
+        return false
+
+    }
+
+	const login = async () => {
+
+		let accessToken = Cookies.get("accessToken");
+		const accessResult = verifyAccess(accessToken);
+
+        if (accessResult){
+            setAuthed(true)
+        }else{
+            setAuthed(false)
+        }
+
 	};
 
 	const logout = () => {
