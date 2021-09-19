@@ -2,30 +2,33 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { url } from "../../helper";
-import { Link, useHistory } from "react-router-dom";
-import Logoutpage from "../pages/Logoutpage";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
+
 
 const Navbar = (props) => {
 
-    let history = useHistory()
+    let navigate = useNavigate();
 
-	const logoutHandler = () => {
-        props.removeAccessToken();
-		props.removeRefreshToken();
-        history.push('/login');
+    const logoutHandler = () => {
+		Cookies.remove("accessToken");
+        Cookies.remove("refreshToken");
+        navigate('/')
 	};
 
-	const blogHandler = () => {};
-    const adminHandler = () => {
-        props.protect(props.accessToken, props.refreshToken);
+	const blogHandler = async () => {
+        return props.protect();
     };
+    const adminHandler = () => {};
 
 	return (
 		<div className="navbar">
-			<div className="navbar__logo" onClick={history.push('/')}>
-				<a href="/" className="alink">
-					AnandPal
-				</a>
+			<div className="navbar__logo" onClick={()=>console.log("logo clicked")}>
+                <Link to="/">
+                    <a className="alink">
+                       AnandPal
+                    </a>
+                </Link>
 			</div>
 
 			<div className="navbar__menu">

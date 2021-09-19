@@ -4,14 +4,15 @@ import editIcon from '../../../src/assets/editIcon.svg'
 import deleteIcon from '../../../src/assets/deleteIcon.svg'
 import createIcon from '../../../src/assets/createIcon.svg'
 
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "../blocks/Navbar";
 
 
 const Blogpage = (props) => {
 
 	return (
-		<div className="view">
+        <div className="view">
+            <Navbar></Navbar>
             <div className="blogposts">
                 <Link to='/newblog'>
                     <div className='alink blogposts__item'>

@@ -1,17 +1,24 @@
 import "../src/css/loop.css";
 import "../src/css/index.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/blocks/Navbar";
 import Newblog from "./components/pages/Newblog";
 import Blogpage from "./components/pages/Blogpage";
 import Adminpage from "./components/pages/Adminpage";
-import Login from "./components/pages/Loginpage";
-import useLocalStorage from "./hooks/useLocalStorage";
+import Loginpage from "./components/pages/Loginpage";
 import Logoutpage from "./components/pages/Logoutpage";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { useAuth, AuthProvider } from "./hooks/useAuth";
 
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import {
+	BrowserRouter,
+	Routes,
+	Route,
+	Link,
+	useNavigate,
+} from "react-router-dom";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -19,19 +26,8 @@ dotenv.config();
 function App() {
 	const [user, setUser] = useState({});
 	const [err, setErr] = useState("");
-    let history = useHistory();
+	const { authed } = useAuth();
 
-	const [
-        accessToken,
-        setAccessToken,
-        removeAccessToken
-    ] = useLocalStorage("accessToken", "");
-
-	const [
-        refreshToken,
-        setRefreshToken,
-        removeRefreshToken
-    ] = useLocalStorage("refreshToken","");
 
 	const refresh = async (refreshToken) => {
 		console.log("Refreshing token!");
@@ -39,107 +35,97 @@ function App() {
 			"http://localhost:1000/auth/refreshtoken",
 			{ token: refreshToken }
 		);
-		setRefreshToken(newAccessToken);
+		Cookies.set("accessToken", newAccessToken);
 	};
 
-    const requestLogin = async (accessToken, refreshToken) => {
-        console.log(accessToken, refreshToken);
-        return new Promise((resolve, reject) => {
-            axios
-                .post(
-                    "http://localhost:1000/auth/verify",
-                    {},
-                    { headers: { authorization: `Bearer ${accessToken}` } }
-                )
-                .then(async data => {
-                    if (data.data.success === false) {
-                        if (data.data.message === "User not authenticated") {
-                            // setErr("Login again");
-                            // set err message to login again.
-                            history.push('/login');
-                        } else if (
-                            data.data.message === "Access token expired"
-                        ) {
-                            const accessToken = await refresh(refreshToken);
-                            return await requestLogin(
-                                accessToken,
-                                refreshToken
-                            );
-                        }
+	const requestLogin = async (accessToken, refreshToken) => {
+		console.log(accessToken, refreshToken);
+		return new Promise((resolve, reject) => {
+			axios
+				.post(
+					"http://localhost:1000/auth/verify",
+					{},
+					{ headers: { authorization: `Bearer ${accessToken}` } }
+				)
+				.then(async (data) => {
+					if (data.data.success === false) {
+						if (data.data.msg === "User not authenticated") {
+							setErr("Login again");
+						} else if (data.data.msg === "Access token expired") {
+							const accessToken = await refresh(refreshToken);
+							return await requestLogin(
+								accessToken,
+								refreshToken
+							);
+						}
 
-                        resolve(false);
-                    } else {
-                        // protected route has been accessed, response can be used.
-                        setErr("Protected route accessed!");
-                        resolve(true);
-                    }
-                });
-        });
-    };
+						resolve(false);
+					} else {
+						// protected route has been accessed, response can be used.
+						setErr("Protected route accessed!");
+						resolve(true);
+					}
+				});
+		});
+	};
 
-    const hasAccess = async (accessToken, refreshToken) => {
-        if (!refreshToken) return null;
+	const hasAccess = async (accessToken, refreshToken) => {
+		if (!refreshToken) return null;
 
-        if (accessToken === undefined) {
-            // generate new accessToken
-            accessToken = await refresh(refreshToken);
-            return accessToken;
-        }
+		if (accessToken === undefined) {
+			accessToken = await refresh(refreshToken);
+			return accessToken;
+		}
+		return accessToken;
+	};
 
-        return accessToken;
-    };
+	const protectWrapper = async (e) => {
+		let accessToken = Cookies.get("accessToken");
+		let refreshToken = Cookies.get("refreshToken");
+		accessToken = await hasAccess(accessToken, refreshToken);
 
-    const protect = async (accessToken, refreshtoken) => {
+		if (!accessToken) {
+			window.location.href = "/";
+		} else {
+			return await requestLogin(accessToken, refreshToken);
+		}
+	};
 
-        accessToken = await hasAccess(accessToken, refreshToken);
-
-        if (!accessToken) {
-            console.log("---user not authorized");
-        } else {
-            await requestLogin(accessToken, refreshToken);
-        }
-    };
-
+	const protect = async () => {
+		const res = protectWrapper();
+		if (!res) {
+			// history.push('/');
+		}
+	};
 
 	return (
 		<div className="App">
-			<div className="container">
-				<Router>
-					<Navbar
-						removeAccessToken={removeAccessToken}
-						removeRefreshToken={removeRefreshToken}
-                        protect={protect}
-                        accessToken={accessToken}
-                        refreshToken={refreshToken}
-					/>
-					<Switch>
-						<Route exact path="/">
-							<Blogpage />
-						</Route>
-						<Route exact path="/admin">
-							<Adminpage />
-						</Route>
-						<Route exact path="/newblog">
-							<Newblog />
-						</Route>
-						<Route exact path="/login">
-							<Login
-								accessToken={accessToken}
-								setAccessToken={setAccessToken}
-								setRefreshToken={setRefreshToken}
-								refreshToken={refreshToken}
-                                protect={protect}
-							/>
-						</Route>
-						<Route exact path="/logout">
-							<Logoutpage
-								removeAccessToken={removeAccessToken}
-								removeRefreshToken={removeRefreshToken}
-							/>
-						</Route>
-					</Switch>
-				</Router>
-			</div>
+			<AuthProvider>
+				<div className="container">
+					<BrowserRouter>
+						<Routes>
+							<Route path="/">
+								<Loginpage authed={authed} />
+							</Route>
+							<Route path="/login">
+								<Loginpage authed={authed} />
+							</Route>
+							<Route path="/admin">
+								<Adminpage protect={protect} />
+							</Route>
+							<Route path="/newblog">
+								<Newblog protect={protect} />
+							</Route>
+							<Route path="/blogs">
+								<Blogpage protect={protect} />
+							</Route>
+							<Route path="/logout">
+								<Logoutpage />
+							</Route>
+						</Routes>
+					</BrowserRouter>
+				</div>
+			</AuthProvider>
 		</div>
 	);
 }

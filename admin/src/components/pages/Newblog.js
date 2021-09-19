@@ -4,7 +4,6 @@ import deleteIcon from "../../../src/assets/deleteIcon.svg";
 import createIcon from "../../../src/assets/createIcon.svg";
 import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "./../../tools";
-import useUndo from 'use-undo';
 
 const Newblog = (props) => {
 	const [blogTitle, setBlogTitle] = useState("");

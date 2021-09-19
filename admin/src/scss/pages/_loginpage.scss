@@ -1,27 +1,73 @@
 .loginwrapper{
-    @include test;
+    // @include test;
     
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 600px;
-
-
 }
 
 .centerwrapper{
     display: flex;
     flex-direction: column;
+    box-shadow: $shadow_all;
+    border-radius: 5px;
+    padding: 40px;
 
-    &__login{
-        color: $red;
+    &__section{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-size: 1.5em;
         text-align: center;
-        padding: 10px;
+        padding-top: 20px;
+        width: 600px;
+
+        
+        &__input{
+            padding: 10px 20px;
+            width: 100%;
+            text-decoration: none;
+            cursor: pointer;
+            outline: none;
+            border: none;
+            border: 1px solid tint(black, 93%);
+        
+            &::placeholder{
+                color: shade(white, 10%);
+            }
+        }
+
+        
+        &__button{
+            // @include test;
+            color: white;
+            background-color: $purple;
+            border: 1px solid $purple;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8em;
+
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            transition: all ease-out 250ms;
+
+            &:hover{
+                // inverse current color with background color
+                @include inverse(white, $purple);
+                transition: all ease-in 250ms;
+            }
+            
+        }
+
     }
 
-    > label {
-        background-color:  red
-    }
+    
+
+
+
 }

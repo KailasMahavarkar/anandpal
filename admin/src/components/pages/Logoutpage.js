@@ -1,13 +1,16 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
+
+
 
 const Logoutpage = (props) => {
-	let history = useHistory();
+	let history = useNavigate();
+
 
 	const logoutHandler = () => {
-		props.removeAccessToken();
-		props.removeRefreshToken();
-		// history.push("/");
+		Cookies.remove("accessToken");
+        Cookies.remove("refreshToken");
 	};
 
 	return (

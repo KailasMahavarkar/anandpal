@@ -57,7 +57,7 @@
 	align-items: center;
 	justify-content: center;
 
-	background: linear-gradient(to left, $white 50%, $purple 50%);
+	background: linear-gradient(to left, white 50%, $purple 50%);
 	background-size: 200% 120%;
 	background-position: right;
 	transition: all 0.5s ease-out;
@@ -70,5 +70,5 @@
 
 .button_purple:hover {
 	background-position: left;
-    color: $white;
+    color: white;
 }
