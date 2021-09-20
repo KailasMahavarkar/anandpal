@@ -10,6 +10,9 @@ import Navbar from "../blocks/Navbar";
 
 const Blogpage = (props) => {
 
+
+    console.log(props.authed)
+
 	return (
         <div className="view">
             <Navbar></Navbar>

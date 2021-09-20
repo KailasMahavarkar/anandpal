@@ -1,17 +1,18 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-function PrivateRoute({ element, path }) {
-	const { authed } = useAuth();
+function PrivateRoute({ element, path, authed }) {
+    
+    console.log("authed --> ", authed)
 
 	const ele =
 		authed === true ? (
 			element
 		) : (
-			<Navigate to="/login" replace state={{ path }} />
+			<Navigate to="/login"  />
 		);
 
-	return <Route path={path} element={ele} />;
+	return <Route path={path} element={ele} authed={authed}/>;
 }
 
 export default PrivateRoute;

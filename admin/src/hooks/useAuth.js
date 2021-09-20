@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { url } from "../helper";
+import { useNavigate } from "react-router";
 
 const authContext = React.createContext();
 
@@ -26,46 +27,61 @@ const hasAccess = async (accessToken, refreshToken) => {
 
 const useAuth = () => {
 	let [authed, setAuthed] = useState(false);
+	const [user, setUser] = useState({});
+	const [err, setErr] = useState("");
 
-    const verifyAccess = async (accessToken) => {
-        const loginResult = await axios.post(
-            url("/auth/verify"), 
-            {
-                headers: {
-                    'Authorization': "Bearer " + accessToken
-                }
-            }
-        );
+	const verifyToken = async (accessToken, refreshToken) => {
+		console.log(accessToken, refreshToken);
+		return new Promise((resolve, reject) => {
+			axios
+				.post(
+					"http://localhost:1000/auth/verify",
+					{},
+					{ headers: { authorization: `Bearer ${accessToken}` } }
+				)
+				.then(async (data) => {
+					if (data.data.success === false) {
+						if (data.data.msg === "User not authenticated") {
+							setErr("Login again");
+						} else if (data.data.msg === "Access token expired") {
+							const accessToken = await refresh(refreshToken);
+							return await verifyToken(accessToken, refreshToken);
+						}
 
-        if (loginResult.status === 200 && loginResult.data.msg === 'success') {
-            console.log("success login", loginResult);
-            Cookies.set("accessToken", loginResult.data.accessToken);
-            Cookies.set("refreshToken", loginResult.data.refreshToken);
-            return true
-        }
-        
-        return false
+						resolve(false);
+					} else {
+						// protected route has been accessed, response can be used.
+						setErr("Protected route accessed!");
+						resolve(true);
+					}
+				});
+		});
+	};
 
-    }
 
 	const login = async () => {
-
 		let accessToken = Cookies.get("accessToken");
-		const accessResult = verifyAccess(accessToken);
+		let refreshToken = Cookies.get("refreshToken");
+		const access= await hasAccess(accessToken, refreshToken);
 
-        if (accessResult){
-            setAuthed(true)
-        }else{
+		if (!access) {
             setAuthed(false)
-        }
+		} else {
+            
+			const verifedResult = await verifyToken(accessToken, refreshToken);
 
+            if (!verifedResult){
+                setAuthed(false)
+            }
+            setAuthed(true)
+
+		}
 	};
 
 	const logout = () => {
-		return new Promise((res) => {
-			setAuthed(false);
-			res();
-		});
+		setAuthed(false);
+		Cookies.remove("accessToken");
+		Cookies.remove("refreshToken");
 	};
 
 	return {

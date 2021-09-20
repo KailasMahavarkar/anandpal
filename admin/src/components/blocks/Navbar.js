@@ -13,13 +13,16 @@ const Navbar = (props) => {
     const logoutHandler = () => {
 		Cookies.remove("accessToken");
         Cookies.remove("refreshToken");
-        navigate('/')
+        props.logout();
+        navigate('/login')
 	};
 
-	const blogHandler = async () => {
-        return props.protect();
+	const blogHandler =  () => {
+        navigate('/blogs')
     };
-    const adminHandler = () => {};
+    const adminHandler = () => {
+        navigate('/blogs')
+    };
 
 	return (
 		<div className="navbar">

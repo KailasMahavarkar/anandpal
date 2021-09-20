@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import { url } from "../../helper";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { useAuth } from "../../hooks/useAuth";
 
-
-
-
 const Loginpage = (props) => {
-    let navigate = useNavigate();
-    const { login, logout } = useAuth();
+	let navigate = useNavigate();
 
+	useEffect(async () => {
+		if (props.authed) {
+			navigate("/blogs");
+		}
+	}, []);
 
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -24,30 +25,26 @@ const Loginpage = (props) => {
 		setPassword(value);
 	};
 
-
-    
-
-
 	const loginHandler = async () => {
+		const loginResult = await axios.post(url("/auth/login"), {
+			username: username,
+			password: password,
+		});
 
-        // await login().then(()=>{
-        //     console.log('logged in')
-        // })
+		console.log("login data -->", loginResult);
+        console.log("authed status --> ", props.authed)
 
-        const loginResult = await axios.post(
-            url("/auth/login"), 
-            {
-                username,
-                password
-            }
-        );
-
-        if (loginResult.status === 200 && loginResult.data.msg === 'success') {
-            Cookies.set("accessToken", loginResult.data.accessToken);
-            Cookies.set("refreshToken", loginResult.data.refreshToken);
-        }
-    
-		
+		if (loginResult.status === 200 && loginResult.data.msg === "success") {
+			Cookies.set("accessToken", loginResult.data.accessToken);
+			Cookies.set("refreshToken", loginResult.data.refreshToken);
+            await props.login();
+			navigate("/blogs");
+		} else {
+			Cookies.remove("accessToken");
+			Cookies.remove("refreshToken");
+            await props.logout();
+			navigate("/login");
+		}
 	};
 
 	return (
@@ -60,7 +57,7 @@ const Loginpage = (props) => {
 							onChange={usernameChangeHandler}
 							placeholder="*Username"
 							className="centerwrapper__section__input"
-                            required={true}
+							required={true}
 						/>
 					</div>
 					<div className="centerwrapper__section">
@@ -69,8 +66,7 @@ const Loginpage = (props) => {
 							onChange={passwordChangeHandler}
 							placeholder="*Password"
 							className="centerwrapper__section__input"
-                            required={true}
-
+							required={true}
 						/>
 					</div>
 					<div className="centerwrapper__section">
