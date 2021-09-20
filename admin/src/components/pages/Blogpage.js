@@ -5,17 +5,11 @@ import deleteIcon from '../../../src/assets/deleteIcon.svg'
 import createIcon from '../../../src/assets/createIcon.svg'
 
 import { Link } from "react-router-dom";
-import Navbar from "../blocks/Navbar";
 
 
 const Blogpage = (props) => {
-
-
-    console.log(props.authed)
-
 	return (
         <div className="view">
-            <Navbar></Navbar>
             <div className="blogposts">
                 <Link to='/newblog'>
                     <div className='alink blogposts__item'>

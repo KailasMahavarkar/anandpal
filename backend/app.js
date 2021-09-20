@@ -4,7 +4,8 @@ const path = require("path");
 const mongo = require("./middlewares/_connect");
 
 const authHandlers = require("./routes/authRoutes");
-const blogHandlers = require("./routes/blogRoutes")
+const blogHandlers = require("./routes/blogRoutes");
+const productHandlers = require("./routes/productRoutes");
 
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -35,7 +36,7 @@ app.set("json spaces", 2);
 // auth api handlers
 app.use("/auth", authHandlers);
 app.use("/blog", blogHandlers);
-
+app.use("/product", productHandlers);
 
 // Assume 404 since no middleware responded
 // app.use(function (req, res, next)  {

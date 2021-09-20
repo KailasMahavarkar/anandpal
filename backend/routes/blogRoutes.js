@@ -13,12 +13,16 @@ const _singleFileUpload = require("../middlewares/_singleFileUpload")._singleFil
 
 // controllers
 const blogCreate = require("../controllers/Blog/blogCreate").blogCreate;
-
-
+const blogDelete = require("../controllers/Blog/blogDelete").blogDelete;
+const blogUpdate = require("../controllers/Blog/blogUpdate").blogUpdate;
+const blogRead = require("../controllers/Blog/blogRead").blogRead;
 // router.route("/create").post(upload.single('image'), _singleFileUpload, blogCreate);
 
 
 router.route("/create").post(blogCreate);
+router.route("/delete").delete(blogDelete);
+router.route("/update").patch(blogUpdate);
+router.route("/read").get(blogRead);
 
 
 module.exports = router;

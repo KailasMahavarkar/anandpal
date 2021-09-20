@@ -46,6 +46,7 @@ const blogCreate = async (req, res) => {
 
 	// /* ---------------------  END TYPE CHECK ------------------------------- */
 
+
 	const new_blog = new BlogModel({
         title: title,
         author: author,
@@ -53,7 +54,7 @@ const blogCreate = async (req, res) => {
     });
 
     const res_save = await new_blog.save();
-	return res.status(400).json({
+	return res.status(200).json({
         msg: "new blog added",
         id: res_save._id
     });

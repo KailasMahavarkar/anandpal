@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom';
 import { url } from "../../helper";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useAuth } from "../../hooks/useAuth";
+
 
 const Loginpage = (props) => {
-	let navigate = useNavigate();
 
-	useEffect(async () => {
-		if (props.authed) {
-			navigate("/blogs");
-		}
-	}, []);
-
+    const history = useHistory();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
 	const usernameChangeHandler = ({ target: { value } }) => {
 		setUsername(value);
 	};
-
 	const passwordChangeHandler = ({ target: { value } }) => {
 		setPassword(value);
 	};
@@ -31,19 +24,11 @@ const Loginpage = (props) => {
 			password: password,
 		});
 
-		console.log("login data -->", loginResult);
-        console.log("authed status --> ", props.authed)
-
 		if (loginResult.status === 200 && loginResult.data.msg === "success") {
-			Cookies.set("accessToken", loginResult.data.accessToken);
-			Cookies.set("refreshToken", loginResult.data.refreshToken);
-            await props.login();
-			navigate("/blogs");
-		} else {
-			Cookies.remove("accessToken");
-			Cookies.remove("refreshToken");
-            await props.logout();
-			navigate("/login");
+			localStorage.setItem("accessToken", loginResult.data.accessToken);
+			localStorage.setItem("refreshToken", loginResult.data.refreshToken);
+            localStorage.setItem("authed", true);
+            history.push('/blogs')
 		}
 	};
 

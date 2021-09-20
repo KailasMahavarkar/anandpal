@@ -60,8 +60,9 @@ const useAuth = () => {
 
 
 	const login = async () => {
-		let accessToken = Cookies.get("accessToken");
-		let refreshToken = Cookies.get("refreshToken");
+		let accessToken = localStorage.setItem('accessToken', accessToken);
+		let refreshToken =  localStorage.setItem('refreshToken', refreshToken);
+
 		const access= await hasAccess(accessToken, refreshToken);
 
 		if (!access) {
@@ -80,8 +81,8 @@ const useAuth = () => {
 
 	const logout = () => {
 		setAuthed(false);
-		Cookies.remove("accessToken");
-		Cookies.remove("refreshToken");
+		localStorage.removeItem("accessToken");
+		localStorage.removeItem("refreshToken");
 	};
 
 	return {

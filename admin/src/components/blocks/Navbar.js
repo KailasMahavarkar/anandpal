@@ -2,26 +2,26 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { url } from "../../helper";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 
 const Navbar = (props) => {
 
-    let navigate = useNavigate();
+    let history = useHistory();
 
     const logoutHandler = () => {
-		Cookies.remove("accessToken");
-        Cookies.remove("refreshToken");
-        props.logout();
-        navigate('/login')
-	};
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('authed');
+        history.push('/login');
+    };
 
 	const blogHandler =  () => {
-        navigate('/blogs')
+        history.push('/blogs');
     };
     const adminHandler = () => {
-        navigate('/blogs')
+        history.push('/admin');
     };
 
 	return (
