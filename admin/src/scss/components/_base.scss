@@ -19,6 +19,17 @@ body {
     overflow: auto; // this will make sidebar sticky
 }
 
+a{
+    text-decoration: none;
+
+    &:active{
+        color: $dark;
+    }
+
+    &:visited{
+        color: $red;
+    }
+}
 
 
 .hero {

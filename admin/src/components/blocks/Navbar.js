@@ -4,17 +4,17 @@ import axios from "axios";
 import { url } from "../../helper";
 import { Link, useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
+import auth from "../../auth";
 
 
 const Navbar = (props) => {
-
     let history = useHistory();
 
+
     const logoutHandler = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('authed');
-        history.push('/login');
+        auth.logout(()=>{
+            history.push('/');
+        })
     };
 
 	const blogHandler =  () => {
@@ -27,7 +27,7 @@ const Navbar = (props) => {
 	return (
 		<div className="navbar">
 			<div className="navbar__logo" onClick={()=>console.log("logo clicked")}>
-                <Link to="/">
+                <Link to="/blogs">
                     <a className="alink">
                        AnandPal
                     </a>

@@ -4,12 +4,25 @@ import editIcon from '../../../src/assets/editIcon.svg'
 import deleteIcon from '../../../src/assets/deleteIcon.svg'
 import createIcon from '../../../src/assets/createIcon.svg'
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import auth from '../../auth';
+import Loginpage from "./Loginpage";
+import Navbar from "../blocks/Navbar";
 
 
 const Blogpage = (props) => {
+
+    const history = useHistory();
+
+    const logoutHandler = () =>{
+        auth.logout(()=>{
+            history.push('/')
+        })
+    }
+
 	return (
         <div className="view">
+            <Navbar />
             <div className="blogposts">
                 <Link to='/newblog'>
                     <div className='alink blogposts__item'>
@@ -37,6 +50,7 @@ const Blogpage = (props) => {
 					<div className="blogposts__item__timestamp">July 18 2021</div>
 				</div>
                 
+
 			</div>
 		</div>
 	);

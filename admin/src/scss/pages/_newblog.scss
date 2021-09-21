@@ -35,8 +35,12 @@
 }
 
 .ce-block__content {
-	box-shadow: $shadow-100;
+    border: 1px solid tint(#eee, 50%);
 	padding: 10px;
+    
+    &:hover{
+        border: 2px solid tint(yellow, 50%);
+    }
 }
 
 

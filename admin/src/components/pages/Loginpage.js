@@ -3,11 +3,20 @@ import { useHistory } from 'react-router-dom';
 import { url } from "../../helper";
 import axios from "axios";
 import Cookies from "js-cookie";
-
+import auth from "../../auth";
 
 const Loginpage = (props) => {
-
+    
     const history = useHistory();
+
+    useEffect(()=>{
+        auth.logout(()=>{
+            history.push('/')
+        })
+    }, [])
+
+
+    // const history = useHistory();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -18,19 +27,11 @@ const Loginpage = (props) => {
 		setPassword(value);
 	};
 
-	const loginHandler = async () => {
-		const loginResult = await axios.post(url("/auth/login"), {
-			username: username,
-			password: password,
-		});
-
-		if (loginResult.status === 200 && loginResult.data.msg === "success") {
-			localStorage.setItem("accessToken", loginResult.data.accessToken);
-			localStorage.setItem("refreshToken", loginResult.data.refreshToken);
-            localStorage.setItem("authed", true);
+    const loginHandler = () => {
+        auth.login(username, password, ()=>{
             history.push('/blogs')
-		}
-	};
+        });
+    }
 
 	return (
 		<div className="view">

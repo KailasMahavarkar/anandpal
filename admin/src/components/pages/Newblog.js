@@ -4,6 +4,7 @@ import deleteIcon from "../../../src/assets/deleteIcon.svg";
 import createIcon from "../../../src/assets/createIcon.svg";
 import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "./../../tools";
+import Navbar from './../blocks/Navbar'; 
 
 const Newblog = (props) => {
 	const [blogTitle, setBlogTitle] = useState("");
@@ -46,7 +47,8 @@ const Newblog = (props) => {
 
 	return (
 		<div className="view">
-			<div className="options">
+            <Navbar />
+			<div className="options mt-20">
 				<div className="options__main options__title">
 					<input
 						type="text"
