@@ -9,8 +9,10 @@ import Blogpage from "./components/pages/Blogpage";
 import Adminpage from "./components/pages/Adminpage";
 import Loginpage from "./components/pages/Loginpage";
 import Logoutpage from "./components/pages/Logoutpage";
+import x404 from './components/pages/x404'
 import axios from "axios";
 import { ProtectedRoute } from "./protected.router";
+
 
 import {
 	Switch,
@@ -31,7 +33,7 @@ function App(props) {
                 <ProtectedRoute exact path="/newblog" component={Newblog}  />
                 <ProtectedRoute exact path="/admin" component={Adminpage}  />
                 {/* pattern for unknown routes */}
-                <Route path="*" component={()=>"404 Not Found"} />                    
+                <Route path="*" component={x404} />                    
 			</Switch>
 		</div>
 	);

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { url } from "./helper";
+import { isEmpty, url } from "./helper";
 
 class Auth {
 	constructor() {
@@ -7,21 +7,33 @@ class Auth {
 	}
 
 	async login(username, password, cb) {
-		this.authenticated = true;
 
+        try{
+            const loginResult = await axios.post(url("/auth/login"), {
+                username: username,
+                password: password,
+            });
 
-        const loginResult = await axios.post(url("/auth/login"), {
-            username: username,
-            password: password,
-        });
+            if (loginResult.status === 200 && loginResult.data.msg === "success") {
+                localStorage.setItem("accessToken", loginResult.data.accessToken);
+                localStorage.setItem("refreshToken", loginResult.data.refreshToken);
+                localStorage.setItem("authed", true);
+                this.authenticated = true;
+            }
 
-        if (loginResult.status === 200 && loginResult.data.msg === "success") {
-            localStorage.setItem("accessToken", loginResult.data.accessToken);
-            localStorage.setItem("refreshToken", loginResult.data.refreshToken);
-            localStorage.setItem("authed", true);
+        }catch(error){
+            this.authenticated = false;
+            if (!isEmpty(error.response)){
+                localStorage.setItem("errorText", JSON.stringify(error.response.data));
+                console.log("loginResult", error.response)
+            }else{
+                localStorage.setItem("errorText", JSON.stringify({msg: "Server is Down"}));
+            }
         }
-        
 
+
+
+        
 		cb();
 	}
 
