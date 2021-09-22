@@ -12,9 +12,8 @@ const log = logger(__filename);
     CE -> 0
 */
 
-const blogRead = async (req, res, next) => {
+const xblogRead = async (req, res, next) => {
 	const blogID = req.params.blogID;
-
 
 	if (isEmpty(blogID)) {
 		return res.status(404).json({
@@ -23,10 +22,7 @@ const blogRead = async (req, res, next) => {
 	}
 
 	try {
-		const readBlog = await BlogModel.findOne(
-            { _id: blogID }
-        );
-
+		const readBlog = await BlogModel.findOne({ _id: blogID });
 
 		if (isEmpty(readBlog)) {
 			return res.status(400).json({
@@ -34,20 +30,13 @@ const blogRead = async (req, res, next) => {
 			});
 		}
 
-        
-        if (readBlog.status === 'unpublished') {
-			return res.status(400).json({
-				msg: `Blog with blogID ${blogID} is unpublished`,
-			});
-		}
-
 		const dataObject = {
 			_id: readBlog._id,
-			status: readBlog._status,
-			create_ts: readBlog.create_ts,
 			title: readBlog.title,
+			status: readBlog.status,
 			author: readBlog.author,
 			data: readBlog.data,
+			create_ts: readBlog.create_ts,
 		};
 
 		return res.status(200).json({
@@ -69,10 +58,10 @@ const blogRead = async (req, res, next) => {
 };
 
 
-const blogReadAll = async (req, res, next) => {
+const xblogReadAll = async (req, res, next) => {
 
     try{
-        const blogData = await BlogModel.find({status: "published"});
+        const blogData = await BlogModel.find();
 
         if (isEmpty(blogData)){
             return res.status(200).json({})
@@ -94,4 +83,4 @@ const blogReadAll = async (req, res, next) => {
 	}
 }
 
-module.exports = { blogRead, blogReadAll };
+module.exports = { xblogRead, xblogReadAll};

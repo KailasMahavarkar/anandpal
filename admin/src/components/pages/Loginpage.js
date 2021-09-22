@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { url, isEmpty} from "../../helper";
+import { url, isEmpty } from "../../helper";
 import axios from "axios";
 import Cookies from "js-cookie";
 import auth from "../../auth";
@@ -8,24 +8,20 @@ import SnackbarProvider from "react-simple-snackbar";
 import { useSnackbar } from "react-simple-snackbar";
 
 const SnackBar = () => {
-    const [openSnackbar, closeSnackbar] = useSnackbar()
-    let errorText = JSON.parse(localStorage.getItem("errorText"));
+	const [openSnackbar, closeSnackbar] = useSnackbar();
+	let errorText = JSON.parse(localStorage.getItem("errorText"));
 
-    useEffect(()=>{
+	useEffect(() => {
+		if (!isEmpty(errorText)) {
+			if (errorText.msg) {
+				openSnackbar(errorText.msg, 3000);
+				localStorage.removeItem("errorText");
+			}
+		}
+	}, []);
 
-        if (!isEmpty(errorText)){
-            if (errorText.msg){
-                openSnackbar(errorText.msg, 3000)
-                localStorage.removeItem("errorText")
-            }
-        }
-
-        
-
-    }, [])
-
-    return (<div></div>)
-}
+	return <div></div>;
+};
 const Loginpage = (props) => {
 	const history = useHistory();
 
@@ -57,9 +53,9 @@ const Loginpage = (props) => {
 			<div className="view">
 				<div className="loginwrapper">
 					<div className="centerwrapper">
-                        <div className="centerwrapper__section centerwrapper__adminlogin">
-                            Admin Login
-                        </div>
+						<div className="centerwrapper__section centerwrapper__adminlogin">
+							Admin Login
+						</div>
 						<div className="centerwrapper__section">
 							<input
 								type="text"

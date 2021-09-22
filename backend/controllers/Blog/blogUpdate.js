@@ -7,7 +7,7 @@ const log = logger(__filename)
 
 
 const blogUpdate = async (req, res) => {
-	let { blogID, title, data, author }  = req.body;
+	let { id, title, data, author }  = req.body;
 
     // return res.status(200).json({
     //     "success" : 1,
@@ -25,14 +25,14 @@ const blogUpdate = async (req, res) => {
 		});
 	}
 
-    if (isEmpty(blogID) ) {
+    if (isEmpty(id) ) {
 		return res.status(400).json({
-			msg: `blogID should not be empty`,
+			msg: `id should not be empty`,
 		});
 	}
-    if (blogID.length != 24){
+    if (id.length != 24){
         return res.status(400).json({
-			msg: `blogID should be of 24 length`,
+			msg: `id should be of 24 length`,
 		});
     }
 
@@ -66,7 +66,7 @@ const blogUpdate = async (req, res) => {
     try {
 
 		const updatedBlog = await BlogModel.updateOne(
-			{ _id: blogID },
+			{ _id: id },
 			{   
                 title: title,
                 data: data,
@@ -76,19 +76,19 @@ const blogUpdate = async (req, res) => {
 
         if (updatedBlog.n === 0) {
             return res.status(400).json({
-                msg: `Blog with ID ${blogID} does not exists`,
+                msg: `Blog with ID ${id} does not exists`,
             });
         } 
 
 
 		if (updatedBlog.nModified !== 1) {
             return res.status(400).json({
-                msg: `Blog with ID ${blogID} was already updated`,
+                msg: `Blog with ID ${id} was already updated`,
             });
 		} 
 
         return res.status(200).json({
-            msg: `Blog with ID ${blogID} was updated`,
+            msg: `Blog with ID ${id} was updated`,
         });
 
 		

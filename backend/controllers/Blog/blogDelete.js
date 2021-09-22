@@ -13,7 +13,8 @@ const log = logger(__filename)
 */
 
 const blogDelete = async (req, res, next) => {
-	const { blogID } = req.body;
+const blogID = req.body.blogID;
+
 
     if (!typeMatch(blogID)){
         return res.status(404).json({
@@ -36,7 +37,7 @@ const blogDelete = async (req, res, next) => {
 		} 
 
         return res.status(200).json({
-            msg: `Blog with ID ${blogID} has been deleted`,
+            msg: `Blog with ID ${blogID} has been deleted`
         });
 
 		

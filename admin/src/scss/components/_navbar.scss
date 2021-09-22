@@ -1,6 +1,6 @@
 // container > main > navbar
 .navbar {
-	@include test;
+	// @include test;
 
 	display: flex;
 	flex-direction: row;
@@ -8,10 +8,11 @@
 
 
 	overflow: none;
-    box-shadow: $shadow-100;
+    box-shadow: $shadow-200;
 
-    padding-bottom: 20px;
-    margin-bottom: 10px;
+    // padding-bottom: 20px;
+    margin: 10px 0px;
+    padding: 10px;
 
 	&__logo {
         flex-grow: 1;

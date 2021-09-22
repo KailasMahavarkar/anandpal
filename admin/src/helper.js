@@ -1,3 +1,5 @@
+import {useEffect } from 'react';
+
 const url = (endpoint) => {
     return `http://localhost:1000${endpoint}`
 }
@@ -15,4 +17,34 @@ const isEmpty = (arg) => {
 	return false;
 };
 
-export { url, isEmpty };
+function useEffectAsync(effect, inputs) {
+    useEffect(() => {
+        effect();
+    }, inputs);
+}
+
+// function useEffectAsync(asyncFn, onSuccess) {
+//     useEffect(() => {
+//       let isActive = true;
+//       asyncFn().then(data => {
+//         if (isActive) onSuccess(data);
+//       });
+//       return () => { isActive = false };
+//     }, [asyncFn, onSuccess]);
+//   }
+
+
+const randomHash = (length = 24) => {
+	var result = "";
+	var characters =
+		"ABCDEFabcdef0123456789";
+	var charactersLength = characters.length;
+	for (var i = 0; i < length; i++) {
+		result += characters.charAt(
+			Math.floor(Math.random() * charactersLength)
+		);
+	}
+	return result;
+};
+
+export { url, isEmpty, useEffectAsync, randomHash};

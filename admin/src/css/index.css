@@ -456,14 +456,13 @@ a:visited {
 }
 
 .navbar {
-  border: 1px solid violet;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   overflow: none;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-  padding-bottom: 20px;
-  margin-bottom: 10px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  margin: 10px 0px;
+  padding: 10px;
 }
 
 .navbar__logo {
@@ -669,6 +668,7 @@ a:visited {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 200px;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
@@ -749,7 +749,7 @@ a:visited {
   display: flex;
   justify-content: end;
   align-items: end;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 .editorjs__wrapper {
@@ -784,12 +784,8 @@ a:visited {
 }
 
 .ce-block__content {
-  border: 1px solid #f7f7f7;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
   padding: 10px;
-}
-
-.ce-block__content:hover {
-  border: 2px solid #ffff80;
 }
 
 .options {

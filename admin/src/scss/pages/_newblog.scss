@@ -35,12 +35,9 @@
 }
 
 .ce-block__content {
-    border: 1px solid tint(#eee, 50%);
+    box-shadow: $shadow-100;
 	padding: 10px;
-    
-    &:hover{
-        border: 2px solid tint(yellow, 50%);
-    }
+
 }
 
 
@@ -49,6 +46,7 @@
     display: flex;   
     align-items: center;
     justify-content: center;
+    
     box-shadow: $shadow-100;
     
     margin-left: 40px;

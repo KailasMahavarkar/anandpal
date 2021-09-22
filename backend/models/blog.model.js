@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const blogSchema = new Schema({
 	_id: {
-		type: Schema.ObjectId,
-		auto: true,
+		type: String,
+		requied: true
 	},
 	title: {
 		type: String,
