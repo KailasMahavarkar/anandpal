@@ -88,13 +88,21 @@ const Blogpage = (props) => {
 	const renderBlogs = () => {
         if (blogs.length > 0){
 
+            const titleHandler = (title) => {
+                const fixedLength = 80;
+                if (title.length > fixedLength){
+                    return title.substring(0, fixedLength) + '....';
+                }
+                return title
+            }
+
             return blogs.map((blog) => {
+
+                
 
                 return (                    
                     <div className="blogposts__item">
-                        <div className="blogposts__item__id">{blog._id}</div>
-                        
-                        <div className="blogposts__item__title">{blog.title} </div>
+                        <div className="blogposts__item__title">{titleHandler(blog.title)} </div>
                         <div className="blogposts__item__inner">
                             <div className="blogposts__item__inner__edit">
                                 <img src={editIcon} alt={blog._id} width='50px' height='50px' onClick={viewPageHandler} />
@@ -103,6 +111,7 @@ const Blogpage = (props) => {
                                 <img src={deleteIcon} alt={blog._id} width='30px' height='50px' onClick={blogDeleteHandler}/>
                             </div>
                         </div>
+                        <div className="blogposts__item__id">{ blog._id}</div>
                         <div className="blogposts__item__timestamp">{new Date(blog.create_ts).toLocaleString()}</div>
                     </div>
                 )
@@ -115,7 +124,6 @@ const Blogpage = (props) => {
 		<div className="view">
 			<Navbar />
 			<div className="blogposts">
-
                 <div className='alink blogposts__item'>
                     <div className="blogposts__item__main" >
                         <div className="blogposts__item__main__createicon" >

@@ -16,16 +16,6 @@ import Delimiter from "@editorjs/delimiter";
 import InlineCode from "@editorjs/inline-code";
 import SimpleImage from "@editorjs/simple-image";
 
-// let editor = new EditorJS({
-//     //...
-//     tools: {
-
-//     onReady: () => {
-//         console.log('Editor.js is ready to work!')
-//      }
-//     //...
-// });
-
 export const EDITOR_JS_TOOLS = {
 	header: {
 		class: Header,
@@ -65,7 +55,7 @@ export const EDITOR_JS_TOOLS = {
 		config: {
 			endpoints: {
                 // Your backend file uploader endpoint -> POST
-				byFile: "http://localhost:1000/blog/create", 
+				byFile: "http://localhost:1000/blog/image", 
 			},
 		},
 	},
