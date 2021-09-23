@@ -4,14 +4,6 @@ const BlogModel = require("../../models/blog.model")
 const blogCreate = async (req, res, next) => {
 	let { title, data, author, id, status }  = req.body;
 
-    // return res.status(200).json({
-    //     "success" : 1,
-    //     "file": {
-    //         "url" : req.singleImage.secure_url,
-    //     }            
-    // })
-
-    // return res.send(req.singleImage.secure_url)
 
 	/* ---------------------  START NULL CHECK ------------------------------- */
 
