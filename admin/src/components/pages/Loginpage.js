@@ -50,7 +50,6 @@ const Loginpage = (props) => {
 
 	return (
 		<SnackbarProvider>
-			<div className="view">
 				<div className="loginwrapper">
 					<div className="centerwrapper">
 						<div className="centerwrapper__section centerwrapper__adminlogin">
@@ -60,16 +59,16 @@ const Loginpage = (props) => {
 							<input
 								type="text"
 								onChange={usernameChangeHandler}
-								placeholder="*Username"
+								placeholder="Username"
 								className="centerwrapper__section__input"
 								required={true}
 							/>
 						</div>
 						<div className="centerwrapper__section">
 							<input
-								type="text"
+								type="password"
 								onChange={passwordChangeHandler}
-								placeholder="*Password"
+								placeholder="Password"
 								className="centerwrapper__section__input"
 								required={true}
 							/>
@@ -89,7 +88,6 @@ const Loginpage = (props) => {
 						</div>
 					</div>
 				</div>
-			</div>
 		</SnackbarProvider>
 	);
 };

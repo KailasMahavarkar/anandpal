@@ -621,6 +621,7 @@ a:visited {
   display: flex;
   flex-direction: column;
   width: 100vw;
+  background-color: linear-gradient(145deg, #ae96ca 0%, #6f53b8 26%, #4f4ab1 63%, #31409d 100%);
 }
 
 .basic_input {
@@ -797,6 +798,10 @@ a:visited {
   padding: 10px;
 }
 
+.image-tool--withBackground .image-tool__image {
+  background-color: #eeeeee;
+}
+
 .options {
   display: flex;
   align-items: center;
@@ -898,21 +903,27 @@ a:visited {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  font-size: 1.5em;
+  background: linear-gradient(145deg, #ae96ca 0%, #6f53b8 26%, #4f4ab1 63%, #31409d 100%);
+  font-size: 1.3em;
 }
 
 .centerwrapper {
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border-radius: 10px;
   border-radius: 5px;
   padding: 40px;
 }
 
 .centerwrapper__adminlogin {
-  color: #7727d8;
+  color: white;
   font-weight: 600;
-  font-size: 1.5em;
+  font-size: 1.8em;
 }
 
 .centerwrapper__section {
@@ -925,14 +936,17 @@ a:visited {
 }
 
 .centerwrapper__section__input {
-  padding: 10px 20px;
+  padding: 20px 5px;
   width: 100%;
   text-decoration: none;
   cursor: pointer;
   outline: none;
   border: none;
-  border: 1px solid #ededed;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 2px solid white;
+  caret-color: white;
   font-size: 1.2em;
+  background: none;
 }
 
 .centerwrapper__section__input::placeholder {
@@ -941,21 +955,23 @@ a:visited {
 
 .centerwrapper__section__button {
   color: white;
-  background-color: #7727d8;
-  border: 1px solid #7727d8;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1em;
-  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 15px 0px;
   width: 100%;
   cursor: pointer;
   transition: all ease-out 250ms;
 }
 
 .centerwrapper__section__button:hover {
-  color: #7727d8;
-  background-color: white;
   transition: all ease-in 250ms;
 }
 /*# sourceMappingURL=index.css.map */

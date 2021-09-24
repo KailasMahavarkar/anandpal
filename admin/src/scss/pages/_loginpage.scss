@@ -7,20 +7,28 @@
     justify-content: center;
     height: 100vh;
 
-    font-size: 1.5em;
+    background: $glass;
+
+    font-size: 1.3em;
 }
 
 .centerwrapper{
     display: flex;
     flex-direction: column;
-    box-shadow: $shadow_all;
+
+
+    // glass effect
+    @include glasseffect();
+
+
+    border-radius: 10px;
     border-radius: 5px;
     padding: 40px;
 
     &__adminlogin{
-        color: $purple;
+        color: white;
         font-weight: 600;
-        font-size: 1.5em;
+        font-size: 1.8em;
     }
 
     &__section{
@@ -33,16 +41,21 @@
 
         
         &__input{
-            padding: 10px 20px;
+            padding: 20px 5px;
             width: 100%;
             text-decoration: none;
             cursor: pointer;
             outline: none;
             border: none;
-            border: 1px solid tint(black, 93%);
 
+            color: rgba(white, 0.9);
+            border-bottom: 2px solid white;
+            caret-color: white;
+            // border: 1px solid tint(black, 93%);
+
+            
             font-size: 1.2em;
-        
+            background: none;
             &::placeholder{
                 color: shade(white, 10%);
             }
@@ -52,22 +65,30 @@
         &__button{
             // @include test;
             color: white;
-            background-color: $purple;
-            border: 1px solid $purple;
 
+            border: none;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 1em;
 
-            padding: 10px;
+            // start --> glass
+            background: rgba( 255, 255, 255, 0.05 );
+            // box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+            backdrop-filter: blur( 5px );
+            -webkit-backdrop-filter: blur( 10px );
+            border-radius: 5px;
+            // end --> glasseffect
+
+            margin: 10px 0;
+            padding: 15px 0px;
             width: 100%;
             cursor: pointer;
+            
             transition: all ease-out 250ms;
 
             &:hover{
                 // inverse current color with background color
-                @include inverse(white, $purple);
                 transition: all ease-in 250ms;
             }
             
