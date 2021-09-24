@@ -3,29 +3,25 @@ const Schema = mongoose.Schema;
 
 const blogSchema = new Schema({
 	_id: {
-		type: Schema.ObjectId,
-		auto: true,
+		type: String,
+		requied: true
 	},
 	title: {
 		type: String,
 		requried: true,
 	},
-	info: {
+	data: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	author: {
 		type: String,
 		required: true,
 	},
-    tags: {
+    status:{
         type: String,
         required: false,
-        default: 'active'
-    },
-    header_image_url: {
-        type: String,
-        required: true,
+        default: "unpublished"
     },
 	create_ts: {
 		type: Number,

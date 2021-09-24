@@ -70,7 +70,7 @@ const renewtoken = async (req, res, next) => {
         delete payload['exp']
         const newAccessToken = generateAccessToken(payload);
         return res.status(200).json({
-            token: newAccessToken
+            accessToken: newAccessToken
         })
     }catch{
         const [MESSAGE, STATUS, ERROR] = ['SE_AUTH_MAIN', 500, "token invalid or expired"];

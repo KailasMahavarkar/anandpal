@@ -88,6 +88,7 @@ const adminLogin = async (req, res) => {
 
         // return access token and refresh token for 1st time
         return res.status(200).json({
+            msg: "success",
             accessToken: accessTokenValue,
             refreshToken: refreshTokenValue,
         });

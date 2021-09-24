@@ -1,72 +1,40 @@
-import logo from "./logo.svg";
-import "./App.css";
+import "../src/css/loop.css";
+import "../src/css/index.css";
+
+import React, { useEffect, useState } from "react";
+
+import Blogpage from "./components/pages/Blogpage";
+import Adminpage from "./components/pages/Adminpage";
+import Loginpage from "./components/pages/Loginpage";
+import Viewpage from "./components/pages/Viewpage";
+import x404 from './components/pages/x404'
 import axios from "axios";
-import { useState } from "react";
-import FormData from "form-data";
+import { ProtectedRoute } from "./protected.router";
 
-import EditorJs from "react-editor-js";
-import { EDITOR_JS_TOOLS } from "./tools";
 
-function App() {
-	const [author, setAuthor] = useState("");
-	const [title, setTitle] = useState("");
-	const [data, setData] = useState("");
+import {
+	Switch,
+	Route,
+	useHistory,
+} from "react-router-dom";
 
-	const authorChangeHandler = (e) => {
-		setAuthor(e.target.value);
-		console.log(author);
-	};
+import dotenv from "dotenv";
+dotenv.config();
 
-	const titleChangeHandler = (e) => {
-		setTitle(e.target.value);
-		console.log(title);
-	};
-
+function App(props) {
 	return (
 		<div className="App">
-            <div className="wrapper_editorjs">
-                <div id="editorjs">
-                    <EditorJs data={data} tools={EDITOR_JS_TOOLS} />
-                </div>
-            </div>
-
-
-			<input
-				type="submit"
-				value="submit"
-				onClick={() => {
-					console.log("submit clicked");
-				}}
-			/>
-
-			{/* <form
-				action="http://localhost:1000/blog/create"
-				method="post"
-				enctype="multipart/form-data"
-			>
-				<div className="author">
-					author:{" "}
-					<input
-						type="text"
-						name="author"
-						value={author}
-						onChange={authorChangeHandler}
-					/>
-				</div>
-				<div className="title">
-					title:{" "}
-					<input
-						type="text"
-						name="title"
-						value={title}
-						onChange={titleChangeHandler}
-					/>
-				</div>
-				<div className="file">
-					<input type="file" name="avatar" />
-				</div>
-				
-			</form> */}
+			<Switch>
+                {/* pattern for base route */}
+				<Route exact path="/" component={Loginpage} />
+                <ProtectedRoute exact path="/blogs" component={Blogpage}  />
+                <ProtectedRoute exact path="/blogs/:blogID?" component={Viewpage}  />
+                
+                {/* <ProtectedRoute exact path="/newblog" component={Newblog}  /> */}
+                <ProtectedRoute exact path="/admin" component={Adminpage}  />
+                {/* pattern for unknown routes */}
+                <Route path="*" component={x404} />                    
+			</Switch>
 		</div>
 	);
 }
