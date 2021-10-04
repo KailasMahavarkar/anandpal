@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect} from "react";
-import Navbar from "./../blocks/Navbar";
+import Navbar from "../blocks/Navbar";
 import axios from "axios";
 import { isEmpty, url, randomHash, useEffectAsync } from "../../helper";
 import EditorJs from "react-editor-js";
-import { EDITOR_JS_TOOLS } from "./../../tools";
+import { EDITOR_JS_TOOLS } from "../../tools";
 import SnackBar from "../blocks/SnackBar";
 
 
-const Viewpage = (props) => {
+const Editorpage = (props) => {
 	const [blogTitle, setBlogTitle] = useState("");
 	const [blogAuthor, setBlogAuthor] = useState("");
 	const [blogStatus, setBlogStatus] = useState("unpublished");
@@ -154,4 +154,4 @@ const Viewpage = (props) => {
 	);
 };
 
-export default Viewpage;
+export default Editorpage;

@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
-
-import editIcon from "../../../src/assets/editIcon.svg";
-import deleteIcon from "../../../src/assets/deleteIcon.svg";
 import createIcon from "../../../src/assets/createIcon.svg";
 
 import { Link, useHistory } from "react-router-dom";
 import auth from "../../auth";
-import Loginpage from "./Loginpage";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
 import { url, useEffectAsync, isEmpty, randomHash } from "../../helper";
@@ -14,12 +10,6 @@ import { url, useEffectAsync, isEmpty, randomHash } from "../../helper";
 const Blogpage = (props) => {
 	const history = useHistory();
 	const [blogs, setBlogs] = useState([]);
-
-	const logoutHandler = () => {
-		auth.logout(() => {
-			history.push("/");
-		});
-	};
 
 	const blogDeleteHandler = async () => {
 		let deleteID = localStorage.getItem("currentID");
@@ -44,6 +34,7 @@ const Blogpage = (props) => {
 	};
 
 	useEffectAsync(async () => {
+		localStorage.removeItem("currentID");
 		try {
 			const items = await axios.get(url("/blog/xread"));
 			setBlogs(items.data);
@@ -53,7 +44,6 @@ const Blogpage = (props) => {
 	}, [blogs]);
 
 	const newBlogHandler = () => {
-		localStorage.removeItem("currentID");
 		const currentID = randomHash();
 		localStorage.setItem("currentID", currentID);
 
