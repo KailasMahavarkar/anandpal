@@ -18,6 +18,7 @@ const log = logger(__filename)
 
 // generate new access token
 const generateAccessToken = (payload) => {
+    console.log("current Expiry: ", process.env.ACCESS_TOKEN_EXPIRY);
 	return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
 		expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
 	});

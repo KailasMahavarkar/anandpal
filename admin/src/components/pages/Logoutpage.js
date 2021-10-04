@@ -8,11 +8,11 @@ import { useAuth } from "../../hooks/useAuth";
 
 const Logoutpage = () => {
 
-    useEffect(()=>{
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('authed');
-    }, [])
+    // useEffect(()=>{
+    //     localStorage.removeItem('accessToken');
+    //     localStorage.removeItem('refreshToken');
+    //     localStorage.removeItem('authed');
+    // }, [])
     return
 }
 

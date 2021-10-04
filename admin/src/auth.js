@@ -25,11 +25,10 @@ class Auth {
 					"refreshToken",
 					loginResult.data.refreshToken
 				);
-				localStorage.setItem("authed", true);
-				this.authenticated = true;
+			} else {
+				localStorage.clear();
 			}
 		} catch (error) {
-			this.authenticated = false;
 			if (!isEmpty(error.response)) {
 				localStorage.setItem(
 					"errorText",
@@ -42,6 +41,7 @@ class Auth {
 					JSON.stringify({ msg: "Server is Down" })
 				);
 			}
+			this.authenticated = false;
 		}
 
 		cb();
@@ -54,7 +54,64 @@ class Auth {
 		cb();
 	}
 
-	isAuthenticated() {
+	async isAuthenticated() {
+		const accessToken = localStorage.getItem("accessToken");
+
+		// if (!isEmpty(accessToken)) {
+		try {
+			const authRes = await axios.post(
+				url("/auth/verify"),
+				{},
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${accessToken}`,
+					},
+				}
+			);
+			if (authRes.status === 200 && authRes.data.msg === "success") {
+				this.authenticated = true;
+				return this.authenticated;
+			}
+		} catch (error) {
+			if (error.response.status === 401) {
+				const refreshToken = localStorage.getItem("refreshToken");
+				if (!isEmpty(refreshToken)) {
+					try {
+						const newAccessToken = await axios.post(
+							url("/auth/refresh"),
+							{
+								token: refreshToken,
+							}
+						);
+
+						localStorage.setItem(
+							"accessToken",
+							newAccessToken.data.accessToken
+						);
+						if (!isEmpty(newAccessToken.data.accessToken)) {
+                            this.authenticated = true;
+                            console.log("accessToken renewed");
+							return this.authenticated;
+						} else {
+							this.authenticated = false;
+						}
+
+					} catch (errorx) {
+						console.log("inner error --> ", console.log(errorx));
+						this.authenticated = false;
+					}
+				}else{
+                    this.authenticated = false
+                    return this.authenticated
+                }
+			}
+		}
+
+        if (!this.authenticated){
+            localStorage.clear();
+        }
+
 		return this.authenticated;
 	}
 }
