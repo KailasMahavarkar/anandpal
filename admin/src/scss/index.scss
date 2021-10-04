@@ -16,9 +16,12 @@
 @import './blocks/view';
 @import './Icons/createicon';
 @import './blocks/input';
+@import './blocks/snackbar';
 
 // pages
 @import './pages/x404';
 @import './pages/blogpage';
 @import './pages/newblog';
 @import './pages/loginpage';
+@import './pages/productpage';
+@import './pages/_newproduct';

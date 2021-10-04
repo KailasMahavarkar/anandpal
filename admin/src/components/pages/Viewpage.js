@@ -22,19 +22,24 @@ const Viewpage = (props) => {
         try{
             const checkExists = await axios.get(url(`/blog/xread/${currentID}`))
             if (!isEmpty(checkExists)){
-                const {data, title, status, author} = checkExists.data.msg;
-                setBlogAuthor(author);
-                setBlogTitle(title);
-                setBlogStatus(status);
-                setEditorData(JSON.parse(data));
-                editorInstance.current.configuration.data = JSON.parse(data);
+                
+                setBlogAuthor(checkExists.data.msg.author);
+                setBlogTitle(checkExists.data.msg.title);
+                setBlogStatus(checkExists.data.msg.status);
+                const parsed = JSON.parse(checkExists.data.msg.data);
+                if (isEmpty(parsed.blocks)){
+                    parsed['blocks'] = [{"id":"wvCLQ0wF5E","type":"paragraph","data":{"text":"Begin super blog ...","alignment":"left"}}]
+                }
+                setEditorData(parsed);
+            }else{
+                await editorInstance.current.clear();
             }
             console.log(checkExists)
         }catch(error){
             console.log(error)
         }
 
-    }, [])
+    }, [editorInstance])
 
 	const blogStatusHandler = () => {
 		if (blogStatus === "published") {

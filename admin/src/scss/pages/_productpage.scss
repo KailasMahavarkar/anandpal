@@ -1,4 +1,4 @@
-.blogposts {
+.productposts {
 	display: grid;
 	margin: 50px;
 
@@ -16,7 +16,7 @@
 
 		border: 1px solid tint(black, 85);
 		border-radius: 5px;
-		box-shadow: $shadow_100;
+		box-shadow: $shadow-100;
 
 		padding: 30px;
 		color: $purple;
@@ -79,7 +79,7 @@
 			}
 		}
 
-		&__inner {
+        &__inner {
 			flex: 2 0 0;
 
 			display: flex;
@@ -90,7 +90,7 @@
 
 			&__edit, &__delete {
 				display: flex;
-                padding: 10px;
+                padding: 10px 15px;
                 border-radius: 5px;
 				transform: scale(1);
 				transition: transform 250ms ease-out;
@@ -104,6 +104,7 @@
             &__edit{
                 color: white;
                 background-color: $success;
+
             }
 
             &__delete{

@@ -10,7 +10,8 @@ import Viewpage from "./components/pages/Viewpage";
 import x404 from './components/pages/x404'
 import axios from "axios";
 import { ProtectedRoute } from "./protected.router";
-
+import Productpage from './components/pages/Productpage';
+import TestPage from "./components/pages/TestPage";
 
 import {
 	Switch,
@@ -19,6 +20,7 @@ import {
 } from "react-router-dom";
 
 import dotenv from "dotenv";
+import NewProduct from "./components/pages/NewProduct";
 dotenv.config();
 
 function App(props) {
@@ -30,8 +32,14 @@ function App(props) {
                 <ProtectedRoute exact path="/blogs" component={Blogpage}  />
                 <ProtectedRoute exact path="/blogs/:blogID?" component={Viewpage}  />
                 
+                <Route exact path="/test" component={TestPage}  />
+
                 {/* <ProtectedRoute exact path="/newblog" component={Newblog}  /> */}
                 <ProtectedRoute exact path="/admin" component={Adminpage}  />
+
+                <ProtectedRoute exact path="/products" component={Productpage}  />
+                <ProtectedRoute exact path="/products/:productID?" component={NewProduct}  />
+
                 {/* pattern for unknown routes */}
                 <Route path="*" component={x404} />                    
 			</Switch>

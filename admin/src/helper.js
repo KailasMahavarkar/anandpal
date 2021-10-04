@@ -37,7 +37,7 @@ function useEffectAsync(effect, inputs) {
 const randomHash = (length = 24) => {
 	var result = "";
 	var characters =
-		"ABCDEFabcdef0123456789";
+		"abcdef0123456789";
 	var charactersLength = characters.length;
 	for (var i = 0; i < length; i++) {
 		result += characters.charAt(
