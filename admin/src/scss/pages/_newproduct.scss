@@ -43,6 +43,15 @@
 			padding: 10px;
 		}
 
+        &__upload{
+            flex: 1;
+            height: 200px;
+            box-shadow: $shadow_x200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
 		&__title {
 			background-color: #eee;
 			text-align: center;

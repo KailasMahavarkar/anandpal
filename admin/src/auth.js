@@ -49,10 +49,7 @@ class Auth {
 
 	logout(cb) {
 		this.authenticated = false;
-
-		localStorage.removeItem("accessToken");
-		localStorage.removeItem("refreshToken");
-		localStorage.removeItem("authed");
+		localStorage.clear();
 
 		cb();
 	}

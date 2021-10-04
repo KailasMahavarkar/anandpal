@@ -7,7 +7,7 @@ const productCreate = async (req, res) => {
         id, 
         title, info, 
         price, discounted_price,
-        available_quantity, images,
+        available_quantity, image0, image1, image2,
         video
     }  = req.body;
 
@@ -94,10 +94,6 @@ const productCreate = async (req, res) => {
         discounted_price = 0;
     }
 
-    if (isEmpty(images)) {
-		images = [];
-	}
-
     if (isEmpty(video)) {
 		video = '';
 	}
@@ -115,7 +111,9 @@ const productCreate = async (req, res) => {
             price: price,
             discounted_price: discounted_price,
             available_quantity: available_quantity,
-            images: images,
+            image0: image0,
+            image1: image1,
+            image2: image2,
             video: video
         });
         const res_save = await new_product.save();
@@ -127,7 +125,9 @@ const productCreate = async (req, res) => {
             price: price,
             discounted_price: discounted_price,
             available_quantity: available_quantity,
-            images: images,
+            image0: image0,
+            image1: image1,
+            image2: image2,
             video: video
         });
     }else{
@@ -153,7 +153,9 @@ const productCreate = async (req, res) => {
                 price: price,
                 discounted_price: discounted_price,
                 available_quantity: available_quantity,
-                images: images,
+                image0: image0,
+                image1: image1,
+                image2: image2,
                 video: video
             },
 		);
@@ -168,7 +170,9 @@ const productCreate = async (req, res) => {
                 price: price,
                 discounted_price: discounted_price,
                 available_quantity: available_quantity,
-                images: images,
+                image0: image0,
+                image1: image1,
+                image2: image2,
                 video: video,
                 msg: `Product with ID ${id} was already updated`
             });

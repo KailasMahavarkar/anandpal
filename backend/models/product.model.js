@@ -26,9 +26,20 @@ const productSchema = new Schema({
         type: Number,
         required: false
     },
-    images: {
-        type: Array,
-        required: false
+    image0: {
+        type: String,
+        required: false,
+        default: ''
+    },
+    image1: {
+        type: String,
+        required: false,
+        default: ''
+    },
+    image2: {
+        type: String,
+        required: false,
+        default: ''
     },
     video: {
         type: String,
