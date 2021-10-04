@@ -1,21 +1,23 @@
-// @import "./components/navigationBar";
-// @import "./components/contactUs";
+@import "./base/fonts";
+@import "./base/base";
+@import "./base/typography";
+@import "./base/utilities";
 
-// // Home Page
-// @import "./components/HomePage/homePageLander";
-// @import "./components/HomePage/smallintroduction";
-// @import "./components/HomePage/businessintro";
+@import "./components/navigationBar";
+@import "./components/contactUs";
 
-// // About Us
-// @import "./components/AboutUs/aboutUsLander";
-// @import "./components/AboutUs/aboutUsContent";
+// Home Page
+@import "./components/HomePage/homePageLander";
+@import "./components/HomePage/smallintroduction";
+@import "./components/HomePage/businessintro";
 
-// // Business Page
-// @import "./components/Business/businessPageLander";
-// @import "./components/Business/businessPageContent";
-// @import "./components/Business/vestege";
+// About Us
+@import "./components/AboutUs/aboutUsLander";
+@import "./components/AboutUs/aboutUsContent";
 
-// @import "./base/fonts";
-// @import "./base/base";
-// @import "./base/typography";
-// @import "./base/utilities";
+// Business Page
+@import "./components/Business/businessPageLander";
+@import "./components/Business/businessPageContent";
+@import "./components/Business/vestege";
+
+

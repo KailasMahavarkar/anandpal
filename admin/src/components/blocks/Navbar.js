@@ -41,9 +41,9 @@ const Navbar = (props) => {
 					</div>
 				</Link>
 
-                <Link to="/admin">
+                <Link to="/products">
 					<div className="navbar__menu__item" onClick={adminHandler}>
-						Admin
+						Products
 					</div>
 				</Link>
 

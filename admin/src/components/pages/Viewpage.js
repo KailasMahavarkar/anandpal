@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect} from "react";
-import editIcon from "../../../src/assets/editIcon.svg";
-import deleteIcon from "../../../src/assets/deleteIcon.svg";
-import createIcon from "../../../src/assets/createIcon.svg";
 import Navbar from "./../blocks/Navbar";
 import axios from "axios";
 import { isEmpty, url, randomHash, useEffectAsync } from "../../helper";
 import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "./../../tools";
+import SnackBar from "../blocks/SnackBar";
 
 
 const Viewpage = (props) => {
@@ -15,26 +13,32 @@ const Viewpage = (props) => {
 	const [blogStatus, setBlogStatus] = useState("unpublished");
     const [editorData, setEditorData] = useState('');
 	const editorInstance = useRef(null);
-    
+    const [bar, setBar] = useState(false);
+    const [newError, setNewError] = useState('')
     
     useEffectAsync(async ()=>{
         const currentID = localStorage.getItem('currentID')
         try{
             const checkExists = await axios.get(url(`/blog/xread/${currentID}`))
             if (!isEmpty(checkExists)){
-                const {data, title, status, author} = checkExists.data.msg;
-                setBlogAuthor(author);
-                setBlogTitle(title);
-                setBlogStatus(status);
-                setEditorData(JSON.parse(data));
-                editorInstance.current.configuration.data = JSON.parse(data);
+                
+                setBlogAuthor(checkExists.data.msg.author);
+                setBlogTitle(checkExists.data.msg.title);
+                setBlogStatus(checkExists.data.msg.status);
+                const parsed = JSON.parse(checkExists.data.msg.data);
+                if (isEmpty(parsed.blocks)){
+                    parsed['blocks'] = [{"id":"wvCLQ0wF5E","type":"paragraph","data":{"text":"Begin super blog ...","alignment":"left"}}]
+                }
+                setEditorData(parsed);
+            }else{
+                await editorInstance.current.clear();
             }
             console.log(checkExists)
         }catch(error){
             console.log(error)
         }
 
-    }, [])
+    }, [editorInstance])
 
 	const blogStatusHandler = () => {
 		if (blogStatus === "published") {
@@ -52,16 +56,20 @@ const Viewpage = (props) => {
 	};
 
 	const dataSaveHandler = async () => {
+        // setNewError('');
 		try {
-			const savedData = await editorInstance.current.save();
-
+            
+            const savedData = await editorInstance.current.save();
+            
+            
             if (!localStorage.getItem("currentID")) {
                 localStorage.setItem("currentID", randomHash());
             }
             const currentID = localStorage.getItem("currentID");
             
-
+            
             try{
+                setBar(false);
                 const result = await axios.post(url('/blog/create'), {
                     id: currentID,
                     title: blogTitle,
@@ -76,16 +84,18 @@ const Viewpage = (props) => {
                     author: blogAuthor,
                     status: blogStatus
                 });
-
+                // setBar(true);
                 editorInstance.current.configuration.data = result.data.data;
             }catch(error){
                 console.log("Error creating", error)
+                // setNewError('Error Creating EditorJS 1');
             }
            
 
             
 		} catch (error) {
 			console.error(error);
+            // setNewError('Error Creating EditorJS 2');
 		}
     };
 
@@ -136,7 +146,10 @@ const Viewpage = (props) => {
                         enableReInitialize={true} 
 					/>
 				</div>
+                
 			</div>
+            {bar ? (<SnackBar MESSAGE="Data Saved"></SnackBar>): (<></>)}
+            {/* {newError ? (<SnackBar MESSAGE={newError}></SnackBar>): (<></>)} */}
 		</div>
 	);
 };
