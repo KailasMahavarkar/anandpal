@@ -12,6 +12,7 @@ import axios from "axios";
 import { ProtectedRoute } from "./protected.router";
 import Productpage from './components/pages/Productpage';
 import TestPage from "./components/pages/TestPage";
+import Notification from './components/pages/Notificationpage';
 
 import {
 	Switch,
@@ -35,7 +36,7 @@ function App(props) {
                 <Route exact path="/test" component={TestPage}  />
 
                 {/* <ProtectedRoute exact path="/newblog" component={Newblog}  /> */}
-                <ProtectedRoute exact path="/admin" component={Adminpage}  />
+                <ProtectedRoute exact path="/nofify" component={Notification}  />
 
                 <ProtectedRoute exact path="/products" component={Productpage}  />
                 <ProtectedRoute exact path="/products/:productID?" component={NewProduct}  />

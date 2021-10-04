@@ -72,9 +72,9 @@ const Productpage = (props) => {
 				return title;
 			};
 
-			return products.map((product) => {
+			return products.map((product, index) => {
 				return (
-					<div className="productposts__item">
+					<div className="productposts__item" key={index}>
 						<div className="productposts__item__title">
 							{titleHandler(product.title)}{" "}
 						</div>
