@@ -37,9 +37,7 @@ const productRead = async (req, res, next) => {
             price: readProduct.price,
             discount_price: readProduct.discount_price,
             available_quantity: readProduct.available_quantity,
-            image0: readProduct.image0,
-            image1: readProduct.image1,
-            image2: readProduct.image2,
+            images: readProduct.images
 		};
 
         console.log(dataObject);

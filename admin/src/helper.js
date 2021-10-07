@@ -34,6 +34,33 @@ function useEffectAsync(effect, inputs) {
 //   }
 
 
+const replaceWithIndex = (array, index, element) => {
+    array.splice(index, 1, element);
+    return array
+}
+  
+
+const xrange = (start=0, stop=5, step=1) => {
+    let array = []
+    let i =start;
+    while (i <= stop){
+        array.push(i);
+        i += step;
+    }
+    return array
+}
+
+const xiter = (stop=10) => {
+    let array = []
+    let i = 1;
+    while (i <= stop){
+        array.push(i);
+        i += 1;
+    }
+    return array
+}
+
+
 const randomHash = (length = 24) => {
 	var result = "";
 	var characters =
@@ -47,4 +74,4 @@ const randomHash = (length = 24) => {
 	return result;
 };
 
-export { url, isEmpty, useEffectAsync, randomHash};
+export { url, isEmpty, useEffectAsync, randomHash, xrange, xiter};

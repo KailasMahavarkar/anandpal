@@ -18,7 +18,7 @@ const productSchema = new Schema({
         type: Number,
         required: true
     },
-    discounted_price: {
+    discount_price: {
         type: Number,
         required: false
     },
@@ -26,20 +26,10 @@ const productSchema = new Schema({
         type: Number,
         required: false
     },
-    image0: {
-        type: String,
+    images: {
+        type: Array,
         required: false,
-        default: ''
-    },
-    image1: {
-        type: String,
-        required: false,
-        default: ''
-    },
-    image2: {
-        type: String,
-        required: false,
-        default: ''
+        default: ["", "", "", ""]
     },
     video: {
         type: String,

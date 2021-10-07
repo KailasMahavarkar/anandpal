@@ -34,30 +34,28 @@ const Blogpage = (props) => {
 	};
 
 	useEffectAsync(async () => {
-		localStorage.removeItem("currentID");
-		try {
+        try {
+            localStorage.removeItem("currentID");
 			const items = await axios.get(url("/blog/xread"));
-			setBlogs(items.data);
+
+            console.log(items)
+
+            if (!isEmpty(items)){
+                setBlogs(items.data);
+            }
 		} catch (error) {
-			console.log(error.response);
+			console.log("error --> ", error.response);
 		}
-	}, [blogs]);
+	}, []);
 
 	const newBlogHandler = () => {
 		const currentID = randomHash();
 		localStorage.setItem("currentID", currentID);
-
-		// edge case -> user tries to edit localstorage
-		if (!localStorage.getItem(currentID)) {
-			history.push("/");
-		}
-
 		history.push(`/blogs/${currentID}`);
 	};
 
 	const viewPageHandler = ({ target: { alt } }) => {
 		localStorage.setItem("currentID", alt);
-
 		history.push(`/blogs/${alt}`);
 	};
 
@@ -71,9 +69,9 @@ const Blogpage = (props) => {
 				return title;
 			};
 
-			return blogs.map((blog) => {
+			return blogs.map((blog, index) => {
 				return (
-					<div className="blogposts__item">
+					<div className="blogposts__item" key={index}>
 						<div className="blogposts__item__title">
 							{titleHandler(blog.title)}{" "}
 						</div>

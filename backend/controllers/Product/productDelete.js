@@ -1,10 +1,10 @@
 // importing models
 const { typeMatch, isEmpty } = require("../../Improve/Improve");
-const ProductModel = require("../../models/product.model")
+const ProductModel = require("../../models/product.model");
 
 // importing logger
-const { logger } = require("../../Improve/logger") 
-const log = logger(__filename)
+const { logger } = require("../../Improve/logger");
+const log = logger(__filename);
 
 /*
     DE -> 0
@@ -13,40 +13,37 @@ const log = logger(__filename)
 */
 
 const productDelete = async (req, res, next) => {
-const productID = req.body.productID;
+	const productID = req.body.productID;
 
+	if (!typeMatch(productID)) {
+		return res.status(404).json({
+			msg: "ProductID cannot be empty",
+		});
+	}
 
-    if (!typeMatch(productID)){
-        return res.status(404).json({
-            msg: 'ProductID cannot be empty',
-        });
-    }
-
-    
 	try {
-
-		const deletedProduct = await ProductModel.deleteOne(
-			{ _id: productID }
-		);
+		const deletedProduct = await ProductModel.deleteOne({ _id: productID });
 
 		if (deletedProduct.deletedCount !== 1) {
-            return res.status(400).json({
-                msg: `Product with ID ${productID} does not exists`,
-            });
-		} 
+			return res.status(400).json({
+				msg: `Product with ID ${productID} does not exists`,
+			});
+		}
 
-        return res.status(200).json({
-            msg: `Product with ID ${productID} has been deleted`
-        });
-
-		
+		return res.status(200).json({
+			msg: `Product with ID ${productID} has been deleted`,
+		});
 	} catch (error) {
-        const [ERROR, STATUS, MESSAGE] = ['SE_AUTH_BLOG_DELETE_01', 500,  'BLOG Delete Failed']
+		const [ERROR, STATUS, MESSAGE] = [
+			"SE_AUTH_BLOG_DELETE_01",
+			500,
+			"BLOG Delete Failed",
+		];
 
-        log.error(ERROR, STATUS, 'dragon', MESSAGE)
+		log.error(ERROR, STATUS, "dragon", MESSAGE);
 		return res.status(STATUS).json({
 			msg: "Server Error",
-			error: "SE_BLOG_DELETE_ERROR"
+			error: "SE_BLOG_DELETE_ERROR",
 		});
 	}
 };

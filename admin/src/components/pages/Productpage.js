@@ -41,7 +41,7 @@ const Productpage = (props) => {
 		} catch (error) {
 			console.log(error.response);
 		}
-	}, [products]);
+	}, []);
 
 	const newProductHandler = () => {
 		localStorage.removeItem("currentPID");
