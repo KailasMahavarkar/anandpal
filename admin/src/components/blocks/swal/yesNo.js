@@ -2,12 +2,12 @@ import Swal from "sweetalert2";
 
 const yesNO = (id, cb) => {
 	Swal.fire({
-		title: `Do you really want to delete ${id}`,
+		title: `Do you really want to delete ${id} ?`,
 		text: `You won't be able to revert this!`,
 		icon: "warning",
 		showCancelButton: true,
-		confirmButtonColor: "#3085d6",
-		cancelButtonColor: "#d33",
+		confirmButtonColor: "#2ab34a",
+		cancelButtonColor: "#FF4C29",
 		confirmButtonText: "Yes, delete it!",
 		backdrop: "rgba(0,0,0,0.7)",
 	}).then((result) => {

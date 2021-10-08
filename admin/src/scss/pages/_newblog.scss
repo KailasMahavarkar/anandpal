@@ -78,7 +78,12 @@
     }
 
     &__status{
-        @include button-outline(shade($warning, 5), white);
+        &-true{
+            @include button-outline(shade($success, 5), white);
+        }
+        &-false{
+            @include button-outline(shade($warning, 5), white);
+        }
     }
 
     &__clear{

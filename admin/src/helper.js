@@ -60,18 +60,23 @@ const xiter = (stop=10) => {
     return array
 }
 
+const randomHash = (length = 24, type = 1) => {
+    let characters = '';
+    let result = '';
+    if (type === 1){
+        characters = "abcdef0123456789";
+    }else{
+        characters = "ABCDEFabcdef0123456789";
+    }
 
-const randomHash = (length = 24) => {
-	var result = "";
-	var characters =
-		"abcdef0123456789";
 	var charactersLength = characters.length;
 	for (var i = 0; i < length; i++) {
 		result += characters.charAt(
 			Math.floor(Math.random() * charactersLength)
-		);
+		)
 	}
 	return result;
 };
+
 
 export { url, isEmpty, useEffectAsync, randomHash, xrange, xiter};

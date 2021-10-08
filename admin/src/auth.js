@@ -4,10 +4,12 @@ import { isEmpty, url } from "./helper";
 class Auth {
 	constructor() {
 		this.authenticated = false;
+		this.errorText = "";
 	}
 
 	async login(username, password, cb) {
 		try {
+			localStorage.clear();
 			const loginResult = await axios.post(url("/auth/login"), {
 				username: username,
 				password: password,
@@ -25,23 +27,16 @@ class Auth {
 					"refreshToken",
 					loginResult.data.refreshToken
 				);
-			} else {
-				localStorage.clear();
 			}
 		} catch (error) {
-			if (!isEmpty(error.response)) {
-				localStorage.setItem(
-					"errorText",
-					JSON.stringify(error.response.data)
-				);
-				console.log("loginResult", error.response);
-			} else {
-				localStorage.setItem(
-					"errorText",
-					JSON.stringify({ msg: "Server is Down" })
-				);
-			}
 			this.authenticated = false;
+			if (!isEmpty(error.response)) {
+				this.errorText = JSON.stringify(error.response.data);
+				// throw new Error(error.response.data);
+			} else {
+                this.errorText = JSON.stringify(error.response.data);
+				// throw new Error("Server is Down");
+			}
 		}
 
 		cb();
@@ -90,30 +85,33 @@ class Auth {
 							newAccessToken.data.accessToken
 						);
 						if (!isEmpty(newAccessToken.data.accessToken)) {
-                            this.authenticated = true;
-                            console.log("accessToken renewed");
+							this.authenticated = true;
+							console.log("accessToken renewed");
 							return this.authenticated;
 						} else {
 							this.authenticated = false;
 						}
-
 					} catch (errorx) {
 						console.log("inner error --> ", console.log(errorx));
 						this.authenticated = false;
 					}
-				}else{
-                    this.authenticated = false
-                    return this.authenticated
-                }
+				} else {
+					this.authenticated = false;
+					return this.authenticated;
+				}
 			}
 		}
 
-        if (!this.authenticated){
-            localStorage.clear();
-        }
+		if (!this.authenticated) {
+			localStorage.clear();
+		}
 
-		return this.authenticated;
+		return this.authenticated
 	}
+
+    isError(){
+        return JSON.parse(this.errorText)
+    }
 }
 
 export default new Auth();

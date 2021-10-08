@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const { randomHash } = require("../Improve/encryption");
 
 const blogSchema = new Schema({
 	_id: {
@@ -11,17 +12,28 @@ const blogSchema = new Schema({
 		requried: true,
 	},
 	data: {
-		type: String,
-		required: false,
+		type: Object,
+        default:  {
+			time: Date.now(),
+			blocks: [
+				{
+					id: randomHash(10, 2),
+					type: "paragraph",
+					data: {},
+				},
+			],
+			version: "2.22.2",
+		},
+		required: true,
 	},
 	author: {
 		type: String,
 		required: true,
 	},
     status:{
-        type: String,
+        type: Boolean,
         required: false,
-        default: "unpublished"
+        default: false,
     },
 	create_ts: {
 		type: Number,

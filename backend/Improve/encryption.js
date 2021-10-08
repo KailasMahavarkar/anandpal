@@ -58,7 +58,25 @@ if (require.main === module) {
     // console.log(sizeof('U2FsdGVkX19+SiLlnUMiuz+mNakFA6PDrrHWmxldZSA='));
 }
 
+const randomHash = (length = 24, type = 1) => {
+    let characters = '';
+    let result = '';
+    if (type === 1){
+        characters = "abcdef0123456789";
+    }else{
+        characters = "ABCDEFabcdef0123456789";
+    }
+
+	var charactersLength = characters.length;
+	for (var i = 0; i < length; i++) {
+		result += characters.charAt(
+			Math.floor(Math.random() * charactersLength)
+		)
+	}
+	return result;
+};
+
 
 module.exports = {
-    hash, fakeID, fakeNumString, encryptAES, decryptAES, generateHash
+    hash, fakeID, fakeNumString, encryptAES, decryptAES, generateHash, randomHash
 }

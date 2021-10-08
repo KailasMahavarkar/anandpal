@@ -32,6 +32,7 @@
     "history": "^5.0.1",
     "js-cookie": "^3.0.1",
     "localstorage": "^1.0.1",
+    "pretty-ms": "^7.0.1",
     "rc-upload": "^4.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -39,9 +40,9 @@
     "react-popper": "^2.2.5",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
-    "react-simple-snackbar": "^1.1.11",
     "redux": "^4.1.1",
     "sweetalert2": "^11.1.7",
+    "use-debounce": "^7.0.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
