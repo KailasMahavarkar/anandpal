@@ -1,106 +1,82 @@
-import React, { useState, useRef, useEffect} from "react";
+import React, { useRef, useReducer, useState } from "react";
+import { useLocation } from "react-router";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
 import { isEmpty, url, randomHash, useEffectAsync } from "../../helper";
 import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "../../tools";
-import SnackBar from "../blocks/SnackBar";
+import customToast from "../blocks/swal/customToast";
+import blogReducer from "../reducers/blogReducer";
+import ACTIONS from "../reducers/actions";
 
-
-const Editorpage = (props) => {
-	const [blogTitle, setBlogTitle] = useState("");
-	const [blogAuthor, setBlogAuthor] = useState("");
-	const [blogStatus, setBlogStatus] = useState("unpublished");
-    const [editorData, setEditorData] = useState('');
+const Editorpage = () => {
 	const editorInstance = useRef(null);
-    const [bar, setBar] = useState(false);
-    const [newError, setNewError] = useState('')
-    
-    useEffectAsync(async ()=>{
-        const currentID = localStorage.getItem('currentID')
-        try{
-            const checkExists = await axios.get(url(`/blog/xread/${currentID}`))
-            if (!isEmpty(checkExists)){
-                
-                setBlogAuthor(checkExists.data.msg.author);
-                setBlogTitle(checkExists.data.msg.title);
-                setBlogStatus(checkExists.data.msg.status);
-                const parsed = JSON.parse(checkExists.data.msg.data);
-                if (isEmpty(parsed.blocks)){
-                    parsed['blocks'] = [{"id":"wvCLQ0wF5E","type":"paragraph","data":{"text":"Begin super blog ...","alignment":"left"}}]
-                }
-                setEditorData(parsed);
-            }else{
-                await editorInstance.current.clear();
-            }
-            console.log(checkExists)
-        }catch(error){
-            console.log(error)
-        }
+	const blogInitialState = {
+		title: "",
+		author: "",
+		status: false,
+	};
+	const [blogState, blogDispatch] = useReducer(blogReducer, blogInitialState);
+	const location = useLocation();
+	const currentID = useRef("");
 
-    }, [editorInstance])
+	const editorReadyHandler = async () => {
+		try {
+			currentID.current = location.pathname.split("/").pop();
+			if (location.search !== "?newblog") {
+				const result = await axios.get(
+					url(`/blog/xread/${currentID.current}`)
+				);
 
-	const blogStatusHandler = () => {
-		if (blogStatus === "published") {
-			setBlogStatus("unpublished");
-		} else {
-			setBlogStatus("published");
+                blogDispatch({
+                    type: ACTIONS.BLOG_STATE,
+                    payload: {
+                        title: result.data.msg.title,
+                        author: result.data.msg.author,
+                        status: result.data.msg.status,
+                    },
+                });
+
+				await editorInstance.current.render(result.data.msg.data);
+			}
+		} catch (error) {
+			console.log("main error -> ", error);
 		}
 	};
 
-	const titleChangeHandler = ({ target: { value } }) => {
-		setBlogTitle(value);
-	};
-	const authorChangeHandler = ({ target: { value } }) => {
-		setBlogAuthor(value);
-	};
 
-	const dataSaveHandler = async () => {
-        // setNewError('');
+	const dataSaveHandler = async (blur = false) => {
 		try {
-            
-            const savedData = await editorInstance.current.save();
-            
-            
-            if (!localStorage.getItem("currentID")) {
-                localStorage.setItem("currentID", randomHash());
-            }
-            const currentID = localStorage.getItem("currentID");
-            
-            
-            try{
-                setBar(false);
-                const result = await axios.post(url('/blog/create'), {
-                    id: currentID,
-                    title: blogTitle,
-                    data: JSON.stringify(savedData),
-                    author: blogAuthor,
-                    status: blogStatus
-                })
-                console.log({
-                    id: currentID,
-                    title: blogTitle,
-                    data: JSON.stringify(savedData),
-                    author: blogAuthor,
-                    status: blogStatus
-                });
-                // setBar(true);
-                editorInstance.current.configuration.data = result.data.data;
-            }catch(error){
-                console.log("Error creating", error)
-                // setNewError('Error Creating EditorJS 1');
-            }
-           
+			const savedData = await editorInstance.current.save();
 
-            
+			try {
+				const PAYLOAD = {
+					id: currentID.current,
+					title: blogState.title,
+					data: savedData,
+					author: blogState.author,
+					status: blogState.status,
+				};
+				const result = await axios.post(url("/blog/create"), PAYLOAD);
+				if (blur === true) {
+					if (blogState.status) {
+						customToast("success", "Blog status is now published");
+					} else {
+						customToast(
+							"warning",
+							"Blog status is now unpublished"
+						);
+					}
+				} else {
+					customToast("info", "Data Saved");
+				}
+			} catch (error) {
+                customToast("error", "error saving editor data");
+				console.log("Error creating", error.response);
+			}
 		} catch (error) {
 			console.error(error);
-            // setNewError('Error Creating EditorJS 2');
 		}
-    };
-
-	const dataClearHandler = async () => {
-		await editorInstance.current.clear();
 	};
 
 	return (
@@ -111,45 +87,78 @@ const Editorpage = (props) => {
 					<input
 						type="text"
 						placeholder="Blog Title"
-						value={blogTitle}
-						onChange={titleChangeHandler}
+						value={blogState.title}
+						onChange={(e) =>
+							blogDispatch({
+								type: ACTIONS.BLOG_UPDATE_TITLE,
+								payload: e.target.value,
+							})
+						}
 					></input>
 				</div>
 				<div className="options__main options__author">
 					<input
 						type="text"
 						placeholder="Author Name"
-						value={blogAuthor}
-						onChange={authorChangeHandler}
+						value={blogState.author}
+						onChange={(e) =>
+							blogDispatch({
+								type: ACTIONS.BLOG_UPDATE_AUTHOR,
+								payload: e.target.value,
+							})
+						}
 					></input>
 				</div>
-				<div className="options__clear" onClick={dataClearHandler}>
+				<div
+					className="options__clear"
+					onClick={async () => {
+						if (editorInstance) {
+							await editorInstance.current.clear();
+						}
+					}}
+				>
 					Clear
 				</div>
-				<div className="options__save" onClick={dataSaveHandler}>
+
+				<div className="options__clear" onClick={dataSaveHandler}>
 					Save
 				</div>
 
-				<div className="options__status" onClick={blogStatusHandler}>
-					{blogStatus}
+				<div
+					className={`options__status options__status-${blogState.status}`}
+					onClick={() => {
+						blogDispatch({
+							type: ACTIONS.BLOG_UPDATE_STATUS,
+							payload: blogState.status,
+						});
+
+						dataSaveHandler(true);
+					}}
+				>
+					{blogState.status
+						? "Click to Publish"
+						: "Rollback to Private"}
 				</div>
 			</div>
 
 			<div className="editorjs__wrapper">
 				<div id="editorjs">
-					<EditorJs
-						tools={EDITOR_JS_TOOLS}
-						data={editorData}
-						instanceRef={(instance) =>
-							(editorInstance.current = instance)
-						}
-                        enableReInitialize={true} 
-					/>
+					{editorInstance ? (
+						<>
+							<EditorJs
+								tools={EDITOR_JS_TOOLS}
+								instanceRef={(instance) =>
+									(editorInstance.current = instance)
+								}
+								onReady={editorReadyHandler}
+								enableReInitialize={true}
+							/>
+						</>
+					) : (
+						"loading editor ...."
+					)}
 				</div>
-                
 			</div>
-            {bar ? (<SnackBar MESSAGE="Data Saved"></SnackBar>): (<></>)}
-            {/* {newError ? (<SnackBar MESSAGE={newError}></SnackBar>): (<></>)} */}
 		</div>
 	);
 };

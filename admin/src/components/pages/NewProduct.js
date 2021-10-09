@@ -1,109 +1,111 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useReducer } from "react";
 import Navbar from "./../blocks/Navbar";
-import { isEmpty, url, randomHash, useEffectAsync } from "../../helper";
+import { isEmpty, url, randomHash, useEffectAsync, xiter } from "../../helper";
 import axios from "axios";
 import Upload from "rc-upload";
+// import SnackBar from './../blocks/SnackBar';
+import productReducer from "./../reducers/productReducer";
+import ACTIONS from "../reducers/actions";
+import yesNO from "../blocks/swal/yesNo";
+import customToast from "../blocks/swal/customToast";
+import uploadWait from "../blocks/swal/uploadWait";
+import { useLocation, useHistory } from "react-router-dom";
+import useIncDec from "../../hooks/useIncDec";
 
 const NewProduct = (props) => {
-	const [productTitle, setProductTitle] = useState("");
-	const [productInfo, setProductInfo] = useState("");
-	const [productPrice, setProductPrice] = useState(0);
-	const [discountPrice, setDiscountPrice] = useState(0);
-	const [availableQuantity, setAvailableQuantity] = useState(0);
-	const currentImage = useRef(0);
+	const location = useLocation();
+	const currentID = useRef(location.pathname.split("/").pop());
+    const history = useHistory();
 
-	const [image0, setImage0] = useState("");
-	const [image1, setImage1] = useState("");
-	const [image2, setImage2] = useState("");
+	const [price, setPrice, PriceBlock] = useIncDec({
+		initalvalue: 50,
+		minvalue: 0,
+		maxvalue: 10000,
+	});
 
-	const [currentPID, setCurrentPID] = useState(
-		localStorage.getItem("currentPID")
-	);
+	const [discount_price, setDiscountPrice, DiscountPriceBlock] =  useIncDec({
+		initalvalue: 40,
+		minvalue: 0,
+		maxvalue: 10000,
+	});
+
+	const [available_quantity, setAvailableQuantity, AvailableQuantityBlock] =
+    useIncDec({
+			initalvalue: 2,
+			minvalue: 0,
+			maxvalue: 100000,
+		});
+
+	const productInitialState = {
+		id: currentID.current,
+		title: "",
+		info: "",
+		images: ["", "", "", "", "", ""],
+	};
+
+	const [state, dispatch] = useReducer(productReducer, productInitialState);
+	const [currentImage, setCurrentImage] = useState(0);
 
 	useEffectAsync(async () => {
 		try {
-			if (localStorage.getItem("currentPID")) {
-				setCurrentPID(localStorage.getItem("currentPID"));
-			} else {
-				setCurrentPID(randomHash(24));
-			}
-			const checkExists = await axios.get(
-				url(`/product/read/${currentPID}`)
-			);
-			console.log("checkexists", checkExists);
-			if (!isEmpty(checkExists)) {
-				const {
-					title,
-					price,
-					discount_price,
-					available_quantity,
-					info,
-					image0,
-                    image1,
-                    image2
-				} = checkExists.data.msg;
+			if (location.search !== "?newproduct") {
+				const checkExists = await axios.get(
+					url(`/product/read/${currentID.current}`)
+				);
 
-				if (!isEmpty(image0)){
-				    setImage0(image0);
+				if (!isEmpty(checkExists.data.msg)) {
+					dispatch({
+						type: ACTIONS.PRODUCT_STATE,
+						payload: {
+							id: checkExists.data.msg.id,
+							info: checkExists.data.msg.info,
+							title: checkExists.data.msg.title,
+							images: checkExists.data.msg.images,
+						},
+					});
+					setPrice(checkExists.data.msg.price);
+					setAvailableQuantity(
+						checkExists.data.msg.available_quantity
+					);
+					setDiscountPrice(checkExists.data.msg.discount_price);
 				}
-				if (!isEmpty(image1)){
-				    setImage1(image1);
-				}
-				if (!isEmpty(image2)){
-				    setImage1(image2);
-				}
-
-				setProductTitle(title);
-				setProductPrice(price);
-				setDiscountPrice(discount_price);
-				setProductInfo(info);
-				setAvailableQuantity(available_quantity);
 			}
 		} catch (error) {
-			console.log(error);
+			console.log("error new product --> ", error.response);
 		}
 	}, []);
 
-	const infoChangeHandler = ({ target: { value } }) => {
-		setProductInfo(value);
-	};
-
-	const titleChangeHandler = ({ target: { value } }) => {
-		setProductTitle(value);
-	};
-
 	const productSaveHandler = async () => {
+		const productData = {
+			id: state.id,
+			info: state.info,
+			discount_price: discount_price,
+			title: state.title,
+			images: state.images,
+			price: price,
+			available_quantity: available_quantity,
+		};
 		try {
+			const result = await axios.post(
+				url("/product/create"),
+				productData
+			);
+            
+            if (location.search === '?newproduct'){
+                history.push(`/products/${state.id}`)
+            }
 
-			const dataframe = {
-				id: currentPID,
-				title: productTitle,
-				info: productInfo,
-				price: productPrice,
-				discount_price: discountPrice,
-				available_quantity: availableQuantity,
-                image0: image0,
-                image1: image1,
-                image2: image2,
-
-			};
-
-			const result = await axios.post(url("/product/create"), dataframe);
-			console.log(result.data);
+			customToast("success", "Data Saved");
 		} catch (error) {
-			console.error(error.response);
+            console.log(error)
+			if (error.response.status === 400) {
+				customToast("warning", error.response.data.msg);
+			} else {
+				customToast("error", error.response.data.msg);
+			}
+
+			console.error("error saving product --> ", error.response);
 		}
-	};
-	const priceChangeHandler = ({ target: { value } }) => {
-		setProductPrice(Number(value));
-	};
-
-	const discountPriceChangeHandler = ({ target: { value } }) => {
-		setDiscountPrice(Number(value));
-	};
-
-	const availableQuantityChangeHandler = ({ target: { value } }) => {
-		setAvailableQuantity(Number(value));
 	};
 
 	const uploadProps = {
@@ -111,18 +113,20 @@ const NewProduct = (props) => {
 		method: "POST",
 		multiple: false,
 		onStart(file) {
-			console.log("onStart");
+			console.log(file.name);
+			uploadWait(file.name);
 		},
 		onSuccess(result) {
-			if (currentImage.current === 0) {
-				setImage0(result.file.url);
-			}
-			if (currentImage.current === 1) {
-				setImage1(result.file.url);
-			}
-			if (currentImage.current === 2) {
-				setImage2(result.file.url);
-			}
+			const PAYLOAD = { number: currentImage["x"], url: result.file.url };
+			dispatch({
+				type: ACTIONS.UPDATE_IMAGES,
+				payload: PAYLOAD,
+			});
+			customToast(
+				"success",
+				`New Image Uploaded at ${currentImage["x"]}`
+			);
+			productSaveHandler();
 		},
 		onError(err) {
 			console.log("onError", err);
@@ -132,9 +136,71 @@ const NewProduct = (props) => {
 		},
 	};
 
+	const imageConfirmHandler = (x) => {
+		const yesHandler = async () => {
+			dispatch({
+				type: ACTIONS.UPDATE_IMAGES,
+				payload: { number: x, url: "" },
+			});
+			await productSaveHandler();
+		};
+		yesNO(x, yesHandler);
+	};
+
+	const repeatUpload = (x) => (
+		<div className="card">
+			{state.images[x] ? (
+				<>
+					<img
+						src={state.images[x]}
+						alt=""
+						height="200px"
+						width="auto"
+					/>
+					<div className="card__control">
+						<div className="card__control__button">
+							<div>
+								<Upload
+									{...uploadProps}
+									onClick={() => setCurrentImage({ x })}
+								>
+									<div className="card__upload__text">
+										{`Upload image ${x}`}
+									</div>
+								</Upload>
+							</div>
+						</div>
+						<div className="card__control__button ">
+							<div
+								className="card__upload__delete"
+								onClick={() => imageConfirmHandler(x)}
+							>
+								delete
+							</div>
+						</div>
+					</div>
+				</>
+			) : (
+				<>
+					<div className="card__upload">
+						<Upload
+							{...uploadProps}
+							onClick={() => setCurrentImage({ x })}
+						>
+							<div className="card__upload__text">
+								{`Upload image ${x}`}
+							</div>
+						</Upload>
+					</div>
+				</>
+			)}
+		</div>
+	);
+
 	return (
 		<div className="view">
 			<Navbar />
+
 			<div className="newproduct">
 				<div className="newproduct__main">
 					<div className="split">
@@ -145,8 +211,13 @@ const NewProduct = (props) => {
 							type="text"
 							className="split__input"
 							placeholder="...."
-							onChange={titleChangeHandler}
-							value={productTitle}
+							onChange={({ target: { value } }) =>
+								dispatch({
+									type: ACTIONS.UPDATE_TITLE,
+									payload: value,
+								})
+							}
+							value={state.title}
 						/>
 					</div>
 					<div className="split">
@@ -157,103 +228,46 @@ const NewProduct = (props) => {
 							type="text"
 							className="split__input"
 							placeholder="...."
-							onChange={infoChangeHandler}
-							value={productInfo}
+							onChange={({ target: { value } }) =>
+								dispatch({
+									type: ACTIONS.UPDATE_INFO,
+									payload: value,
+								})
+							}
+							value={state.info}
 						/>
 					</div>
-
 					<div className="split">
 						<label htmlFor="" className="split__title">
 							Product Price
 						</label>
-						<input
-							type="text"
-							className="split__input"
-							onChange={priceChangeHandler}
-							value={productPrice}
-						/>
+						<div className="split__input">{PriceBlock}</div>
 					</div>
-
-					{/* <div className="split">
+					<div className="split">
 						<label htmlFor="" className="split__title">
 							Discounted Price
 						</label>
-						<input
-							type="text"
-							className="split__input"
-							placeholder="...."
-							onChange={discountPriceChangeHandler}
-							value={discountPrice}
-						/>
-					</div> */}
-
+						<div className="split__input">{DiscountPriceBlock}</div>
+					</div>
 					<div className="split">
 						<label htmlFor="" className="split__title">
 							Available Quantity
 						</label>
-						<input
-							type="text"
-							className="split__input"
-							placeholder="...."
-							onChange={availableQuantityChangeHandler}
-							value={availableQuantity}
-						/>
+						<div className="split__input">
+							{AvailableQuantityBlock}
+						</div>
 					</div>
 
-					<div className="split">
-						{image0 ? (
-							<>
-								<img src={image0} width='auto' height='200px' />
-							</>
-						) : (
-							<Upload
-								{...uploadProps}
-								className="split__upload"
-								onClick={() => {
-									currentImage.current = 0;
-								}}
-							>
-								<button className="custom-file-upload">
-									Upload 0
-								</button>
-							</Upload>
-						)}
-
-						{image1 ? (
-							<>
-								<img src={image1} width='auto' height='200px'/>
-							</>
-						) : (
-							<Upload
-								{...uploadProps}
-								className="split__upload"
-								onClick={() => {
-									currentImage.current = 1;
-								}}
-							>
-								<button className="custom-file-upload">
-									Upload 1
-								</button>
-							</Upload>
-						)}
-
-						{image2 ? (
-							<>
-								<img src={image2} width='auto' height='200px' />
-							</>
-						) : (
-							<Upload
-								{...uploadProps}
-								className="split__upload"
-								onClick={() => {
-									currentImage.current = 2;
-								}}
-							>
-								<button className="custom-file-upload">
-									Upload 2
-								</button>
-							</Upload>
-						)}
+					<div>
+						<div className="split">
+							{[0, 1].map((x) => repeatUpload(x))}
+						</div>
+						<div className="split">
+							{[2, 3].map((x) => repeatUpload(x))}
+						</div>
+						<div className="split">
+							{[4, 5].map((x) => repeatUpload(x))}
+						</div>
 					</div>
 
 					<button

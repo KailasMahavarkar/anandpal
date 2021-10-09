@@ -35,7 +35,7 @@ const blogRead = async (req, res, next) => {
 		}
 
         
-        if (readBlog.status === 'unpublished') {
+        if (!readBlog.status) {
 			return res.status(400).json({
 				msg: `Blog with blogID ${blogID} is unpublished`,
 			});
@@ -43,7 +43,7 @@ const blogRead = async (req, res, next) => {
 
 		const dataObject = {
 			_id: readBlog._id,
-			status: readBlog._status,
+			status: readBlog.status,
 			create_ts: readBlog.create_ts,
 			title: readBlog.title,
 			author: readBlog.author,
@@ -72,7 +72,7 @@ const blogRead = async (req, res, next) => {
 const blogReadAll = async (req, res, next) => {
 
     try{
-        const blogData = await BlogModel.find({status: "published"});
+        const blogData = await BlogModel.find({status: false});
 
         if (isEmpty(blogData)){
             return res.status(200).json({})

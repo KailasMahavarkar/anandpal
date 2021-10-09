@@ -3,62 +3,74 @@ import { useState } from "react";
 import axios from "axios";
 import { url } from "../../helper";
 import { Link, useHistory } from "react-router-dom";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import auth from "../../auth";
 
-
 const Navbar = (props) => {
-    let history = useHistory();
+	let history = useHistory();
 
-
-    const logoutHandler = () => {
-        auth.logout(()=>{
-            history.push('/');
-        })
-    };
+	const logoutHandler = () => {
+		auth.logout(() => {
+			history.push("/");
+		});
+	};
 
 	return (
 		<div className="navbar">
-			<div className="navbar__logo">
-                <Link to="/blogs">
-                    <a className="alink">
-                       AnandPal
-                    </a>
-                </Link>
+			<div
+				className="navbar__logo"
+				onClick={() => {
+					history.push("/blogs");
+				}}
+			>
+				AnandPal
 			</div>
 
 			<div className="navbar__menu">
 				<Link to="/blogs">
-					<div className="navbar__menu__item" onClick={()=>{
-                        history.push('/blogs')
-                    }}>
+					<div
+						className="navbar__menu__item"
+						onClick={() => {
+							history.push("/blogs");
+						}}
+					>
 						Blogs
 					</div>
 				</Link>
 
-                <Link to="/products">
-					<div className="navbar__menu__item" onClick={()=>{
-                        history.push('/products')
-                    }}>
+				<Link to="/products">
+					<div
+						className="navbar__menu__item"
+						onClick={() => {
+							history.push("/products");
+						}}
+					>
 						Products
 					</div>
 				</Link>
 
-                <Link to="/notify">
-					<div className="navbar__menu__item" onClick={()=>{
-                        history.push('/notify')
-                    }}>
+				<Link to="/notify">
+					<div
+						className="navbar__menu__item"
+						onClick={() => {
+							history.push("/notify");
+						}}
+					>
 						Notify
 					</div>
 				</Link>
 
-                {/* handle -> admin logout */}
-                <div className="navbar__menu__item" style={{
-                    backgroundColor: 'red',
-                    color: 'white'
-                    }} onClick={logoutHandler}>
-                    Logout
-                </div>
+				{/* handle -> admin logout */}
+				<div
+					className="navbar__menu__item"
+					style={{
+						backgroundColor: "red",
+						color: "white",
+					}}
+					onClick={logoutHandler}
+				>
+					Logout
+				</div>
 			</div>
 		</div>
 	);

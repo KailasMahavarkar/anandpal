@@ -1,63 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import createIcon from "../../../src/assets/createIcon.svg";
 
-import { Link, useHistory } from "react-router-dom";
-import auth from "../../auth";
+import { useHistory } from "react-router-dom";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
 import { url, useEffectAsync, isEmpty, randomHash } from "../../helper";
+import yesNO from "../blocks/swal/yesNo";
+import customToast from "../blocks/swal/customToast";
 
 const Blogpage = (props) => {
 	const history = useHistory();
 	const [blogs, setBlogs] = useState([]);
+    const [forceCount, setForceCount] = useState(0);
 
-	const blogDeleteHandler = async () => {
-		let deleteID = localStorage.getItem("currentID");
-		if (window.confirm(`Do you want to delete ${deleteID}`)) {
+	const blogDeleteHandler = (title, id) => {
+		const onSuccessDelete = async () => {
 			try {
-				const deleteBlog = await axios.delete(url(`/blog/delete`), {
+				const result = await axios.delete(url(`/blog/delete`), {
 					headers: {},
 					data: {
-						blogID: deleteID,
+						blogID: id,
 					},
 				});
-				if (deleteBlog.status === 200) {
-					console.log(blogs);
-					localStorage.removeItem(deleteID);
-				}
+				customToast("success", result.data.msg);
+                setForceCount((forceCount)=>forceCount+1);
 			} catch (error) {
-				console.log(error.response.data);
+				customToast("error", error.response.data.msg);
 			}
-		} else {
-			console.log("You pressed cancel!");
-		}
+		};
+		yesNO(title, onSuccessDelete);
+        
 	};
 
 	useEffectAsync(async () => {
-		localStorage.removeItem("currentID");
 		try {
+			localStorage.removeItem("currentID");
 			const items = await axios.get(url("/blog/xread"));
-			setBlogs(items.data);
+			if (!isEmpty(items)) {
+				setBlogs(items.data);
+			}
 		} catch (error) {
-			console.log(error.response);
+			console.log("error --> ", error.response);
 		}
-	}, [blogs]);
+	}, [forceCount]);
 
 	const newBlogHandler = () => {
 		const currentID = randomHash();
 		localStorage.setItem("currentID", currentID);
-
-		// edge case -> user tries to edit localstorage
-		if (!localStorage.getItem(currentID)) {
-			history.push("/");
-		}
-
-		history.push(`/blogs/${currentID}`);
+		history.push(`/blogs/${currentID}?newblog`);
 	};
 
 	const viewPageHandler = ({ target: { alt } }) => {
 		localStorage.setItem("currentID", alt);
-
 		history.push(`/blogs/${alt}`);
 	};
 
@@ -71,9 +65,9 @@ const Blogpage = (props) => {
 				return title;
 			};
 
-			return blogs.map((blog) => {
+			return blogs.map((blog, index) => {
 				return (
-					<div className="blogposts__item">
+					<div className="blogposts__item" key={index}>
 						<div className="blogposts__item__title">
 							{titleHandler(blog.title)}{" "}
 						</div>
@@ -89,11 +83,11 @@ const Blogpage = (props) => {
 							</div>
 							<div
 								className="blogposts__item__inner__delete"
-								onClick={() => {
-									localStorage.setItem("currentID", blog._id);
-								}}
+								onClick={() =>
+									blogDeleteHandler(blog.title, blog._id)
+								}
 							>
-								<div onClick={blogDeleteHandler}>Delete</div>
+								<div>Delete</div>
 							</div>
 						</div>
 						<div className="blogposts__item__id">{blog._id}</div>

@@ -450,11 +450,6 @@ a:visited {
   color: #1a1a1a;
 }
 
-.alink {
-  color: #7727d8;
-  text-decoration: none;
-}
-
 .navbar {
   display: flex;
   flex-direction: row;
@@ -576,21 +571,21 @@ a:visited {
 }
 
 .btn_inv_red {
-  border: 2px solid green;
+  border: 2px solid #FF4C29;
   margin: 5px;
   padding: 10px;
   text-align: center;
   font-size: 0.8em;
-  color: green;
+  color: #FF4C29;
   cursor: pointer;
 }
 
 .btn_inv_red:hover {
   color: #eeeeee;
-  background-color: green;
+  background-color: #FF4C29;
 }
 
-.button_purple {
+.button-purple {
   color: #7727d8;
   border: 3px solid #7727d8;
   border-radius: 5px;
@@ -606,7 +601,7 @@ a:visited {
   cursor: pointer;
 }
 
-.button_purple:hover {
+.button-purple:hover {
   background-position: left;
   color: white;
 }
@@ -696,6 +691,30 @@ input[type="file"] {
   border: none;
   background-color: white;
   cursor: pointer;
+}
+
+.indec {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 0;
+  justify-content: space-between;
+}
+
+.indec > button {
+  cursor: pointer;
+  margin: 5px;
+  border: 1px solid #eee;
+  color: #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.indec > input {
+  color: #ccc;
+  text-align: center;
+  outline: none;
+  border: none;
 }
 
 .x404 {
@@ -904,12 +923,22 @@ input[type="file"] {
   color: white;
 }
 
-.options__status {
+.options__status-true {
+  border: 1px solid #28aa46;
+  color: #28aa46;
+}
+
+.options__status-true:hover {
+  background-color: #28aa46;
+  color: white;
+}
+
+.options__status-false {
   border: 1px solid #f2c438;
   color: #f2c438;
 }
 
-.options__status:hover {
+.options__status-false:hover {
   background-color: #f2c438;
   color: white;
 }
@@ -1148,7 +1177,7 @@ input[type="file"] {
   flex-grow: 1;
   align-self: center;
   width: 70%;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
 }
 
 .newproduct input {
@@ -1172,38 +1201,91 @@ input[type="file"] {
   margin: 10px 20px;
 }
 
-.newproduct .split {
+.split {
   display: flex;
   flex-direction: row;
   border: 1px solid #eee;
   margin: 5px;
 }
 
-.newproduct .split * {
+.split > * {
   padding: 10px;
 }
 
-.newproduct .split__upload {
+.split__input {
+  flex: 4;
+}
+
+.split__title {
   flex: 1;
-  height: 200px;
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.newproduct .split__title {
-  background-color: #eee;
+  border: 1px solid #eee;
   text-align: center;
-  width: 20%;
 }
 
-.newproduct .split__save {
-  margin: 10px;
+.split__save {
+  margin: 10px 0;
   padding: 10px;
   outline: none;
   border: 1px solid #FF4C29;
   background-color: transparent;
   cursor: pointer;
+}
+
+.card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card > div {
+  padding: 10px;
+}
+
+.card__image {
+  margin: 5px;
+  width: 300px;
+}
+
+.card__upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.card__upload__text {
+  cursor: pointer;
+  font-size: 0.9em;
+  padding: 10px 20px;
+  color: black;
+  border-radius: 5px;
+  background-color: #ffce3b;
+}
+
+.card__upload__delete {
+  cursor: pointer;
+  font-size: 0.9em;
+  padding: 10px 20px;
+  color: #eeeeee;
+  border-radius: 5px;
+  background-color: #FF4C29;
+}
+
+.card__control {
+  display: flex;
+  flex-direction: row;
+}
+
+.card__control__button {
+  flex: 1;
+  display: inline;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  color: black;
 }
 /*# sourceMappingURL=index.css.map */

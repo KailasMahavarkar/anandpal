@@ -1,9 +1,8 @@
 .button {
 	color: $red;
-    
+
 	border: 3px solid $red;
 	border-radius: 5px;
-
 
 	display: flex;
 	align-items: center;
@@ -22,36 +21,32 @@
 
 .button:hover {
 	background-position: left;
-    color: $dark;
+	color: $dark;
 }
-
-
 
 .btn_inv_red {
-    // @include test2;
+	// @include test2;
 
-    border: 2px solid green;
-    margin: 5px;
-    padding: 10px;
-    text-align: center;
-    font-size: 0.8em;
-    color: green;
+	border: 2px solid $red;
+	margin: 5px;
+	padding: 10px;
+	text-align: center;
+	font-size: 0.8em;
+	color: $red;
 
-    cursor: pointer;
+	cursor: pointer;
 
-    &:hover{
-        color: $white;
-        background-color: green;
-    }
+	&:hover {
+		color: $white;
+		background-color: $red;
+	}
 }
 
-
-.button_purple {
+.button-purple {
 	color: $purple;
-    
+
 	border: 3px solid $purple;
 	border-radius: 5px;
-
 
 	display: flex;
 	align-items: center;
@@ -68,7 +63,7 @@
 	cursor: pointer;
 }
 
-.button_purple:hover {
+.button-purple:hover {
 	background-position: left;
-    color: white;
+	color: white;
 }

@@ -32,7 +32,7 @@ const blogCreate = async (req, res, next) => {
 		});
 	}
 
-    if (!['published', 'unpublished'].includes(status)) {
+    if (typeof status !== 'boolean') {
 		return res.status(400).json({
 			msg: `status can only be published or unpublished`,
 		});
@@ -62,15 +62,9 @@ const blogCreate = async (req, res, next) => {
 		});
 	}
 
-    if (!typeMatch(data)) {
+    if (!typeMatch(data, 'object')) {
 		return res.status(400).json({
-			msg: `data should be alphanumeric sequence`,
-		});
-	}
-
-    if (!typeMatch(status)) {
-		return res.status(400).json({
-			msg: `status can only be published or unpublished`,
+			msg: `data should an editorjs object block`,
 		});
 	}
 

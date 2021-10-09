@@ -1,37 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import editIcon from "../../../src/assets/editIcon.svg";
 import deleteIcon from "../../../src/assets/deleteIcon.svg";
 import createIcon from "../../../src/assets/createIcon.svg";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
 import { url, useEffectAsync, randomHash } from "../../helper";
+import customToast from "../blocks/swal/customToast";
+import yesNO from "../blocks/swal/yesNo";
 
 const Productpage = (props) => {
 	const history = useHistory();
 	const [products, setProducts] = useState([]);
+    const [forceRenderCount, setForceRenderCount] = useState(0);
 
-
-	const productDeleteHandler = async () => {
-        const productID = localStorage.getItem("currentPID");
-		if (window.confirm(`Do you want to delete ${productID}`)) {
+	const productDeleteHandler =  (productID, productTitle) => {
+		const yesHandler = async () => {
 			try {
-				const deleteProduct = await axios.delete(url(`/product/delete`), {
-					headers: {},
-					data: {
-						productID: productID,
-					},
-				});
+				const deleteProduct = await axios.delete(
+					url(`/product/delete`),
+					{
+						headers: {},
+						data: {
+							productID: productID,
+						},
+					}
+				);
 				if (deleteProduct.status === 200) {
-					console.log(products);
+					customToast("success", `${productTitle} has been deleted`);
+                    setForceRenderCount(forceRenderCount =>  forceRenderCount + 1);
 				}
 			} catch (error) {
 				console.log(error.response.data);
 			}
-		} else {
-			console.log("You pressed cancel!");
-		}
+		};
+		yesNO(productTitle, yesHandler);
 	};
 
 	useEffectAsync(async () => {
@@ -41,7 +45,7 @@ const Productpage = (props) => {
 		} catch (error) {
 			console.log(error.response);
 		}
-	}, [products]);
+	}, [forceRenderCount]);
 
 	const newProductHandler = () => {
 		localStorage.removeItem("currentPID");
@@ -53,7 +57,7 @@ const Productpage = (props) => {
 			history.push("/");
 		}
 
-		history.push(`/products/${currentPID}`);
+		history.push(`/products/${currentPID}?newproduct`);
 	};
 
 	const viewPageHandler = ({ target: { alt } }) => {
@@ -76,13 +80,16 @@ const Productpage = (props) => {
 				return (
 					<div className="productposts__item" key={index}>
 						<div className="productposts__item__title">
-							{titleHandler(product.title)}{" "}
+							{titleHandler(product.title)}
 						</div>
-                        <div className="productposts__item__inner">
+						<div className="productposts__item__inner">
 							<div
 								className="productposts__item__inner__edit"
 								onClick={() => {
-									localStorage.setItem("currentPID", product._id);
+									localStorage.setItem(
+										"currentPID",
+										product._id
+									);
 									history.push(`/products/${product._id}`);
 								}}
 							>
@@ -91,16 +98,15 @@ const Productpage = (props) => {
 							<div
 								className="productposts__item__inner__delete"
 								onClick={() => {
-									localStorage.setItem(
-										"currentPID",
-										product._id
-									);
+									productDeleteHandler(product._id, product.title);
 								}}
 							>
-								<div onClick={productDeleteHandler}>Delete</div>
+								<div>Delete</div>
 							</div>
 						</div>
-						<div className="productposts__item__id">{product._id}</div>
+						<div className="productposts__item__id">
+							{product._id}
+						</div>
 						<div className="productposts__item__timestamp">
 							{new Date(product.create_ts).toLocaleString()}
 						</div>
@@ -111,7 +117,6 @@ const Productpage = (props) => {
 	};
 
 	return (
-        
 		<div className="view">
 			<Navbar />
 			<div className="productposts">
