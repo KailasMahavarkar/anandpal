@@ -41,10 +41,19 @@
 		padding: 10px;
 	}
 
+    &__input{
+        flex: 4;
+
+    }
+
 	&__title {
-		background-color: #eee;
+		flex: 1;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #eee;
 		text-align: center;
-		width: 20%;
 	}
 
 	&__save {
@@ -69,6 +78,7 @@
 
 	&__image {
 		margin: 5px;
+        width: 300px;
 	}
 
 	&__upload {

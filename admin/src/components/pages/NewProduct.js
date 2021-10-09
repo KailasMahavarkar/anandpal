@@ -9,15 +9,36 @@ import ACTIONS from "../reducers/actions";
 import yesNO from "../blocks/swal/yesNo";
 import customToast from "../blocks/swal/customToast";
 import uploadWait from "../blocks/swal/uploadWait";
+import { useLocation, useHistory } from "react-router-dom";
+import useIncDec from "../../hooks/useIncDec";
 
 const NewProduct = (props) => {
-	const currentPID = useRef(localStorage.getItem("currentPID"));
+	const location = useLocation();
+	const currentID = useRef(location.pathname.split("/").pop());
+    const history = useHistory();
+
+	const [price, setPrice, PriceBlock] = useIncDec({
+		initalvalue: 50,
+		minvalue: 0,
+		maxvalue: 10000,
+	});
+
+	const [discount_price, setDiscountPrice, DiscountPriceBlock] =  useIncDec({
+		initalvalue: 40,
+		minvalue: 0,
+		maxvalue: 10000,
+	});
+
+	const [available_quantity, setAvailableQuantity, AvailableQuantityBlock] =
+    useIncDec({
+			initalvalue: 2,
+			minvalue: 0,
+			maxvalue: 100000,
+		});
+
 	const productInitialState = {
-		id: currentPID.current,
+		id: currentID.current,
 		title: "",
-		price: 0,
-		discount_price: 0,
-		available_quantity: 0,
 		info: "",
 		images: ["", "", "", "", "", ""],
 	};
@@ -27,21 +48,27 @@ const NewProduct = (props) => {
 
 	useEffectAsync(async () => {
 		try {
-			if (localStorage.getItem("currentPID")) {
-				currentPID.current = localStorage.getItem("currentPID");
-			} else {
-				currentPID.current = randomHash(24);
-			}
+			if (location.search !== "?newproduct") {
+				const checkExists = await axios.get(
+					url(`/product/read/${currentID.current}`)
+				);
 
-			const checkExists = await axios.get(
-				url(`/product/read/${currentPID.current}`)
-			);
-
-			if (!isEmpty(checkExists.data.msg)) {
-				dispatch({
-					type: ACTIONS.PRODUCT_STATE,
-					payload: checkExists.data.msg,
-				});
+				if (!isEmpty(checkExists.data.msg)) {
+					dispatch({
+						type: ACTIONS.PRODUCT_STATE,
+						payload: {
+							id: checkExists.data.msg.id,
+							info: checkExists.data.msg.info,
+							title: checkExists.data.msg.title,
+							images: checkExists.data.msg.images,
+						},
+					});
+					setPrice(checkExists.data.msg.price);
+					setAvailableQuantity(
+						checkExists.data.msg.available_quantity
+					);
+					setDiscountPrice(checkExists.data.msg.discount_price);
+				}
 			}
 		} catch (error) {
 			console.log("error new product --> ", error.response);
@@ -50,16 +77,33 @@ const NewProduct = (props) => {
 
 	const productSaveHandler = async () => {
 		const productData = {
-			...state,
+			id: state.id,
+			info: state.info,
+			discount_price: discount_price,
+			title: state.title,
+			images: state.images,
+			price: price,
+			available_quantity: available_quantity,
 		};
 		try {
 			const result = await axios.post(
 				url("/product/create"),
 				productData
 			);
-			console.log(result.data);
+            
+            if (location.search === '?newproduct'){
+                history.push(`/products/${state.id}`)
+            }
+
+			customToast("success", "Data Saved");
 		} catch (error) {
-            customToast("error", error.response.data.msg);
+            console.log(error)
+			if (error.response.status === 400) {
+				customToast("warning", error.response.data.msg);
+			} else {
+				customToast("error", error.response.data.msg);
+			}
+
 			console.error("error saving product --> ", error.response);
 		}
 	};
@@ -69,17 +113,20 @@ const NewProduct = (props) => {
 		method: "POST",
 		multiple: false,
 		onStart(file) {
-            console.log(file.name)
-            uploadWait(file.name)
+			console.log(file.name);
+			uploadWait(file.name);
 		},
 		onSuccess(result) {
-            const PAYLOAD = { number: currentImage['x'], url: result.file.url }
+			const PAYLOAD = { number: currentImage["x"], url: result.file.url };
 			dispatch({
 				type: ACTIONS.UPDATE_IMAGES,
 				payload: PAYLOAD,
 			});
-            customToast("success", `New Image Uploaded at ${currentImage['x']}`);
-            productSaveHandler()
+			customToast(
+				"success",
+				`New Image Uploaded at ${currentImage["x"]}`
+			);
+			productSaveHandler();
 		},
 		onError(err) {
 			console.log("onError", err);
@@ -89,17 +136,15 @@ const NewProduct = (props) => {
 		},
 	};
 
-
-
-    const imageConfirmHandler = (x) => {
-        const yesHandler = async () => {
-            dispatch({
-                type: ACTIONS.UPDATE_IMAGES,
-                payload: { number: x, url: "" },
-            });
-            await productSaveHandler();
-        }
-        yesNO(x, yesHandler)
+	const imageConfirmHandler = (x) => {
+		const yesHandler = async () => {
+			dispatch({
+				type: ACTIONS.UPDATE_IMAGES,
+				payload: { number: x, url: "" },
+			});
+			await productSaveHandler();
+		};
+		yesNO(x, yesHandler);
 	};
 
 	const repeatUpload = (x) => (
@@ -128,7 +173,7 @@ const NewProduct = (props) => {
 						<div className="card__control__button ">
 							<div
 								className="card__upload__delete"
-								onClick={()=>imageConfirmHandler(x)}
+								onClick={() => imageConfirmHandler(x)}
 							>
 								delete
 							</div>
@@ -151,8 +196,6 @@ const NewProduct = (props) => {
 			)}
 		</div>
 	);
-
-
 
 	return (
 		<div className="view">
@@ -198,51 +241,21 @@ const NewProduct = (props) => {
 						<label htmlFor="" className="split__title">
 							Product Price
 						</label>
-						<input
-							type="text"
-							className="split__input"
-							onChange={({ target: { value } }) =>
-								dispatch({
-									type: ACTIONS.UPDATE_PRICE,
-									payload: value,
-								})
-							}
-							value={state.price}
-						/>
+						<div className="split__input">{PriceBlock}</div>
 					</div>
 					<div className="split">
 						<label htmlFor="" className="split__title">
 							Discounted Price
 						</label>
-						<input
-							type="text"
-							className="split__input"
-							placeholder="...."
-							onChange={({ target: { value } }) =>
-								dispatch({
-									type: ACTIONS.UPDATE_DISCOUNT_PRICE,
-									payload: value,
-								})
-							}
-							value={state.discount_price}
-						/>
+						<div className="split__input">{DiscountPriceBlock}</div>
 					</div>
 					<div className="split">
 						<label htmlFor="" className="split__title">
 							Available Quantity
 						</label>
-						<input
-							type="text"
-							className="split__input"
-							placeholder="...."
-							onChange={({ target: { value } }) =>
-								dispatch({
-									type: ACTIONS.UPDATE_AVAILABLE_QUANTITY,
-									payload: value,
-								})
-							}
-							value={state.available_quantity}
-						/>
+						<div className="split__input">
+							{AvailableQuantityBlock}
+						</div>
 					</div>
 
 					<div>

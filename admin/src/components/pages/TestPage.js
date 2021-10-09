@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
-import SnackBar from "../blocks/SnackBar";
+import customToast from "../blocks/swal/customToast";
+// import useINCDEC from "../../hooks/useINCDEC";
 
 const TestPage = () => {
-	const [bar, setBar] = useState(false);
+	return (
+		<div>
 
-	useEffect(()=>{
-        setBar(true);
-    }, [])
-
-	return bar ? (
-		<>
-			<div >
-				<SnackBar MESSAGE="Hello World"></SnackBar>
-			</div>
-		</>
-	) : null;
+		</div>
+	);
 };
 
 export default TestPage;
