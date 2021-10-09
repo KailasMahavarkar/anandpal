@@ -57,33 +57,4 @@ const xblogRead = async (req, res, next) => {
 	}
 };
 
-
-const xblogReadAll = async (req, res, next) => {
-
-    try{
-        const blogData = await BlogModel.find({}, {_id: true, title: true, create_ts: true});
-
-
-        if (isEmpty(blogData)){
-            return res.status(200).json({});
-        }else{
-            console.log('blog data', blogData)
-            
-            return res.status(200).json(blogData);
-        }
-    }catch (error) {
-		const [ERROR, STATUS, MESSAGE] = [
-			"SE_AUTH_BLOG_READ_ALL_FAILED",
-			500,
-			"BLOG Read Failed",
-		];
-
-		log.error(ERROR, STATUS, "dragon", MESSAGE);
-		return res.status(STATUS).json({
-			msg: "Server Error",
-			error: "SE_BLOG_READ_ALL_FAILED",
-		});
-	}
-}
-
-module.exports = { xblogRead, xblogReadAll};
+module.exports = { xblogRead };

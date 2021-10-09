@@ -18,10 +18,10 @@ const blogUpdate = require("../controllers/Blog/blogUpdate").blogUpdate;
 const blogRead = require("../controllers/Blog/blogRead").blogRead;
 const blogReadAll = require("../controllers/Blog/blogRead").blogReadAll;
 
+// read route for admin
 const xblogRead = require("../controllers/Blog/xblogRead").xblogRead;
-const xblogReadAll = require("../controllers/Blog/xblogRead").xblogReadAll;
 
-
+// upload route for admin
 const insertImage = require("../controllers/Blog/insertImage").insertImage;
 
 router.route("/create").post(blogCreate);
@@ -34,7 +34,6 @@ router.route("/read").get(blogReadAll);
 
 // admin route for reading blog --> for published and unpublished
 router.route("/xread/:blogID").get(xblogRead);
-router.route("/xread").get(xblogReadAll);
 
 
 // post route to upload image
