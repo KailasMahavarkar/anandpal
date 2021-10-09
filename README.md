@@ -1,6 +1,6 @@
 
 # AnandPal is blogging website + ecommerce store
-### AnandPal is created using MERN stack + NextJS + EditorJS support
+### AnandPal is created using MERN stack + EditorJS support
 
 
 ### Server Side Features
