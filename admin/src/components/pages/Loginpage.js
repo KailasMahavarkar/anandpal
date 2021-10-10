@@ -23,18 +23,14 @@ const Loginpage = (props) => {
 	// 'bottom' | 'bottom-start' | 'bottom-end' | 'bottom-left' | 'bottom-right';
 	const loginHandler = async () => {
 		try {
-			await auth.login(username, password, () => {
+			const result = await auth.login(username, password)
+            if (result){
 				history.push("/blogs");
-			});
+                customToast("success", "Logged in successfully");
 
-			if (!auth.isAuthenticated() && auth.isError()) {
-				const { msg, error } = auth.isError();
-				customToast("error", msg);
-			}
-
-			if (auth.isAuthenticated()) {
-				customToast("success", "Logged in successfully");
-			}
+			}else{
+                customToast("error", await auth.isError().msg );
+            }
 		} catch (error) {
 			if (!isEmpty(error)) {
 				customToast("error", error.respose.data);

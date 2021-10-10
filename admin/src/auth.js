@@ -19,6 +19,7 @@ class Auth {
 				loginResult.status === 200 &&
 				loginResult.data.msg === "success"
 			) {
+				this.authenticated = true;
 				localStorage.setItem(
 					"accessToken",
 					loginResult.data.accessToken
@@ -28,18 +29,16 @@ class Auth {
 					loginResult.data.refreshToken
 				);
 			}
+			return this.authenticated;
 		} catch (error) {
 			this.authenticated = false;
 			if (!isEmpty(error.response)) {
 				this.errorText = JSON.stringify(error.response.data);
-				// throw new Error(error.response.data);
 			} else {
-                this.errorText = JSON.stringify(error.response.data);
-				// throw new Error("Server is Down");
+				this.errorText = JSON.stringify(error.response.data);
 			}
+			return this.authenticated;
 		}
-
-		cb();
 	}
 
 	logout(cb) {
@@ -66,7 +65,6 @@ class Auth {
 			);
 			if (authRes.status === 200 && authRes.data.msg === "success") {
 				this.authenticated = true;
-				return this.authenticated;
 			}
 		} catch (error) {
 			if (error.response.status === 401) {
@@ -106,12 +104,12 @@ class Auth {
 			localStorage.clear();
 		}
 
-		return this.authenticated
+		return this.authenticated;
 	}
 
-    isError(){
-        return JSON.parse(this.errorText)
-    }
+	isError() {
+		return JSON.parse(this.errorText);
+	}
 }
 
 export default new Auth();
