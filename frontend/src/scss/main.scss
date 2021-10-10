@@ -1,0 +1,32 @@
+@import "./components/navigationBar";
+@import "./components/contactUs";
+@import "./components/connectWithUs";
+
+// Home Page
+@import "./components/HomePage/homePageLander";
+@import "./components/HomePage/smallintroduction";
+@import "./components/HomePage/businessintro";
+
+// About Us
+@import "./components/AboutUs/aboutUsLander";
+@import "./components/AboutUs/aboutUsContent";
+
+// Business Page
+@import "./components/Business/business";
+@import "./components/Business/businessPageLander";
+@import "./components/Business/businessPageContent";
+@import "./components/Business/vestege";
+@import "./components/Business/satvaa";
+@import "./components/Business/hritvi";
+
+// cart
+@import "./components/Cart/cart";
+@import "./components/Cart/checkOut";
+
+// Blogs Page
+@import "./components/BlogsPage/blogs";
+
+@import "./base/fonts";
+@import "./base/base";
+// @import "./base/typography";
+// @import "./base/utilities";
