@@ -549,27 +549,6 @@ a:visited {
   align-content: center;
 }
 
-.button {
-  color: #FF4C29;
-  border: 3px solid #FF4C29;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(to left, #1a1a1a 50%, #FF4C29 50%);
-  background-size: 200% 120%;
-  background-position: right;
-  transition: all 0.5s ease-out;
-  text-align: center;
-  font-size: 0.8em;
-  cursor: pointer;
-}
-
-.button:hover {
-  background-position: left;
-  color: #1a1a1a;
-}
-
 .btn_inv_red {
   border: 2px solid #FF4C29;
   margin: 5px;
@@ -604,6 +583,22 @@ a:visited {
 .button-purple:hover {
   background-position: left;
   color: white;
+}
+
+.button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.button__delete {
+  color: white;
+  background-color: #FF4C29;
+}
+
+.button:active {
+  border: 2px solid #FF4C29;
 }
 
 .container {
@@ -1287,5 +1282,47 @@ input[type="file"] {
   cursor: pointer;
   text-align: center;
   color: black;
+}
+
+.wrapper_notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  margin: 30px;
+}
+
+.notification {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.notification__header {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #7727d8;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 20px 0;
+}
+
+.notification__item {
+  font-size: 1.2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+  margin-top: 20px;
+  padding: 15px 0;
+}
+
+.notification__item > div {
+  padding: 10px;
+  text-align: center;
+  flex: 1;
+}
+
+.notification__item__message {
+  flex: 3 !important;
 }
 /*# sourceMappingURL=index.css.map */

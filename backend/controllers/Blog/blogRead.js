@@ -72,7 +72,11 @@ const blogRead = async (req, res, next) => {
 const blogReadAll = async (req, res, next) => {
 
     try{
-        const blogData = await BlogModel.find({}, {_id: true, title: true, create_ts: true});
+        const blogData = await BlogModel.find({}, {
+            _id: true, title: true,
+            status: true,
+            create_ts: true
+        });
 
 
         if (isEmpty(blogData)){
