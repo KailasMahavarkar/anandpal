@@ -5,7 +5,7 @@ class Auth {
 	constructor() {
 		this.authenticated = false;
 		this.errorText = "";
-	}
+	} 
 
 	async login(username, password, cb) {
 		try {

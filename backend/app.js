@@ -1,3 +1,7 @@
+const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -9,14 +13,13 @@ const productHandlers = require("./routes/productRoutes");
 const genericHandlers = require("./routes/genericRoutes");
 
 
-const cors = require("cors");
-const dotenv = require("dotenv");
+
 
 
 const rootPath = path.join(__dirname, "./Astatic");
 // const cron = require("./cron");
 
-dotenv.config();
+
 
 
 
