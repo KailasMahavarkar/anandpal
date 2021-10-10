@@ -6,11 +6,6 @@ const BlogModel = require("../../models/blog.model");
 const { logger } = require("../../Improve/logger");
 const log = logger(__filename);
 
-/*
-    DE -> 0
-    SE -> 0
-    CE -> 0
-*/
 
 const blogRead = async (req, res, next) => {
 	const blogID = req.params.blogID;
@@ -35,7 +30,7 @@ const blogRead = async (req, res, next) => {
 		}
 
         
-        if (!readBlog.status) {
+        if (!readBlog.published_status) {
 			return res.status(400).json({
 				msg: `Blog with blogID ${blogID} is unpublished`,
 			});
@@ -43,11 +38,11 @@ const blogRead = async (req, res, next) => {
 
 		const dataObject = {
 			_id: readBlog._id,
-			status: readBlog.status,
-			create_ts: readBlog.create_ts,
 			title: readBlog.title,
 			author: readBlog.author,
-			data: readBlog.data,
+			published_status: readBlog.published_status,
+			create_ts: readBlog.create_ts,
+			data: readBlog.data
 		};
 
 		return res.status(200).json({
@@ -74,7 +69,7 @@ const blogReadAll = async (req, res, next) => {
     try{
         const blogData = await BlogModel.find({}, {
             _id: true, title: true,
-            status: true,
+            published_status: true,
             create_ts: true
         });
 

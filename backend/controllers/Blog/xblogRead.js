@@ -6,11 +6,6 @@ const BlogModel = require("../../models/blog.model");
 const { logger } = require("../../Improve/logger");
 const log = logger(__filename);
 
-/*
-    DE -> 0
-    SE -> 0
-    CE -> 0
-*/
 
 const xblogRead = async (req, res, next) => {
 	const blogID = req.params.blogID;
@@ -33,7 +28,7 @@ const xblogRead = async (req, res, next) => {
 		const dataObject = {
 			_id: readBlog._id,
 			title: readBlog.title,
-			status: readBlog.status,
+			published_status: readBlog.published_status,
 			author: readBlog.author,
 			data: readBlog.data,
 			create_ts: readBlog.create_ts,

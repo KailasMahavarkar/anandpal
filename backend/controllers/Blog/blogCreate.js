@@ -2,7 +2,7 @@ const { typeMatch, isEmpty } = require("../../Improve/Improve");
 const BlogModel = require("../../models/blog.model")
 
 const blogCreate = async (req, res, next) => {
-	let { title, data, author, id, status }  = req.body;
+	let { title, data, author, id, published_status }  = req.body;
 
 
 	/* ---------------------  START NULL CHECK ------------------------------- */
@@ -32,9 +32,9 @@ const blogCreate = async (req, res, next) => {
 		});
 	}
 
-    if (typeof status !== 'boolean') {
+    if (typeof published_status !== 'boolean') {
 		return res.status(400).json({
-			msg: `status can only be published or unpublished`,
+			msg: `published_status can only be published or unpublished`,
 		});
 	}
 
@@ -78,7 +78,7 @@ const blogCreate = async (req, res, next) => {
             title: title,
             author: author,
             data: data,
-            status: status
+            published_status: published_status
         });
         const res_save = await new_blog.save();
         return res.status(200).json({
@@ -87,7 +87,7 @@ const blogCreate = async (req, res, next) => {
             msg: "new blog added",
             author: author,
             data: data,
-            status: status
+            published_status: published_status
         });
     }else{
         
@@ -110,7 +110,7 @@ const blogCreate = async (req, res, next) => {
                 title: title,
                 data: data,
                 author: author,
-                status: status
+                published_status: published_status
             },
 		);
 
@@ -123,7 +123,7 @@ const blogCreate = async (req, res, next) => {
                 title: title,
                 author: author,
                 data: data,
-                status: status
+                published_status: published_status
             });
 		} 
 
@@ -133,14 +133,12 @@ const blogCreate = async (req, res, next) => {
             title: title,
             author: author,
             data: data,
-            status: status
+            published_status: published_status
         });
 
 		
 	} catch (error) {
         const [ERROR, STATUS, MESSAGE] = ['SE_BLOG_UPDATE_ERROR', 500,  'BLOG Update Failed']
-
-        console.log(error);
         log.error(ERROR, STATUS, 'dragon', MESSAGE)
 		return res.status(STATUS).json({
 			msg: "Server Error",

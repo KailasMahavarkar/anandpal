@@ -13,7 +13,7 @@ function blogReducer(state, action) {
 			newState["author"] = action.payload;
 			break;
         case ACTIONS.BLOG_UPDATE_STATUS:
-            newState["status"] =  action.payload ? false : true 
+            newState["published_status"] =  !action.payload
             break;
 		default:
 			return newState;

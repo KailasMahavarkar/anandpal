@@ -30,9 +30,9 @@ const blogSchema = new Schema({
 		type: String,
 		required: true,
 	},
-    status:{
+    published_status:{
         type: Boolean,
-        required: false,
+        required: true,
         default: false,
     },
 	create_ts: {

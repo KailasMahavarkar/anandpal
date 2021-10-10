@@ -26,8 +26,7 @@ const blogID = req.body.blogID;
 	try {
 
 		const deletedBlog = await BlogModel.deleteOne(
-			{ _id: blogID },
-			{ status: "deleted" },
+			{ _id: blogID }
 		);
 
 		if (deletedBlog.deletedCount !== 1) {
