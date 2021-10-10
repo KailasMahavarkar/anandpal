@@ -14,36 +14,44 @@ const Editorpage = () => {
 	const blogInitialState = {
 		title: "",
 		author: "",
-		status: false,
+		published_status: true,
 	};
 	const [blogState, blogDispatch] = useReducer(blogReducer, blogInitialState);
 	const location = useLocation();
 	const currentID = useRef("");
 
 	const editorReadyHandler = async () => {
-		try {
-			currentID.current = location.pathname.split("/").pop();
-			if (location.search !== "?newblog") {
+		currentID.current = location.pathname.split("/").pop();
+		if (location.search !== "?newblog") {
+			try {
 				const result = await axios.get(
 					url(`/blog/xread/${currentID.current}`)
 				);
+				blogDispatch({
+					type: ACTIONS.BLOG_UPDATE_AUTHOR,
+					payload: result.data.msg.author,
+				});
 
-                blogDispatch({
-                    type: ACTIONS.BLOG_STATE,
-                    payload: {
-                        title: result.data.msg.title,
-                        author: result.data.msg.author,
-                        status: result.data.msg.status,
-                    },
-                });
+				blogDispatch({
+					type: ACTIONS.BLOG_UPDATE_TITLE,
+					payload: result.data.msg.title,
+				});
 
-				await editorInstance.current.render(result.data.msg.data);
+				blogDispatch({
+					type: ACTIONS.BLOG_UPDATE_STATUS,
+					payload: result.data.msg.published_status,
+				});
+
+				if (isEmpty(result.data.msg.data.blocks)) {
+					await editorInstance.current.clear();
+				} else {
+					await editorInstance.current.render(result.data.msg.data);
+				}
+			} catch (error) {
+				console.log(error);
 			}
-		} catch (error) {
-			console.log("main error -> ", error);
 		}
 	};
-
 
 	const dataSaveHandler = async (blur = false) => {
 		try {
@@ -55,11 +63,16 @@ const Editorpage = () => {
 					title: blogState.title,
 					data: savedData,
 					author: blogState.author,
-					status: blogState.status,
+					published_status: blogState.published_status,
 				};
 				const result = await axios.post(url("/blog/create"), PAYLOAD);
 				if (blur === true) {
-					if (blogState.status) {
+					blogDispatch({
+						type: ACTIONS.BLOG_UPDATE_STATUS,
+						payload: blogState.published_status,
+					});
+
+					if (blogState.published_status) {
 						customToast("success", "Blog status is now published");
 					} else {
 						customToast(
@@ -71,7 +84,7 @@ const Editorpage = () => {
 					customToast("info", "Data Saved");
 				}
 			} catch (error) {
-                customToast("error", "error saving editor data");
+				customToast("error", "error saving editor data");
 				console.log("Error creating", error.response);
 			}
 		} catch (error) {
@@ -125,17 +138,10 @@ const Editorpage = () => {
 				</div>
 
 				<div
-					className={`options__status options__status-${blogState.status}`}
-					onClick={() => {
-						blogDispatch({
-							type: ACTIONS.BLOG_UPDATE_STATUS,
-							payload: blogState.status,
-						});
-
-						dataSaveHandler(true);
-					}}
+					className={`options__status options__status-${blogState.published_status}`}
+					onClick={() => dataSaveHandler(true)}
 				>
-					{blogState.status
+					{blogState.published_status
 						? "Click to Publish"
 						: "Rollback to Private"}
 				</div>
