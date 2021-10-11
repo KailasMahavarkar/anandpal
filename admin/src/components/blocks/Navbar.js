@@ -49,14 +49,14 @@ const Navbar = (props) => {
 					</div>
 				</Link>
 
-				<Link to="/notify">
+				<Link to="/contact">
 					<div
 						className="navbar__menu__item"
 						onClick={() => {
-							history.push("/notify");
+							history.push("/contact");
 						}}
 					>
-						Notify
+						Contact
 					</div>
 				</Link>
 

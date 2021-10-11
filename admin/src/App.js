@@ -6,7 +6,7 @@ import x404 from "./components/pages/x404";
 import { ProtectedRoute } from "./protected.router";
 import Productpage from "./components/pages/Productpage";
 import TestPage from "./components/pages/TestPage";
-import Notification from "./components/pages/Notificationpage";
+import ContactPage from "./components/pages/Contactpage";
 
 import { Switch, Route, useHistory } from "react-router-dom";
 
@@ -29,7 +29,7 @@ function App(props) {
 					path="/blogs/:blogID?"
 					component={Editorpage}
 				/>
-				<ProtectedRoute exact path="/notify" component={Notification} />
+				<ProtectedRoute exact path="/contact" component={ContactPage} />
 				<ProtectedRoute
 					exact
 					path="/products"

@@ -1,13 +1,13 @@
 // importing models
 const { typeMatch, isEmpty } = require("../../Improve/Improve");
-const NotificationModel = require("../../models/notification.model");
+const ContactModel = require("../../models/contact.model");
 
 // importing logger
 const { logger } = require("../../Improve/logger");
 const log = logger(__filename);
 
 
-const deleteNotification  = async (req, res, next) => {
+const deleteContact  = async (req, res, next) => {
 	const notificationID = req.body.notificationID;
 
 	if (!typeMatch(notificationID)) {
@@ -17,7 +17,7 @@ const deleteNotification  = async (req, res, next) => {
 	}
 
 	try {
-		const deletedNotification = await NotificationModel.deleteOne({ _id: notificationID });
+		const deletedNotification = await ContactModel.deleteOne({ _id: notificationID });
 
 		if (deletedNotification.deletedCount !== 1) {
 			return res.status(400).json({
@@ -43,4 +43,4 @@ const deleteNotification  = async (req, res, next) => {
 	}
 };
 
-module.exports = { deleteNotification };
+module.exports = { deleteContact };

@@ -1,8 +1,8 @@
-const NotificationModel = require("../../models/notification.model");
+const ContactModel = require("../../models/contact.model");
 const { typeMatch, isEmpty } = require("../../Improve/Improve");
 const {randomHash} = require("../../Improve/encryption")
 
-const createNotification = async (req, res, next) => {
+const createContact = async (req, res, next) => {
 	const { contact_name, contact_phone, contact_message, contact_email } =
 		req.body;
 	/* ---------------------  START NULL CHECK ------------------------------- */
@@ -67,7 +67,7 @@ const createNotification = async (req, res, next) => {
 		contact_email,
 	};
 
-	const newNotify = new NotificationModel(PAYLOAD);
+	const newNotify = new ContactModel(PAYLOAD);
 	try {
 		const res_save = await newNotify.save();
 
@@ -91,4 +91,4 @@ const createNotification = async (req, res, next) => {
 	}
 };
 
-module.exports = { createNotification };
+module.exports = { createContact };

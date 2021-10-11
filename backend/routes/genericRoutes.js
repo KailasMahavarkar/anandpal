@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-
 // create notification
-const createNotification = require("../controllers/Notify/createNotification").createNotification;
-const deleteNotification = require("../controllers/Notify/deleteNotification").deleteNotification;
-const readAllNotification = require("../controllers/Notify/readAllNotification").readAllNotification;
-const _authToken = require("../middlewares/_authToken")._authToken;
+const createContact = require("../controllers/Contact/createContact").createContact;
+const deleteContact = require("../controllers/Contact/deleteContact").deleteContact;
+const readAllContact = require("../controllers/Contact/readAllContact").readAllContact;
 
 // public route for reading blog --> only published
-router.route("/notify/create").post(createNotification);
-router.route("/notify/delete").delete(deleteNotification);
-router.route("/notify/read").get(readAllNotification);
+router.route("/contact/create").post(createContact);
+router.route("/contact/delete").delete(deleteContact);
+router.route("/contact/read").get(readAllContact);
 
 module.exports = router;

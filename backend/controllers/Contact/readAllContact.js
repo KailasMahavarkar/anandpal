@@ -1,16 +1,16 @@
 // importing models
 const { typeMatch, isEmpty } = require("../../Improve/Improve");
-const NotificationModel = require("../../models/notification.model");
+const ContactModel = require("../../models/contact.model");
 
 // importing logger
 const { logger } = require("../../Improve/logger");
 const log = logger(__filename);
 
 
-const readAllNotification  = async (req, res, next) => {
+const readAllContact  = async (req, res, next) => {
 
 	try {
-		const result = await NotificationModel.find({});
+		const result = await ContactModel.find({});
 		return res.status(200).json({
 			msg: result
 		});
@@ -29,4 +29,4 @@ const readAllNotification  = async (req, res, next) => {
 	}
 };
 
-module.exports = { readAllNotification };
+module.exports = { readAllContact };
