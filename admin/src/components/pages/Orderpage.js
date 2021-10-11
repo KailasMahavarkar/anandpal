@@ -11,24 +11,24 @@ const OrderPage = () => {
 	useEffectAsync(async () => {
 		try {
 			const result = await axios.get(url("/order/readall"), {});
-            console.log(result.data.msg);
 			setOrders(result.data.msg);
 		} catch (error) {
             setOrders([])
-			console.log(error);
 		}
 	}, [forceRenderCount]);
 
 	const orderDeleteHandler = async (id, name) => {
 		const yesCallback = async () => {
 			try {
-				await axios.delete(url("/order/delete"), {
+				const delRes = await axios.delete(url("/order/delete"), {
 					headers: {},
 					data: {
 						orderID: id,
 					},
 				});
-				setForceRenderCount((x) => x + 1);
+                if (delRes.status === 200){
+                    setForceRenderCount((x) => x + 1);
+                }
 			} catch (error) {
 				console.log(error);
 			}
