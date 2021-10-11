@@ -21,34 +21,38 @@ function ContactUs() {
 		if (phone.current.value.match(/^\d{10}$/)) {
 			phoneNo = parseInt(phone.current.value);
 		} else {
-			customToast("warning", "enter a valid phone no")
+			customToast("warning", "enter a valid phone no");
 		}
 
-        try{
-            const response = await axios.post(url("/generic/contact/create"), {
-                contact_name: name.current.value,
-                contact_phone: phoneNo,
-                contact_message: message.current.value,
-                contact_email: email.current.value,
-            });
-            if (response.status === 200) {
-                name.current.value = "";
-                phone.current.value = "";
-                message.current.value = "";
-                email.current.value = "";
-                customToast("success", "your message has been sent")
-            } else {
-                customToast("warning", "please name, phone, message & email")
-            }
-        }catch(error){
-            console.log(error);
-        }
-		
+		const PAYLOAD = {
+			contact_name: name.current.value,
+			contact_phone: phoneNo,
+			contact_message: message.current.value,
+			contact_email: email.current.value,
+		};
+
+        console.log(PAYLOAD)
+
+		try {
+			const response = await axios.post(url("/api/contact/create"), PAYLOAD);
+
+			if (response.status === 200) {
+				name.current.value = "";
+				phone.current.value = "";
+				message.current.value = "";
+				email.current.value = "";
+				customToast("success", "your message has been sent");
+			} else {
+				customToast("warning", "please name, phone, message & email");
+			}
+		} catch (error) {
+			console.log(error.response);
+		}
 	};
 	return (
 		<div className="contact_us_container" id="contact_us_section">
 			<div className="contact_overlay">
-				<h1 className="contact_us_header">contact us</h1>
+				{/* <h1 className="contact_us_header">contact us</h1> */}
 				<div className="contact_us">
 					<div className="contact_us_left">
 						<h1>how to find us</h1>
@@ -62,10 +66,10 @@ function ContactUs() {
 						<p>
 							Lorem ipsum dolor sit amet consectetur adipisicing
 							elit. Facere, consequuntur. <br />
-							Telephone:{" "}
-							<span className="green"> +91 9090909090</span>{" "}
+							Telephone:
+							<span className="green"> +91 9090909090</span>
 							<br />
-							E-mail:{" "}
+							E-mail:
 							<span className="green">anandpal@gmail.com</span>
 						</p>
 						{/* 

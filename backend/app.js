@@ -12,8 +12,7 @@ const blogHandlers = require("./routes/blogRoutes");
 const productHandlers = require("./routes/productRoutes");
 const genericHandlers = require("./routes/genericRoutes");
 const orderHandlers = require("./routes/orderRoutes");
-
-
+const publicHandlers = require("./routes/publicRoutes");
 
 
 const rootPath = path.join(__dirname, "./Astatic");
@@ -39,6 +38,7 @@ app.use(express.static(rootPath));
 app.set("json spaces", 2);
 
 // auth api handlers
+app.use("/api",  publicHandlers);
 app.use("/auth", authHandlers);
 app.use("/blog", blogHandlers);
 app.use("/product", productHandlers);

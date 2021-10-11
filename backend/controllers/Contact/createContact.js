@@ -1,11 +1,20 @@
 const ContactModel = require("../../models/contact.model");
 const { typeMatch, isEmpty } = require("../../Improve/Improve");
-const {randomHash} = require("../../Improve/encryption")
+const { randomHash } = require("../../Improve/encryption");
 
 const createContact = async (req, res, next) => {
-	const { contact_name, contact_phone, contact_message, contact_email } =
-		req.body;
+	const { contact_name, contact_phone, contact_message, contact_email } = req.body ?? {};
 	/* ---------------------  START NULL CHECK ------------------------------- */
+
+
+    const PAY = {
+        contact_name: contact_name,
+        contact_phone: contact_phone,
+        contact_message: contact_message,
+        contact_email: contact_email
+    };
+
+    console.log(PAY)
 
 	if (isEmpty(contact_name)) {
 		return res.status(400).json({
@@ -77,7 +86,7 @@ const createContact = async (req, res, next) => {
 		}
 
 		return res.status(200).json({
-            id: res_save.id,
+			id: res_save.id,
 			msg: "thank you for contacting",
 		});
 	} catch (error) {

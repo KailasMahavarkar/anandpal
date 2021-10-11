@@ -50,7 +50,7 @@ const NewProduct = (props) => {
 		try {
 			if (location.search !== "?newproduct") {
 				const checkExists = await axios.get(
-					url(`/product/read/${currentID.current}`)
+					url(`/api/product/read/${currentID.current}`)
 				);
 
 				if (!isEmpty(checkExists.data.msg)) {

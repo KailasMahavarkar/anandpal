@@ -11,7 +11,7 @@ const Blogs = () => {
 
 	useEffectAsync(async () => {
 		try {
-			const result = await axios.get(url("/blog/read"));
+			const result = await axios.get(url("/api/blog/read"));
 
 			if (result.status === 200) {
 				console.log(result.data);

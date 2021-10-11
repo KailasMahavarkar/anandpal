@@ -35,7 +35,7 @@ const Blogpage = (props) => {
 	useEffectAsync(async () => {
 		try {
 			localStorage.removeItem("currentID");
-			const items = await axios.get(url("/blog/read"));
+			const items = await axios.get(url("/api/blog/read"));
 			if (!isEmpty(items)) {
 				setBlogs(items.data);
 			}

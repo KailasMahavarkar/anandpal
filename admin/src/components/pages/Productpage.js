@@ -40,7 +40,7 @@ const Productpage = (props) => {
 
 	useEffectAsync(async () => {
 		try {
-			const items = await axios.get(url("/product/read"));
+			const items = await axios.get(url("/api/product/read"));
 			setProducts(items.data);
 		} catch (error) {
 			console.log(error.response);
