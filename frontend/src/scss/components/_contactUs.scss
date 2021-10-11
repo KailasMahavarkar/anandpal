@@ -31,11 +31,12 @@
   &_form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr 2fr 1fr;
     grid-template-areas:
       "one two"
       "three three"
-      "four four";
+      "four four"
+      "five five";
     row-gap: 1rem;
     column-gap: 2rem;
     .input_text {
@@ -60,9 +61,13 @@
       @extend .input_text;
     }
     input:nth-of-type(3) {
+      grid-area: three;
+      @extend .input_text;
+    }
+    input:nth-of-type(4) {
       border: none;
       padding: 0.5rem;
-      grid-area: four;
+      grid-area: five;
       border-radius: 3px;
       background-color: #b0b0b0;
 
@@ -78,7 +83,7 @@
       outline: none;
       width: 100%;
       resize: none;
-      grid-area: three;
+      grid-area: four;
       border-radius: 3px;
       padding: 10px;
       &:focus {

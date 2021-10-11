@@ -1,22 +1,43 @@
 import React from "react";
-import img from "../../../images/contactUs.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingCart,
   faShoppingBag,
 } from "@fortawesome/free-solid-svg-icons";
+import "react-responsive-carousel/lib/styles/carousel.css";
+import { Carousel } from "react-responsive-carousel";
 
 function Item({ dispatch, info, addedToCart }) {
   return (
     <div className="items-container">
-      <h1>{info.name}</h1>
+      <h1>{info.title}</h1>
       <div className="items-images">
-        <img src={info.img} />
+        <Carousel
+          showArrows={true}
+          autoPlay={true}
+          showIndicators={true}
+          showThumbs={false}
+          stopOnHover={false}
+          dynamicHeight={true}
+          infiniteLoop={true}
+          statusFormatter={() => null}
+        >
+          {info.images
+            .filter((img) => img !== "")
+            .map((img) => {
+              return (
+                img !== "" && <img src={img} className="blog-image" alt="" />
+              );
+            })}
+        </Carousel>
       </div>
 
       <div className="items-product">
-        <h2>Rs. {info.cost}</h2>
-        <p className="items-desc">{info.desc}</p>
+        <h5>
+          MRP: <strike>{info.price} &#8377;</strike>
+        </h5>
+        <h3>Our Price: {info.discount_price} &#8377;</h3>
+        <p className="items-desc">{info.info}</p>
         <div className="items-buttons">
           <button
             className="items-add"

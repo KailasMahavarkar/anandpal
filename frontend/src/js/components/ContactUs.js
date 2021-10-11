@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -6,8 +6,41 @@ import {
   faLinkedin,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import axios from "axios";
 
 function ContactUs() {
+  const name = useRef(null);
+  const email = useRef(null);
+  const phone = useRef(null);
+  const message = useRef(null);
+  const submitContactUs = async (e) => {
+    e.preventDefault();
+    let phoneNo;
+    if (phone.current.value.match(/^\d{10}$/)) {
+      phoneNo = parseInt(phone.current.value);
+    } else {
+      alert("enter a valid phone no");
+    }
+
+    const response = await axios.post(
+      "http://localhost:1000/generic/notify/create",
+      {
+        contact_name: name.current.value,
+        contact_phone: phoneNo,
+        contact_message: message.current.value,
+        contact_email: email.current.value,
+      }
+    );
+    if (response.status === 200) {
+      name.current.value = "";
+      phone.current.value = "";
+      message.current.value = "";
+      email.current.value = "";
+      alert("message successfully sent");
+    } else {
+      alert("enter valid data and try again");
+    }
+  };
   return (
     <div className="contact_us_container" id="contact_us_section">
       <div className="contact_overlay">
@@ -45,10 +78,16 @@ function ContactUs() {
           </div>
           <div className="contact_us_right">
             <h1>get in touch</h1>
-            <form action="" method="post" className="contact_us_form">
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="E-mail" />
-              <textarea name="" placeholder="Message" />
+            <form
+              action=""
+              method="post"
+              className="contact_us_form"
+              onSubmit={submitContactUs}
+            >
+              <input type="text" placeholder="Name" ref={name} />
+              <input type="email" placeholder="E-mail" ref={email} />
+              <input type="text" placeholder="Phone No" ref={phone} />
+              <textarea type="text" placeholder="Message" ref={message} />
               <input type="submit" value="SUBMIT" />
             </form>
             {/* <iframe

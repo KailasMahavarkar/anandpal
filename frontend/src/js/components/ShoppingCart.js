@@ -1,20 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Item from "./Cart/Item";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import img from "../../images/contactUs.jpg";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
-const items = [
-  { name: "book", desc: "this is a book", cost: 600, img: img },
-  { name: "cd", desc: "this is a cd", cost: 900, img: img },
-  { name: "tie", desc: " this is a tie", cost: 650, img: img },
-  { name: "cloth", desc: "this is a cloth", cost: 670, img: img },
-];
+import axios from "axios";
 
 function ShoppingCart() {
+  const [items, setItems] = useState(false);
+
+  useEffect(() => {
+    const loadItems = async () => {
+      const { data } = await axios.get("http://localhost:1000/product/read");
+      setItems(data);
+    };
+    loadItems();
+  }, []);
+
   const cartItems = useSelector((state) => state.cartItems);
   const dispatch = useDispatch();
   const [cart, setCart] = useState([]);
@@ -31,26 +35,34 @@ function ShoppingCart() {
         </Link>
       )}
       <div className="cart-container">
-        {items.map((item, key) => {
-          if (cartItems.some((cartItem) => cartItem.name === item.name)) {
+        {items ? (
+          items.map((item, key) => {
+            if (cartItems.some((cartItem) => cartItem.title === item.title)) {
+              return (
+                <Item
+                  dispatch={dispatch}
+                  info={item}
+                  key={key}
+                  addedToCart={true}
+                />
+              );
+            }
             return (
               <Item
                 dispatch={dispatch}
                 info={item}
                 key={key}
-                addedToCart={true}
+                addedToCart={false}
               />
             );
-          }
-          return (
-            <Item
-              dispatch={dispatch}
-              info={item}
-              key={key}
-              addedToCart={false}
-            />
-          );
-        })}
+          })
+        ) : (
+          <FontAwesomeIcon
+            icon={faSpinner}
+            className="fa-spin"
+            style={{ margin: "0 2px" }}
+          />
+        )}
       </div>
       <h5 className="cart-no-more">No more items</h5>
     </>

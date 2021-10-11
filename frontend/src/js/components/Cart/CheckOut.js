@@ -25,7 +25,7 @@ function CheckOut() {
   const dispatch = useDispatch();
   let total = 0;
   cartItems.forEach((item) => {
-    total += item.quantity * item.cost;
+    total += item.quantity * item.discount_price;
   });
 
   // functions
@@ -121,6 +121,7 @@ function CheckOut() {
         <table className="checkout-cart-items-table">
           <tr>
             <th style={{ textAlign: "left" }}>Product Details</th>
+            <th>Available Quantity</th>
             <th>Quantity</th>
             <th>Price</th>
             <th>total</th>
@@ -130,15 +131,16 @@ function CheckOut() {
               <td>
                 <div className="checkout-cart-items-column1">
                   <img
-                    src={product.img}
+                    src={product.images.filter((img) => img !== "")[0]}
                     className="checkout-cart-items-image"
                   />
                   <div className="checkout-cart-items-column1-details">
-                    <p>{product.name}</p>
-                    <span>{product.desc}</span>
+                    <p>{product.title}</p>
+                    <span>{product.info}</span>
                   </div>
                 </div>
               </td>
+              <td className="cost">{product.available_quantity} PCS</td>
               <td>
                 <div className="quantity-alteration">
                   <button
@@ -168,9 +170,10 @@ function CheckOut() {
                   </button>
                 </div>
               </td>
-              <td className="cost">{product.cost} &#8377;</td>
+
+              <td className="cost">{product.discount_price} &#8377;</td>
               <td className="cost">
-                {product.quantity * product.cost} &#8377;
+                {product.quantity * product.discount_price} &#8377;
               </td>
             </tr>
           ))}

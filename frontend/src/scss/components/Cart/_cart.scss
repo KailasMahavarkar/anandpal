@@ -58,7 +58,8 @@
   //     letter-spacing: 1px;
   //   }
 
-  & h2 {
+  & h3,
+  & h5 {
     color: #4e4e4e;
     margin: 0;
   }
@@ -66,7 +67,7 @@
 
 .items-desc {
   color: rgb(19, 19, 19);
-  font-size: 0.7em;
+  font-size: 0.8em;
   line-height: 1.6em;
   text-align: center;
 }
