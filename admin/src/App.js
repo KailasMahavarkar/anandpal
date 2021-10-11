@@ -7,6 +7,7 @@ import { ProtectedRoute } from "./protected.router";
 import Productpage from "./components/pages/Productpage";
 import TestPage from "./components/pages/TestPage";
 import ContactPage from "./components/pages/Contactpage";
+import OrderPage from "./components/pages/Orderpage";
 
 import { Switch, Route, useHistory } from "react-router-dom";
 
@@ -39,6 +40,11 @@ function App(props) {
 					exact
 					path="/products/:productID?"
 					component={NewProduct}
+				/>
+                <ProtectedRoute
+					exact
+					path="/orders"
+					component={OrderPage}
 				/>
 
 				{/* pattern for unknown routes */}

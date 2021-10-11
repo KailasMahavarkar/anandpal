@@ -38,6 +38,7 @@ const Navbar = (props) => {
 					</div>
 				</Link>
 
+
 				<Link to="/products">
 					<div
 						className="navbar__menu__item"
@@ -48,6 +49,18 @@ const Navbar = (props) => {
 						Products
 					</div>
 				</Link>
+
+                <Link to="/orders">
+					<div
+						className="navbar__menu__item"
+						onClick={() => {
+							history.push("/orders");
+						}}
+					>
+						Orders
+					</div>
+				</Link>
+
 
 				<Link to="/contact">
 					<div
