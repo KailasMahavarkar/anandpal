@@ -11,7 +11,7 @@ const authHandlers = require("./routes/authRoutes");
 const blogHandlers = require("./routes/blogRoutes");
 const productHandlers = require("./routes/productRoutes");
 const genericHandlers = require("./routes/genericRoutes");
-
+const orderHandlers = require("./routes/orderRoutes");
 
 
 
@@ -43,6 +43,7 @@ app.use("/auth", authHandlers);
 app.use("/blog", blogHandlers);
 app.use("/product", productHandlers);
 app.use("/generic", genericHandlers);
+app.use("/order", orderHandlers);
 
 // Assume 404 since no middleware responded
 // app.use(function (req, res, next)  {

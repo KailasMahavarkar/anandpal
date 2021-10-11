@@ -20,20 +20,20 @@ const NewProduct = (props) => {
 	const [price, setPrice, PriceBlock] = useIncDec({
 		initalvalue: 50,
 		minvalue: 0,
-		maxvalue: 10000,
+		maxvalue: 1000000,
 	});
 
 	const [discount_price, setDiscountPrice, DiscountPriceBlock] = useIncDec({
 		initalvalue: 40,
 		minvalue: 0,
-		maxvalue: 10000,
+		maxvalue: 1000000,
 	});
 
 	const [available_quantity, setAvailableQuantity, AvailableQuantityBlock] =
 		useIncDec({
 			initalvalue: 2,
 			minvalue: 0,
-			maxvalue: 100000,
+			maxvalue: 1000000,
 		});
 
 	const productInitialState = {
