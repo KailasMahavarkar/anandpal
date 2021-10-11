@@ -26,7 +26,7 @@ const rootPath = path.join(__dirname, "./Astatic");
 // setting up cors config
 app.use(
 	cors({
-		origin: "http://localhost:4000",
+		origin: ["http://localhost:4000", "http://localhost:3000"]
 	})
 );
 

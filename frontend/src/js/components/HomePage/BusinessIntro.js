@@ -25,7 +25,7 @@ function BusinessIntro() {
             500 Diamond-ranked professionals alone. Brig’s heart for the
             organizations led him to develop Support Systems for the people that
             helped to equip and empower each and every individual … Physically,
-            Financially, Emotionally & Spiritually. <br />
+            Financially, Emotionally {"&"} Spiritually. <br />
             <br />
             His Entrepreneurial Spirit compelled him to pursue his next and most
             ambitious project …<br />

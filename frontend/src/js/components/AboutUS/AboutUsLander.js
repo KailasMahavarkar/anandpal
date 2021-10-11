@@ -1,8 +1,11 @@
 import React from "react";
 
 function AboutUsLander() {
-  return <div className="about_us_lander"></div>;
+	return (
+		<div className="about_us_lander_wrapper">
+			<div className="about_us_lander"></div>
+		</div>
+	);
 }
 
-export let name = "lakshmikanth";
 export default AboutUsLander;
