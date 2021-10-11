@@ -76,9 +76,7 @@ const blogReadAll = async (req, res, next) => {
 
         if (isEmpty(blogData)){
             return res.status(200).json({});
-        }else{
-            console.log('blog data', blogData)
-            
+        }else{            
             return res.status(200).json(blogData);
         }
     }catch (error) {

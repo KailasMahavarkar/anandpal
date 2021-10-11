@@ -70,9 +70,6 @@ const createContact = async (req, res, next) => {
 	const newNotify = new ContactModel(PAYLOAD);
 	try {
 		const res_save = await newNotify.save();
-
-		console.log(res_save._id);
-
 		if (isEmpty(res_save._id)) {
 			return res.status(400).json({
 				msg: "unable to send message",
