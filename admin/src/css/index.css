@@ -1241,8 +1241,20 @@ input[type="file"] {
 }
 
 .card__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
   margin: 5px;
-  width: 300px;
+}
+
+.card__image > img {
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+  object-fit: contain;
+  width: 500px;
+  height: 300px;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .card__upload {
@@ -1325,4 +1337,3 @@ input[type="file"] {
 .notification__item__message {
   flex: 3 !important;
 }
-/*# sourceMappingURL=index.css.map */

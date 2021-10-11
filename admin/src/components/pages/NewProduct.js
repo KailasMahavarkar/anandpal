@@ -15,7 +15,7 @@ import useIncDec from "../../hooks/useIncDec";
 const NewProduct = (props) => {
 	const location = useLocation();
 	const currentID = useRef(location.pathname.split("/").pop());
-    const history = useHistory();
+	const history = useHistory();
 
 	const [price, setPrice, PriceBlock] = useIncDec({
 		initalvalue: 50,
@@ -23,14 +23,14 @@ const NewProduct = (props) => {
 		maxvalue: 10000,
 	});
 
-	const [discount_price, setDiscountPrice, DiscountPriceBlock] =  useIncDec({
+	const [discount_price, setDiscountPrice, DiscountPriceBlock] = useIncDec({
 		initalvalue: 40,
 		minvalue: 0,
 		maxvalue: 10000,
 	});
 
 	const [available_quantity, setAvailableQuantity, AvailableQuantityBlock] =
-    useIncDec({
+		useIncDec({
 			initalvalue: 2,
 			minvalue: 0,
 			maxvalue: 100000,
@@ -90,14 +90,14 @@ const NewProduct = (props) => {
 				url("/product/create"),
 				productData
 			);
-            
-            if (location.search === '?newproduct'){
-                history.push(`/products/${state.id}`)
-            }
+
+			if (location.search === "?newproduct") {
+				history.push(`/products/${state.id}`);
+			}
 
 			customToast("success", "Data Saved");
 		} catch (error) {
-            console.log(error)
+			console.log(error);
 			if (error.response.status === 400) {
 				customToast("warning", error.response.data.msg);
 			} else {
@@ -151,12 +151,9 @@ const NewProduct = (props) => {
 		<div className="card">
 			{state.images[x] ? (
 				<>
-					<img
-						src={state.images[x]}
-						alt=""
-						height="200px"
-						width="auto"
-					/>
+					<div className="card__image">
+						<img src={state.images[x]} alt=""/>
+					</div>
 					<div className="card__control">
 						<div className="card__control__button">
 							<div>

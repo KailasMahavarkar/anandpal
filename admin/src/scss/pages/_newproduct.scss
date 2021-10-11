@@ -77,8 +77,20 @@
 	}
 
 	&__image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
 		margin: 5px;
-        width: 300px;
+
+        > img {
+            box-shadow: $shadow_x200;
+            object-fit: contain;
+            width: 500px;
+            height: 300px;
+            max-width:100%;
+            max-height:100%;
+        }
 	}
 
 	&__upload {
