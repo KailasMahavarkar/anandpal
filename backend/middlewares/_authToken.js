@@ -4,6 +4,7 @@ const { isEmpty } = require('../Improve/Improve')
 
 const _authToken = async (req, res, next) => {
 	const authHeader = req.headers["authorization"];
+    console.log("starting... _authToken")
 
     // return on empty
     if (isEmpty(authHeader)){
@@ -14,6 +15,7 @@ const _authToken = async (req, res, next) => {
         })
     }
 
+ 
     token = authHeader.split(' ')[1]
     if (isEmpty(token)){
         return res.status(401).json({
@@ -24,7 +26,9 @@ const _authToken = async (req, res, next) => {
     }
     
     try{
-        req.tokenData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        req.tokenData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);  
+        
+        console.log("leaving... _authToken")
         next()
     }catch(error){
         return res.status(401).json({

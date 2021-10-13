@@ -1,11 +1,12 @@
 import axios from "axios";
-import { isEmpty, url } from "./helper";
+import { isEmpty, url, typeMatch } from "./helper";
 
 class Auth {
 	constructor() {
 		this.authenticated = false;
 		this.errorText = "";
-	} 
+		this.MAX_TIME = 10 * 60 * 1000;
+	}
 
 	async login(username, password, cb) {
 		try {
@@ -28,6 +29,7 @@ class Auth {
 					"refreshToken",
 					loginResult.data.refreshToken
 				);
+				localStorage.setItem("timestamp", Date.now() + this.MAX_TIME);
 			}
 			return this.authenticated;
 		} catch (error) {
@@ -49,66 +51,52 @@ class Auth {
 	}
 
 	async isAuthenticated() {
-		const accessToken = localStorage.getItem("accessToken");
+		const timeStamp = localStorage.getItem("timestamp");
 
-		// if (!isEmpty(accessToken)) {
-		try {
-			const authRes = await axios.post(
-				url("/auth/verify"),
-				{},
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${accessToken}`,
-					},
-				}
-			);
-			if (authRes.status === 200 && authRes.data.msg === "success") {
-				this.authenticated = true;
-			}
-		} catch (error) {
-			if (error.response.status === 401) {
-				const refreshToken = localStorage.getItem("refreshToken");
-				if (!isEmpty(refreshToken)) {
-					try {
-						const newAccessToken = await axios.post(
-							url("/auth/refresh"),
-							{
-								token: refreshToken,
-							}
-						);
+		if (isEmpty(timeStamp)) {
+			localStorage.clear();
+			this.authenticated = false;
+			return this.authenticated;
+		}
 
-						localStorage.setItem(
-							"accessToken",
-							newAccessToken.data.accessToken
-						);
-						if (!isEmpty(newAccessToken.data.accessToken)) {
-							this.authenticated = true;
-							console.log("accessToken renewed");
-							return this.authenticated;
-						} else {
-							this.authenticated = false;
-						}
-					} catch (errorx) {
-						console.log("inner error --> ", console.log(errorx));
-						this.authenticated = false;
-					}
+		if (timeStamp - Date.now() >= 0) {
+			this.authenticated = true;
+			return this.authenticated;
+		} else {
+			const refreshToken = localStorage.getItem("refreshToken");
+
+            if (isEmpty(refreshToken)){
+                this.authenticated = false;
+                localStorage.clear();
+                return this.authenticated;
+            }
+
+			try {
+				const newAccessToken = await axios.post(url("/auth/refresh"), {
+					token: refreshToken,
+				});
+
+				localStorage.setItem(
+					"accessToken",
+					newAccessToken.data.accessToken
+				);
+				localStorage.setItem("timestamp", Date.now() + this.MAX_TIME);
+				if (!isEmpty(newAccessToken.data.accessToken)) {
+					console.log("renewed token :) ");
+					this.authenticated = true;
+					return this.authenticated;
 				} else {
+                    console.log("refresh token expired :< ");
 					this.authenticated = false;
 					return this.authenticated;
 				}
+			} catch (errorx) {
+				console.log("renewed token error :(");
+				localStorage.clear();
+				this.authenticated = false;
+				return this.authenticated;
 			}
 		}
-
-		if (!this.authenticated) {
-			localStorage.clear();
-		}
-
-		return this.authenticated;
-	}
-
-	isError() {
-		return JSON.parse(this.errorText);
 	}
 }
 
