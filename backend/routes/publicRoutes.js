@@ -10,8 +10,7 @@ router.route("/product/read").get(productReadAll);
 
 // blog public routes 
 // only published blogs are fetched
-const blogRead = require("../controllers/Blog/blogRead").blogRead;
-const blogReadAll = require("../controllers/Blog/blogRead").blogReadAll;
+const { blogRead, blogReadAll } = require("../controllers/Blog/blogRead");
 router.route("/blog/read/:blogID").get(blogRead);
 router.route("/blog/read").get(blogReadAll);
 

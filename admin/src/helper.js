@@ -78,5 +78,17 @@ const randomHash = (length = 24, type = 1) => {
 	return result;
 };
 
+// if types are equal
+const typeMatch = (variable, expected = "string") => {
+	if (typeof variable === expected) {
+		return true;
+	}
+	return false;
+};
 
-export { url, isEmpty, useEffectAsync, randomHash, xrange, xiter};
+const HEADER_PAYLOAD = {
+    "content-type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+}
+
+export { url, isEmpty, useEffectAsync, randomHash, typeMatch, xrange, xiter, HEADER_PAYLOAD};

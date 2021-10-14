@@ -52,4 +52,32 @@ const xblogRead = async (req, res, next) => {
 	}
 };
 
-module.exports = { xblogRead };
+
+const xblogReadAll = async (req, res, next) => {
+
+    try{
+        const blogData = await BlogModel.find();
+
+
+        if (isEmpty(blogData)){
+            return res.status(200).json({});
+        }else{            
+            return res.status(200).json(blogData);
+        }
+    }catch (error) {
+		const [ERROR, STATUS, MESSAGE] = [
+			"SE_AUTH_BLOG_READ_ALL_FAILED",
+			500,
+			"Adming BLOG ReadAll Failed",
+		];
+
+		log.error(ERROR, STATUS, "dragon", MESSAGE);
+		return res.status(STATUS).json({
+			msg: "Server Error",
+			error: "SE_ADMIN_BLOG_READ_ALL_FAILED",
+		});
+	}
+}
+
+
+module.exports = { xblogRead, xblogReadAll };

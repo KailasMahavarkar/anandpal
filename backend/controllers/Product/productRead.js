@@ -40,8 +40,6 @@ const productRead = async (req, res, next) => {
             images: readProduct.images
 		};
 
-        console.log(dataObject);
-
 		return res.status(200).json({
 			msg: dataObject,
 		});

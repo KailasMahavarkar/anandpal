@@ -6,7 +6,7 @@ const OrderModel = require("../../models/order.model");
 const { logger } = require("../../Improve/logger");
 const log = logger(__filename);
 
-const readAllOrders = async (req, res, next) => {
+const xreadAllOrders = async (req, res, next) => {
 	try {
 		const orderData = await OrderModel.find({});
 
@@ -31,4 +31,4 @@ const readAllOrders = async (req, res, next) => {
 	}
 };
 
-module.exports = { readAllOrders };
+module.exports = { xreadAllOrders  };

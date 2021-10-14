@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useReducer } from "react";
 import Navbar from "./../blocks/Navbar";
-import { isEmpty, url, randomHash, useEffectAsync, xiter } from "../../helper";
+import { isEmpty, url, HEADER_PAYLOAD, useEffectAsync } from "../../helper";
 import axios from "axios";
 import Upload from "rc-upload";
 // import SnackBar from './../blocks/SnackBar';
@@ -47,6 +47,8 @@ const NewProduct = (props) => {
 	const [currentImage, setCurrentImage] = useState(0);
 
 	useEffectAsync(async () => {
+		// console.log(HEADER_PAYLOAD);
+
 		try {
 			if (location.search !== "?newproduct") {
 				const checkExists = await axios.get(
@@ -88,7 +90,10 @@ const NewProduct = (props) => {
 		try {
 			const result = await axios.post(
 				url("/product/create"),
-				productData
+				productData,
+				{
+					headers: HEADER_PAYLOAD,
+				}
 			);
 
 			if (location.search === "?newproduct") {
@@ -112,9 +117,13 @@ const NewProduct = (props) => {
 		action: url("/product/upload"),
 		method: "POST",
 		multiple: false,
+		headers: {
+			Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+		},
+		crossDomain: true,
 		onStart(file) {
 			console.log(file.name);
-			uploadWait(file.name);
+			// uploadWait(file.name);
 		},
 		onSuccess(result) {
 			const PAYLOAD = { number: currentImage["x"], url: result.file.url };
@@ -128,8 +137,8 @@ const NewProduct = (props) => {
 			);
 			productSaveHandler();
 		},
-		onError(err) {
-			console.log("onError", err);
+		onError(error) {
+			console.log("onError", error);
 		},
 		beforeUpload(file, fileList) {
 			console.log(file, fileList);
@@ -148,11 +157,11 @@ const NewProduct = (props) => {
 	};
 
 	const repeatUpload = (x) => (
-		<div className="card">
+		<div className="card" key={x}>
 			{state.images[x] ? (
 				<>
 					<div className="card__image">
-						<img src={state.images[x]} alt=""/>
+						<img src={state.images[x]} alt="" />
 					</div>
 					<div className="card__control">
 						<div className="card__control__button">

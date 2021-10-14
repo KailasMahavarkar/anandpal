@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
-import { url, useEffectAsync } from "../../helper";
+import { HEADER_PAYLOAD, url, useEffectAsync } from "../../helper";
 import yesNO from "../blocks/swal/yesNo";
 
 const OrderPage = () => {
@@ -10,7 +10,9 @@ const OrderPage = () => {
 
 	useEffectAsync(async () => {
 		try {
-			const result = await axios.get(url("/order/readall"), {});
+			const result = await axios.get(url("/order/xread"), {
+                headers: HEADER_PAYLOAD
+            });
 			setOrders(result.data.msg);
 		} catch (error) {
             setOrders([])

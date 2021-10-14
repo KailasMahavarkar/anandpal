@@ -4,7 +4,7 @@ import createIcon from "../../../src/assets/createIcon.svg";
 import { useHistory } from "react-router-dom";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
-import { url, useEffectAsync, isEmpty, randomHash } from "../../helper";
+import { url, useEffectAsync, isEmpty, randomHash, HEADER_PAYLOAD } from "../../helper";
 import yesNO from "../blocks/swal/yesNo";
 import customToast from "../blocks/swal/customToast";
 
@@ -35,7 +35,12 @@ const Blogpage = (props) => {
 	useEffectAsync(async () => {
 		try {
 			localStorage.removeItem("currentID");
-			const items = await axios.get(url("/api/blog/read"));
+			const items = await axios.get(
+                url("/blog/xread"),
+                {
+                    headers: HEADER_PAYLOAD
+                }
+            );
 			if (!isEmpty(items)) {
 				setBlogs(items.data);
 			}
@@ -44,14 +49,11 @@ const Blogpage = (props) => {
 		}
 	}, [forceCount]);
 
-	const newBlogHandler = () => {
-		const currentID = randomHash();
-		localStorage.setItem("currentID", currentID);
-		history.push(`/blogs/${currentID}?newblog`);
+	const newBlogHandler = (id) => {
+		history.push(`/blogs/${randomHash()}?newblog`);
 	};
 
 	const viewPageHandler = ({ target: { alt } }) => {
-		localStorage.setItem("currentID", alt);
 		history.push(`/blogs/${alt}`);
 	};
 
@@ -75,7 +77,6 @@ const Blogpage = (props) => {
 							<div
 								className="blogposts__item__inner__edit"
 								onClick={() => {
-									localStorage.setItem("currentID", blog._id);
 									history.push(`/blogs/${blog._id}`);
 								}}
 							>

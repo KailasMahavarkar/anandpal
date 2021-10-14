@@ -2,7 +2,7 @@ import React, { useRef, useReducer, useState } from "react";
 import { useLocation } from "react-router";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
-import { isEmpty, url, randomHash, useEffectAsync } from "../../helper";
+import { isEmpty, url, randomHash, useEffectAsync, HEADER_PAYLOAD } from "../../helper";
 import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "../../tools";
 import customToast from "../blocks/swal/customToast";
@@ -25,7 +25,10 @@ const Editorpage = () => {
 		if (location.search !== "?newblog") {
 			try {
 				const result = await axios.get(
-					url(`/blog/xread/${currentID.current}`)
+					url(`/blog/xread/${currentID.current}`),
+                    {
+                        headers: HEADER_PAYLOAD
+                    }
 				);
 				blogDispatch({
 					type: ACTIONS.BLOG_UPDATE_AUTHOR,
