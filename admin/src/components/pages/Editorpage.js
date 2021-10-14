@@ -60,6 +60,16 @@ const Editorpage = () => {
 		try {
 			const savedData = await editorInstance.current.save();
 
+            try{
+                const newAcessToken = await axios.post(url('/auth/refresh'), {
+                    token: localStorage.getItem('refreshToken')
+                })   
+                localStorage.setItem('accessToken', newAcessToken.data.accessToken);
+            }catch(error){
+                console.error("unable to refresh token on save");
+            }
+          
+            
 			try {
 				const PAYLOAD = {
 					id: currentID.current,
@@ -68,7 +78,13 @@ const Editorpage = () => {
 					author: blogState.author,
 					published_status: blogState.published_status,
 				};
-				const result = await axios.post(url("/blog/create"), PAYLOAD);
+				const result = await axios.post(
+                    url("/blog/create"),
+                    PAYLOAD,
+                    {
+                        headers: HEADER_PAYLOAD
+                    }
+                );
 				if (blur === true) {
 					blogDispatch({
 						type: ACTIONS.BLOG_UPDATE_STATUS,

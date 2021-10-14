@@ -1,10 +1,12 @@
-import React from "react";
+import axios from "axios";
+import React, { useRef } from "react";
 import { Route, Redirect } from "react-router-dom";
 import auth from "./auth";
+import { url, isEmpty } from "./helper";
+
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
 
-    // redirect when there is no refresh token
     if (!localStorage.getItem('refreshToken')){
         return <Redirect to="/" />
     }
@@ -13,14 +15,16 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
         return <Redirect to="/" />
     }
 
-	if(auth.isAuthenticated()){
-		return <Route
-			{...rest}
-			render={(props) => {
-				return <Component {...props} />;
-			}}
-		/>
-    }else{
+	if (auth.isAuthenticated()) {
+		return (
+			<Route
+				{...rest}
+				render={(props) => {
+					return <Component {...props} />;
+				}}
+			/>
+		);
+	} else{
         return <Redirect to="/" />
     }
 };

@@ -7,6 +7,10 @@ import customToast from "../blocks/swal/customToast";
 const Loginpage = (props) => {
 	const history = useHistory();
 
+    useEffect(()=>{
+        localStorage.clear();
+    }, [])
+
 	// const history = useHistory();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");

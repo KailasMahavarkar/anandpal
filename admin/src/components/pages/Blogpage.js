@@ -17,7 +17,7 @@ const Blogpage = (props) => {
 		const onSuccessDelete = async () => {
 			try {
 				const result = await axios.delete(url(`/blog/delete`), {
-					headers: {},
+					headers: HEADER_PAYLOAD,
 					data: {
 						blogID: id,
 					},
@@ -33,20 +33,23 @@ const Blogpage = (props) => {
 	};
 
 	useEffectAsync(async () => {
-		try {
-			localStorage.removeItem("currentID");
-			const items = await axios.get(
-                url("/blog/xread"),
-                {
-                    headers: HEADER_PAYLOAD
+        setTimeout(async ()=>{
+            try {
+                localStorage.removeItem("currentID");
+                const items = await axios.get(
+                    url("/blog/xread"),
+                    {
+                        headers: HEADER_PAYLOAD
+                    }
+                );
+                if (!isEmpty(items)) {
+                    setBlogs(items.data);
                 }
-            );
-			if (!isEmpty(items)) {
-				setBlogs(items.data);
-			}
-		} catch (error) {
-			console.log("error --> ", error.response);
-		}
+            } catch (error) {
+                console.log("error --> ", error.response);
+            }
+        }, 2000)
+		
 	}, [forceCount]);
 
 	const newBlogHandler = (id) => {

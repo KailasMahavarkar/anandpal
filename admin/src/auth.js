@@ -4,7 +4,7 @@ import { isEmpty, url, typeMatch } from "./helper";
 class Auth {
 	constructor() {
 		this.authenticated = false;
-		this.errorText = {msg: ""};
+		this.errorText = "";
 		this.MAX_TIME = 10 * 60 * 1000;
 	}
 
@@ -33,12 +33,12 @@ class Auth {
 			}
 			return this.authenticated;
 		} catch (error) {
-            if (!isEmpty(error.response)) {
-                this.errorText = JSON.stringify(error.response.data);
+			this.authenticated = false;
+			if (!isEmpty(error.response)) {
+				this.errorText = JSON.stringify(error.response.data);
 			} else {
-                this.errorText = JSON.stringify(error.response.data);
+				this.errorText = JSON.stringify(error.response.data);
 			}
-            this.authenticated = false;
 			return this.authenticated;
 		}
 	}
@@ -64,19 +64,6 @@ class Auth {
 			return this.authenticated;
 		} else {
 			const refreshToken = localStorage.getItem("refreshToken");
-
-            if (isEmpty(localStorage.getItem('timestamp'))){
-                this.authenticated = false;
-                localStorage.clear();
-                return this.authenticated;
-            }
-
-
-            if (isEmpty(refreshToken)){
-                this.authenticated = false;
-                localStorage.clear();
-                return this.authenticated;
-            }
 
 			try {
 				const newAccessToken = await axios.post(url("/auth/refresh"), {
@@ -105,7 +92,6 @@ class Auth {
 			}
 		}
 	}
-
 }
 
 export default new Auth();

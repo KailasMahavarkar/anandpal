@@ -78,6 +78,16 @@ const NewProduct = (props) => {
 	}, []);
 
 	const productSaveHandler = async () => {
+
+        try{
+            const newAcessToken = await axios.post(url('/auth/refresh'), {
+                token: localStorage.getItem('refreshToken')
+            })   
+            localStorage.setItem('accessToken', newAcessToken.data.accessToken);
+        }catch(error){
+            console.error("unable to refresh token on save");
+        }
+
 		const productData = {
 			id: state.id,
 			info: state.info,
@@ -95,6 +105,8 @@ const NewProduct = (props) => {
 					headers: HEADER_PAYLOAD,
 				}
 			);
+
+
 
 			if (location.search === "?newproduct") {
 				history.push(`/products/${state.id}`);
