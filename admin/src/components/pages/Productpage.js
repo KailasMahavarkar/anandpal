@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-
-import editIcon from "../../../src/assets/editIcon.svg";
-import deleteIcon from "../../../src/assets/deleteIcon.svg";
 import createIcon from "../../../src/assets/createIcon.svg";
 import { useHistory, useLocation } from "react-router-dom";
 import Navbar from "../blocks/Navbar";
@@ -22,10 +19,10 @@ const Productpage = (props) => {
 					url(`/product/delete`),
 					{
 						headers: {
-                            Authorization: `Bearer ${localStorage.getItem(
-                                "accessToken"
-                            )}`,
-                        },
+							Authorization: `Bearer ${localStorage.getItem(
+								"accessToken"
+							)}`,
+						},
 						data: {
 							productID: productID,
 						},

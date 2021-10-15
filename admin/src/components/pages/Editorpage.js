@@ -15,6 +15,7 @@ import customToast from "../blocks/swal/customToast";
 import blogReducer from "../reducers/blogReducer";
 import ACTIONS from "../reducers/actions";
 import { useHistory } from "react-router-dom";
+import Upload from "rc-upload";
 
 const Editorpage = () => {
 	const editorInstance = useRef(null);
@@ -22,11 +23,37 @@ const Editorpage = () => {
 		title: "",
 		author: "",
 		published_status: true,
+		header_image: "",
 	};
 	const [blogState, blogDispatch] = useReducer(blogReducer, blogInitialState);
 	const location = useLocation();
 	const currentID = useRef("");
 	const history = useHistory();
+
+	const uploadProps = {
+		action: url("/upload/product"),
+		method: "POST",
+		multiple: false,
+		headers: {
+			Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+		},
+		crossDomain: true,
+		onStart(file) {
+			console.log(file);
+		},
+		onSuccess(result) {
+			blogDispatch({
+				type: ACTIONS.BLOG_UPDATE_HEADER_IMAGE,
+				payload: result.file.url,
+			});
+		},
+		onError(error) {
+			console.log("onError", error);
+		},
+		beforeUpload(file, fileList) {
+			console.log(file, fileList);
+		},
+	};
 
 	const editorReadyHandler = async () => {
 		currentID.current = location.pathname.split("/").pop();
@@ -57,6 +84,11 @@ const Editorpage = () => {
 					payload: result.data.msg.published_status,
 				});
 
+				blogDispatch({
+					type: ACTIONS.BLOG_UPDATE_HEADER_IMAGE,
+					payload: result.data.msg.header_image,
+				});
+
 				if (isEmpty(result.data.msg.data.blocks)) {
 					await editorInstance.current.clear();
 				} else {
@@ -83,6 +115,7 @@ const Editorpage = () => {
 					data: savedData,
 					author: blogState.author,
 					published_status: blogState.published_status,
+					header_image: blogState.header_image,
 				};
 				await axios.post(url("/blog/create"), PAYLOAD, {
 					headers: {
@@ -117,9 +150,47 @@ const Editorpage = () => {
 		}
 	};
 
+	const BlogCard = () => (
+		<div className="blogcard">
+			<div className="blogcard__title">{blogState.title}</div>
+			<div className="blogcard__image">
+				{isEmpty(blogState.header_image) ? (
+					<div className="blogcard__uploader">
+						<Upload {...uploadProps}>
+							<div className="blogcard__uploader__upload">
+								Upload Blog Header
+							</div>
+						</Upload>
+					</div>
+				) : (
+					<>
+						<img src={blogState.header_image} alt="blogheader" />
+					</>
+				)}
+			</div>
+
+			{!isEmpty(blogState.header_image) ? (
+				<div className="blogcard__reuploader">
+					<Upload {...uploadProps}>
+						<div className="blogcard__reuploader__upload">
+							Change Header Image
+						</div>
+					</Upload>
+				</div>
+			) : (
+				<div className="blogcard__read">
+					<a href="#">Read More</a>
+				</div>
+			)}
+		</div>
+	);
+
 	return (
 		<div className="view">
 			<Navbar />
+			<div className="options">
+				<BlogCard />
+			</div>
 			<div className="options mt-20">
 				<div className="options__main options__title">
 					<input

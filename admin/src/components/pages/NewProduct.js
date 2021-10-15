@@ -48,7 +48,6 @@ const NewProduct = (props) => {
 	const [currentImage, setCurrentImage] = useState(0);
 
 	useEffectAsync(async () => {
-		console.log("payload --> ", localStorage.getItem("accessToken"));
 
 		try {
 			if (location.search !== "?newproduct") {

@@ -9,8 +9,9 @@ const blogSchema = new Schema({
 	},
 	title: {
 		type: String,
-		requried: true,
+		required: true
 	},
+
 	data: {
 		type: Object,
         default:  {
@@ -34,6 +35,12 @@ const blogSchema = new Schema({
         type: Boolean,
         required: true,
         default: false,
+    },
+
+    header_image:{
+		type: String,
+		required: false,
+        default: ''
     },
 	create_ts: {
 		type: Number,

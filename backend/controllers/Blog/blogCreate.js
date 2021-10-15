@@ -2,7 +2,7 @@ const { typeMatch, isEmpty } = require("../../Improve/Improve");
 const BlogModel = require("../../models/blog.model");
 
 const blogCreate = async (req, res, next) => {
-	let { title, data, author, id, published_status } = req.body;
+	let { title, data, author, id, published_status, header_image } = req.body;
 
 	/* ---------------------  START NULL CHECK ------------------------------- */
 
@@ -63,6 +63,10 @@ const blogCreate = async (req, res, next) => {
 		});
 	}
 
+    if (isEmpty(header_image)){
+        header_image = ''
+    }
+
 	// /* ---------------------  END TYPE CHECK ------------------------------- */
 
 	const findRes = await BlogModel.findById({ _id: id });
@@ -74,6 +78,7 @@ const blogCreate = async (req, res, next) => {
 			author: author,
 			data: data,
 			published_status: published_status,
+            header_image: header_image
 		});
 		const res_save = await new_blog.save();
 		return res.status(200).json({
@@ -83,6 +88,7 @@ const blogCreate = async (req, res, next) => {
 			author: author,
 			data: data,
 			published_status: published_status,
+            header_image: header_image
 		});
 	} else {
 		try {
@@ -101,6 +107,7 @@ const blogCreate = async (req, res, next) => {
 					data: data,
 					author: author,
 					published_status: published_status,
+                    header_image: header_image
 				}
 			);
 
@@ -112,6 +119,7 @@ const blogCreate = async (req, res, next) => {
 					author: author,
 					data: data,
 					published_status: published_status,
+                    header_image: header_image
 				});
 			}
 
@@ -122,6 +130,7 @@ const blogCreate = async (req, res, next) => {
 				author: author,
 				data: data,
 				published_status: published_status,
+                header_image: header_image
 			});
 		} catch (error) {
 			const [ERROR, STATUS, MESSAGE] = [

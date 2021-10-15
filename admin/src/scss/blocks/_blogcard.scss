@@ -1,0 +1,88 @@
+.blogcard {
+	padding: 10px;
+	margin: 20px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	flex-wrap: wrap;
+    box-shadow: $shadow-x300;
+
+    > div {
+		padding: 10px;
+    }
+
+	&__title {
+		flex-wrap: wrap;
+		width: 400px;
+        
+		display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        font-size: 1.3em;
+        font-weight: bold;
+        color: rgb(0, 0, 31);
+	}
+
+    &__reuploader{
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        
+        box-shadow: $shadow_x100;
+        justify-content: center;
+        border: 1px solid $purple;
+        align-items: center;
+
+		width: 400px;
+
+		&__upload {
+			cursor: pointer;
+			border-radius: 5px;
+		}
+    }
+
+	&__uploader {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		width: 400px;
+		height: 300px;
+
+		&__upload {
+			background-color: $minion_yellow;
+			padding: 10px;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+	}
+
+
+    &__read{
+        cursor: pointer;
+        display: flex;
+        
+        box-shadow: $shadow_x100;
+        margin: 10px;
+        justify-content: center;
+        border: 1px solid $purple;
+        align-items: center;
+
+        > a {
+            color: $purple;
+        }
+
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+
+	&__image {
+		> img {
+			width: 400px;
+			height: 300px;
+			box-shadow: $shadow_x300;
+		}
+	}
+}

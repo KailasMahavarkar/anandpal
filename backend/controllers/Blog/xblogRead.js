@@ -32,6 +32,7 @@ const xblogRead = async (req, res, next) => {
 			author: readBlog.author,
 			data: readBlog.data,
 			create_ts: readBlog.create_ts,
+            header_image: readBlog.header_image
 		};
 
 		return res.status(200).json({

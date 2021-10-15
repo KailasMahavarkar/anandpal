@@ -15,6 +15,9 @@ function blogReducer(state, action) {
         case ACTIONS.BLOG_UPDATE_STATUS:
             newState["published_status"] =  !action.payload
             break;
+        case ACTIONS.BLOG_UPDATE_HEADER_IMAGE:
+            newState["header_image"] =  action.payload
+            break;
 		default:
 			return newState;
 	}

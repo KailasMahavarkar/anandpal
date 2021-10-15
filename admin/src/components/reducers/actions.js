@@ -14,7 +14,8 @@ const ACTIONS = {
     BLOG_UPDATE_TITLE: "blogUpdateTitle",
     BLOG_UPDATE_AUTHOR: "blogUpdateAuthor",
     BLOG_UPDATE_DATA: "blogUpdateData",
-    BLOG_UPDATE_STATUS: "blogUpdateStatus"    
+    BLOG_UPDATE_STATUS: "blogUpdateStatus",
+    BLOG_UPDATE_HEADER_IMAGE: "blogUpdateHeaderImage" 
 
 };
 
