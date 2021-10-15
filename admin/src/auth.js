@@ -5,7 +5,7 @@ class Auth {
 	constructor() {
 		this.authenticated = false;
 		this.errorText = "";
-		this.MAX_TIME = 10 * 60 * 1000;
+		this.MAX_TIME = 1 * 60 * 1000;
 	}
 
 	async login(username, password, cb) {
@@ -55,13 +55,10 @@ class Auth {
 
 		if (isEmpty(timeStamp)) {
 			localStorage.clear();
-			this.authenticated = false;
-			return this.authenticated;
 		}
 
 		if (timeStamp - Date.now() >= 0) {
 			this.authenticated = true;
-			return this.authenticated;
 		} else {
 			const refreshToken = localStorage.getItem("refreshToken");
 
@@ -78,19 +75,17 @@ class Auth {
 				if (!isEmpty(newAccessToken.data.accessToken)) {
 					console.log("renewed token :) ");
 					this.authenticated = true;
-					return this.authenticated;
 				} else {
                     console.log("refresh token expired :< ");
-					this.authenticated = false;
-					return this.authenticated;
 				}
 			} catch (errorx) {
 				console.log("renewed token error :(");
 				localStorage.clear();
-				this.authenticated = false;
-				return this.authenticated;
 			}
 		}
+        
+        return this.authenticated;
+
 	}
 }
 

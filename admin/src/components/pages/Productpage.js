@@ -21,7 +21,11 @@ const Productpage = (props) => {
 				const deleteProduct = await axios.delete(
 					url(`/product/delete`),
 					{
-						headers: HEADER_PAYLOAD,
+						headers: {
+                            Authorization: `Bearer ${localStorage.getItem(
+                                "accessToken"
+                            )}`,
+                        },
 						data: {
 							productID: productID,
 						},

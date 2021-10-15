@@ -16,7 +16,11 @@ const ContactPage = () => {
 	useEffectAsync(async () => {
 		try {
 			const result = await axios.get(url("/generic/contact/read"), {
-				headers: HEADER_PAYLOAD,
+				headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                },
 			});
 			setNotifications(result.data.msg);
 		} catch (error) {
@@ -28,7 +32,11 @@ const ContactPage = () => {
 		const yesCallback = async () => {
 			try {
 				await axios.delete(url("/generic/contact/delete"), {
-					headers: HEADER_PAYLOAD,
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem(
+							"accessToken"
+						)}`,
+					},
 					data: {
 						notificationID: id,
 					},

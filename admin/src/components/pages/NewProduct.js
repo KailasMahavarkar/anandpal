@@ -11,6 +11,7 @@ import customToast from "../blocks/swal/customToast";
 import uploadWait from "../blocks/swal/uploadWait";
 import { useLocation, useHistory } from "react-router-dom";
 import useIncDec from "../../hooks/useIncDec";
+import SimpleImageSlider from "react-simple-image-slider";
 
 const NewProduct = (props) => {
 	const location = useLocation();
@@ -47,7 +48,7 @@ const NewProduct = (props) => {
 	const [currentImage, setCurrentImage] = useState(0);
 
 	useEffectAsync(async () => {
-		// console.log(HEADER_PAYLOAD);
+		console.log("payload --> ", localStorage.getItem("accessToken"));
 
 		try {
 			if (location.search !== "?newproduct") {
@@ -63,8 +64,11 @@ const NewProduct = (props) => {
 							info: checkExists.data.msg.info,
 							title: checkExists.data.msg.title,
 							images: checkExists.data.msg.images,
+							price: checkExists.data.msg.price,
+							discount_price: checkExists.data.msg.discount_price,
 						},
 					});
+
 					setPrice(checkExists.data.msg.price);
 					setAvailableQuantity(
 						checkExists.data.msg.available_quantity
@@ -78,16 +82,6 @@ const NewProduct = (props) => {
 	}, []);
 
 	const productSaveHandler = async () => {
-
-        try{
-            const newAcessToken = await axios.post(url('/auth/refresh'), {
-                token: localStorage.getItem('refreshToken')
-            })   
-            localStorage.setItem('accessToken', newAcessToken.data.accessToken);
-        }catch(error){
-            console.error("unable to refresh token on save");
-        }
-
 		const productData = {
 			id: state.id,
 			info: state.info,
@@ -98,15 +92,13 @@ const NewProduct = (props) => {
 			available_quantity: available_quantity,
 		};
 		try {
-			const result = await axios.post(
-				url("/product/create"),
-				productData,
-				{
-					headers: HEADER_PAYLOAD,
-				}
-			);
-
-
+			await axios.post(url("/product/create"), productData, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(
+						"accessToken"
+					)}`,
+				},
+			});
 
 			if (location.search === "?newproduct") {
 				history.push(`/products/${state.id}`);
@@ -126,7 +118,7 @@ const NewProduct = (props) => {
 	};
 
 	const uploadProps = {
-		action: url("/product/upload"),
+		action: url("/upload/product"),
 		method: "POST",
 		multiple: false,
 		headers: {
@@ -215,12 +207,33 @@ const NewProduct = (props) => {
 		</div>
 	);
 
+	const ImageCard = () => (
+		<div className="imagecard">
+			<div className="imagecard__image">
+				<img src={state.images[0]} alt="" />
+			</div>
+			<div className="imagecard__info">
+				<div className="imagecard__info__title">{state.title}</div>
+				<div className="imagecard__info__price">
+					<div className="imagecard__info__price__base">{price}</div>
+					<div className="imagecard__info__price__discounted">
+						{discount_price}
+					</div>
+				</div>
+				<div className="imagecard__info__description">{state.info}</div>
+				<div className="imagecard__button">Add to Cart</div>
+			</div>
+		</div>
+	);
+
 	return (
 		<div className="view">
 			<Navbar />
 
 			<div className="newproduct">
 				<div className="newproduct__main">
+					<ImageCard />
+					<div className="split"></div>
 					<div className="split">
 						<label htmlFor="" className="split__title">
 							Product Title
@@ -263,7 +276,7 @@ const NewProduct = (props) => {
 					</div>
 					<div className="split">
 						<label htmlFor="" className="split__title">
-							Discounted Price
+							Final Discounted Price
 						</label>
 						<div className="split__input">{DiscountPriceBlock}</div>
 					</div>

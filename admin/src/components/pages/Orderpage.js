@@ -11,7 +11,11 @@ const OrderPage = () => {
 	useEffectAsync(async () => {
 		try {
 			const result = await axios.get(url("/order/xread"), {
-                headers: HEADER_PAYLOAD
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                },
             });
 			setOrders(result.data.msg);
 		} catch (error) {
@@ -23,7 +27,11 @@ const OrderPage = () => {
 		const yesCallback = async () => {
 			try {
 				const delRes = await axios.delete(url("/order/delete"), {
-					headers: {},
+					headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "accessToken"
+                        )}`,
+                    },
 					data: {
 						orderID: id,
 					},

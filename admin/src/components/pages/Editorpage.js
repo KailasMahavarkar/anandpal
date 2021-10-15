@@ -2,12 +2,19 @@ import React, { useRef, useReducer, useState } from "react";
 import { useLocation } from "react-router";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
-import { isEmpty, url, randomHash, useEffectAsync, HEADER_PAYLOAD } from "../../helper";
+import {
+	isEmpty,
+	url,
+	randomHash,
+	useEffectAsync,
+	HEADER_PAYLOAD,
+} from "../../helper";
 import EditorJs from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "../../tools";
 import customToast from "../blocks/swal/customToast";
 import blogReducer from "../reducers/blogReducer";
 import ACTIONS from "../reducers/actions";
+import { useHistory } from "react-router-dom";
 
 const Editorpage = () => {
 	const editorInstance = useRef(null);
@@ -19,6 +26,7 @@ const Editorpage = () => {
 	const [blogState, blogDispatch] = useReducer(blogReducer, blogInitialState);
 	const location = useLocation();
 	const currentID = useRef("");
+	const history = useHistory();
 
 	const editorReadyHandler = async () => {
 		currentID.current = location.pathname.split("/").pop();
@@ -26,9 +34,13 @@ const Editorpage = () => {
 			try {
 				const result = await axios.get(
 					url(`/blog/xread/${currentID.current}`),
-                    {
-                        headers: HEADER_PAYLOAD
-                    }
+					{
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem(
+								"accessToken"
+							)}`,
+						},
+					}
 				);
 				blogDispatch({
 					type: ACTIONS.BLOG_UPDATE_AUTHOR,
@@ -57,19 +69,13 @@ const Editorpage = () => {
 	};
 
 	const dataSaveHandler = async (blur = false) => {
+		if (location.search === "?newblog") {
+			history.push(`/blogs/${currentID.current}`);
+		}
+
 		try {
 			const savedData = await editorInstance.current.save();
 
-            try{
-                const newAcessToken = await axios.post(url('/auth/refresh'), {
-                    token: localStorage.getItem('refreshToken')
-                })   
-                localStorage.setItem('accessToken', newAcessToken.data.accessToken);
-            }catch(error){
-                console.error("unable to refresh token on save");
-            }
-          
-            
 			try {
 				const PAYLOAD = {
 					id: currentID.current,
@@ -78,13 +84,13 @@ const Editorpage = () => {
 					author: blogState.author,
 					published_status: blogState.published_status,
 				};
-				const result = await axios.post(
-                    url("/blog/create"),
-                    PAYLOAD,
-                    {
-                        headers: HEADER_PAYLOAD
-                    }
-                );
+				await axios.post(url("/blog/create"), PAYLOAD, {
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem(
+							"accessToken"
+						)}`,
+					},
+				});
 				if (blur === true) {
 					blogDispatch({
 						type: ACTIONS.BLOG_UPDATE_STATUS,

@@ -7,9 +7,9 @@ import customToast from "../blocks/swal/customToast";
 const Loginpage = (props) => {
 	const history = useHistory();
 
-    useEffect(()=>{
-        localStorage.clear();
-    }, [])
+    // useEffect(()=>{
+    //     localStorage.clear();
+    // }, [])
 
 	// const history = useHistory();
 	const [username, setUsername] = useState("");
@@ -29,7 +29,7 @@ const Loginpage = (props) => {
 		try {
 			const result = await auth.login(username, password);
 			if (result) {
-				history.push("/blogs");
+                history.push("/blogs");
 				customToast("success", "Logged in successfully");
 			} else {
 				customToast("error", JSON.parse(auth.errorText).msg);

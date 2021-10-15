@@ -4,55 +4,61 @@ import createIcon from "../../../src/assets/createIcon.svg";
 import { useHistory } from "react-router-dom";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
-import { url, useEffectAsync, isEmpty, randomHash, HEADER_PAYLOAD } from "../../helper";
+import {
+	url,
+	useEffectAsync,
+	isEmpty,
+	randomHash,
+	HEADER_PAYLOAD,
+} from "../../helper";
 import yesNO from "../blocks/swal/yesNo";
 import customToast from "../blocks/swal/customToast";
 
 const Blogpage = (props) => {
 	const history = useHistory();
 	const [blogs, setBlogs] = useState([]);
-    const [forceCount, setForceCount] = useState(0);
+	const [forceCount, setForceCount] = useState(0);
+
+	useEffectAsync(async () => {
+		try {
+			const items = await axios.get(url("/blog/xread"), {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(
+						"accessToken"
+					)}`,
+				},
+			});
+			if (!isEmpty(items)) {
+				setBlogs(items.data);
+			}
+		} catch (error) {
+			console.log("error --> ", error.response);
+		}
+	}, [forceCount]);
 
 	const blogDeleteHandler = (title, id) => {
 		const onSuccessDelete = async () => {
 			try {
 				const result = await axios.delete(url(`/blog/delete`), {
-					headers: HEADER_PAYLOAD,
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem(
+							"accessToken"
+						)}`,
+					},
 					data: {
 						blogID: id,
 					},
 				});
 				customToast("success", result.data.msg);
-                setForceCount((forceCount)=>forceCount+1);
+				setForceCount((forceCount) => forceCount + 1);
 			} catch (error) {
 				customToast("error", error.response.data.msg);
 			}
 		};
 		yesNO(title, onSuccessDelete);
-        
 	};
 
-	useEffectAsync(async () => {
-        setTimeout(async ()=>{
-            try {
-                localStorage.removeItem("currentID");
-                const items = await axios.get(
-                    url("/blog/xread"),
-                    {
-                        headers: HEADER_PAYLOAD
-                    }
-                );
-                if (!isEmpty(items)) {
-                    setBlogs(items.data);
-                }
-            } catch (error) {
-                console.log("error --> ", error.response);
-            }
-        }, 2000)
-		
-	}, [forceCount]);
-
-	const newBlogHandler = (id) => {
+	const newBlogHandler = () => {
 		history.push(`/blogs/${randomHash()}?newblog`);
 	};
 

@@ -15,6 +15,7 @@ const productHandlers = require("./routes/productRoutes");
 const genericHandlers = require("./routes/genericRoutes");
 const orderHandlers = require("./routes/orderRoutes");
 const publicHandlers = require("./routes/publicRoutes");
+const uploadHandlers = require("./routes/uploadRoutes");
 const { _authToken } = require("./middlewares/_authToken");
 
 const rootPath = path.join(__dirname, "./Astatic");
@@ -31,22 +32,22 @@ app.set("json spaces", 2);
 app.use("/api", cors(allowPublicCORS), publicHandlers);
 
 
-
 // private api routes
 app.use("/auth", cors(allowPrivateCORS),  authHandlers);
 app.use("/blog", cors(allowPrivateCORS),  _authToken,  blogHandlers);
 app.use("/product", cors(allowPrivateCORS), _authToken,  productHandlers);
 app.use("/generic", cors(allowPrivateCORS), _authToken,  genericHandlers);
 app.use("/order", cors(allowPrivateCORS), _authToken,  orderHandlers);
+app.use("/upload", cors(allowPublicCORS),  uploadHandlers);
 
 // Assume 404 since no middleware responded
-// app.use(function (req, res, next)  {
-//     console.log('error (404)');
-//     return res.status(404).json({
-//         url: req.url,
-//         error: 'Not found'
-//     });
-// });
+app.use(function (req, res, next)  {
+    console.log('error (404)');
+    return res.status(404).json({
+        url: req.url,
+        error: 'Not found'
+    });
+});
 
 // run cron
 // cron.runCrons();
