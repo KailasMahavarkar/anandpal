@@ -5,7 +5,7 @@ class Auth {
 	constructor() {
 		this.authenticated = false;
 		this.errorText = "";
-		this.MAX_TIME = 1 * 60 * 1000;
+		this.MAX_TIME = 10 * 60 * 1000;
 	}
 
 	async login(username, password, cb) {
