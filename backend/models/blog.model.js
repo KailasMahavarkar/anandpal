@@ -5,16 +5,20 @@ const { randomHash } = require("../Improve/encryption");
 const blogSchema = new Schema({
 	_id: {
 		type: String,
-		requied: true
+		requied: true,
 	},
 	title: {
 		type: String,
-		required: true
+		required: true,
 	},
-
+	short_info: {
+		type: String,
+		required: true,
+        default: ""
+	},
 	data: {
 		type: Object,
-        default:  {
+		default: {
 			time: Date.now(),
 			blocks: [
 				{
@@ -31,18 +35,24 @@ const blogSchema = new Schema({
 		type: String,
 		required: true,
 	},
-    published_status:{
-        type: Boolean,
-        required: true,
-        default: false,
-    },
-
-    header_image:{
+	published_status: {
+		type: Boolean,
+		required: true,
+	},
+	category: {
 		type: String,
-		required: false,
-        default: ''
-    },
+		required: true,
+	},
+	header_image: {
+		type: String,
+		required: true,
+	},
 	create_ts: {
+		type: Number,
+		required: false,
+		default: Date.now(),
+	},
+	published_time: {
 		type: Number,
 		required: false,
 		default: Date.now(),

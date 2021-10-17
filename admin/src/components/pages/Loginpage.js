@@ -7,9 +7,13 @@ import customToast from "../blocks/swal/customToast";
 const Loginpage = (props) => {
 	const history = useHistory();
 
-    // useEffect(()=>{
-    //     localStorage.clear();
-    // }, [])
+    useEffect(()=>{
+        if (auth.isAuthenticated()){
+            history.push('/blogs');
+        }else{
+            localStorage.clear();
+        }
+    }, [])
 
 	// const history = useHistory();
 	const [username, setUsername] = useState("");
@@ -25,7 +29,8 @@ const Loginpage = (props) => {
 	// 'top' | 'top-start' | 'top-end' | 'top-left' | 'top-right' |
 	// 'center' | 'center-start' | 'center-end' | 'center-left' | 'center-right' |
 	// 'bottom' | 'bottom-start' | 'bottom-end' | 'bottom-left' | 'bottom-right';
-	const loginHandler = async () => {
+	const loginHandler = async (e) => {
+        e.preventDefault();
 		try {
 			const result = await auth.login(username, password);
 			if (result) {

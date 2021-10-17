@@ -26,13 +26,17 @@ const xblogRead = async (req, res, next) => {
 		}
 
 		const dataObject = {
-			_id: readBlog._id,
+            _id: readBlog._id,
 			title: readBlog.title,
-			published_status: readBlog.published_status,
 			author: readBlog.author,
-			data: readBlog.data,
+			published_status: readBlog.published_status,
 			create_ts: readBlog.create_ts,
-            header_image: readBlog.header_image
+			data: readBlog.data,
+            header_image: readBlog.header_image,
+            category: readBlog.category,
+            create_ts: readBlog.create_ts,
+            published_time: readBlog.published_time,
+            short_info: readBlog.short_info
 		};
 
 		return res.status(200).json({

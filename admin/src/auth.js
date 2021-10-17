@@ -3,9 +3,7 @@ import { isEmpty, url, typeMatch } from "./helper";
 
 class Auth {
 	constructor() {
-		this.authenticated = false;
 		this.errorText = "";
-		this.MAX_TIME = 10 * 60 * 1000;
 	}
 
 	async login(username, password, cb) {
@@ -20,7 +18,6 @@ class Auth {
 				loginResult.status === 200 &&
 				loginResult.data.msg === "success"
 			) {
-				this.authenticated = true;
 				localStorage.setItem(
 					"accessToken",
 					loginResult.data.accessToken
@@ -29,17 +26,15 @@ class Auth {
 					"refreshToken",
 					loginResult.data.refreshToken
 				);
-				localStorage.setItem("timestamp", Date.now() + this.MAX_TIME);
+				localStorage.setItem("authed", true);
 			}
 			return this.authenticated;
 		} catch (error) {
-			this.authenticated = false;
 			if (!isEmpty(error.response)) {
 				this.errorText = JSON.stringify(error.response.data);
 			} else {
 				this.errorText = JSON.stringify(error.response.data);
 			}
-			return this.authenticated;
 		}
 	}
 
@@ -50,42 +45,33 @@ class Auth {
 		cb();
 	}
 
-	async isAuthenticated() {
-		const timeStamp = localStorage.getItem("timestamp");
+	isAuthenticated() {
+		const accessToken = localStorage.getItem("accessToken");
 
-		if (isEmpty(timeStamp)) {
-			localStorage.clear();
-		}
-
-		if (timeStamp - Date.now() >= 0) {
-			this.authenticated = true;
+		if (accessToken) {
+			return true;
 		} else {
-			const refreshToken = localStorage.getItem("refreshToken");
+			localStorage.clear();
 
 			try {
-				const newAccessToken = await axios.post(url("/auth/refresh"), {
-					token: refreshToken,
-				});
-
-				localStorage.setItem(
-					"accessToken",
-					newAccessToken.data.accessToken
-				);
-				localStorage.setItem("timestamp", Date.now() + this.MAX_TIME);
-				if (!isEmpty(newAccessToken.data.accessToken)) {
-					console.log("renewed token :) ");
-					this.authenticated = true;
-				} else {
-                    console.log("refresh token expired :< ");
-				}
+				axios
+					.post(url("/auth/verify"), {
+						token: accessToken,
+					})
+					.then((result) => {
+						localStorage.setItem(
+							"accessToken",
+							result.data.accessToken
+						);
+					})
+					.catch((error) => {
+						localStorage.setItem("authed", false);
+					});
 			} catch (errorx) {
 				console.log("renewed token error :(");
-				localStorage.clear();
 			}
 		}
-        
-        return this.authenticated;
-
+		return false;
 	}
 }
 

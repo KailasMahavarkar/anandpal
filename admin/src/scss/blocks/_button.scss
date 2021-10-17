@@ -40,19 +40,44 @@
 	color: white;
 }
 
+
 .button {
-	padding: 10px;
-	border-radius: 5px;
-    border: none;
-    cursor: pointer;
-
-	&__delete {
-		color: white;
-		background-color: $red;
-	}
-
-    &:active{
-        border: 2px solid $red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    padding: 8px;
+    font-size: 1.3em;
+    transition: all 250ms ease-out;
+    text-align: center;
+    &:hover {
+        box-shadow: $shadow-200;
+        transition: all 250ms ease-in;
     }
 
+    &-save {
+        flex: 1;
+        @include button-outline(tint($success, 15%), white);
+    }
+    
+    &-delete {
+        flex: 1;
+        @include button-outline($red, white);
+    }
+    
+    &__status {
+        flex: 2;
+        &-true {
+            @include button-outline(shade($success, 5), white);
+        }
+        &-false {
+            @include button-outline(shade($warning, 5), white);
+        }
+    }
+    
+    &-clear {
+        flex: 1;
+        @include button-outline(tint(blue, 50), white);
+    }
 }
+
