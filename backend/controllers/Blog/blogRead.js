@@ -52,6 +52,7 @@ const blogRead = async (req, res, next) => {
 
 		return res.status(200).json({
 			msg: dataObject,
+            success: true
 		});
 	} catch (error) {
 		const [ERROR, STATUS, MESSAGE] = [
@@ -72,10 +73,18 @@ const blogRead = async (req, res, next) => {
 const blogReadAll = async (req, res, next) => {
 
     try{
-        const blogData = await BlogModel.find({}, {
-            _id: true, title: true,
+        const blogData = await BlogModel.find({
+            published_status: true
+        }, {
+            _id: true,
+            title: true,
             published_status: true,
-            create_ts: true
+            published_time: true,
+            create_ts: true,
+            header_image: true,
+            short_info: true,
+            category: true,
+            author: true
         });
 
 

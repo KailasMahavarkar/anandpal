@@ -5,6 +5,39 @@ import "react-responsive-carousel/lib/styles/carousel.css";
 import { Carousel } from "react-responsive-carousel";
 import axios from "axios";
 import { url, useEffectAsync } from "../../../helper";
+import anandpal_logo from "../../../images/ap_logo.webp";
+import prettyMS from "pretty-ms";
+import { Link } from "react-router-dom";
+
+const BlogCard = ({ blogState }) => (
+	<Link to={`/blogs/${blogState._id}`}>
+		<div className="blogcard">
+			<div className="blogcard__image">
+				<div className="blogcard__image">
+					<img src={blogState.header_image} alt="blogheader" />
+				</div>
+			</div>
+			<div className="blogcard__category">{blogState.category}</div>
+			<div className="blogcard__title">{blogState.title}</div>
+			<div className="blogcard__basic">{blogState.short_info}</div>
+			<div className="blogcard__about">
+				<div className="blogcard__about__logo">
+					<img src={anandpal_logo} alt="" />
+				</div>
+				<div className="blogcard__about__info">
+					<div className="blogcard__about__info__author">
+						{blogState.author}
+					</div>
+					<div className="blogcard__about__info__timestamp">
+						{prettyMS(blogState.published_time, {
+							compact: true,
+						})}
+					</div>
+				</div>
+			</div>
+		</div>
+	</Link>
+);
 
 const Blogs = () => {
 	const [allBlogs, setAllBlogs] = useState([]);
@@ -35,12 +68,7 @@ const Blogs = () => {
 			return allBlogs.map((blog, index) => {
 				return (
 					<div className="blogposts__item" key={index}>
-						<div className="blogposts__item__title">
-							{titleHandler(blog.title)}
-						</div>
-						<div className="blogposts__item__timestamp">
-							{new Date(blog.create_ts).toLocaleString()}
-						</div>
+						<BlogCard blogState={blog} />
 					</div>
 				);
 			});
