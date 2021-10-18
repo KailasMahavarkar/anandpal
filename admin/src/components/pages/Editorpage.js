@@ -32,6 +32,7 @@ const Editorpage = () => {
 		show_setting: JSON.parse(localStorage.getItem("show_setting") ?? true),
 	};
 	const [blogState, blogDispatch] = useReducer(blogReducer, blogInitialState);
+    const [published_status, setPublishedStatus] = useState(false);
 
 	const location = useLocation();
 	const currentID = useRef("");
@@ -107,11 +108,6 @@ const Editorpage = () => {
 				});
 
 				blogDispatch({
-					type: ACTIONS.BLOG_UPDATE_PUBLISHED_STATUS,
-					payload: result.data.msg.published_status,
-				});
-
-				blogDispatch({
 					type: ACTIONS.BLOG_UPDATE_SHORT_INFO,
 					payload: result.data.msg.short_info,
 				});
@@ -120,6 +116,8 @@ const Editorpage = () => {
 					type: ACTIONS.BLOG_UPDATE_PUBLISHED_TIME,
 					payload: result.data.msg.published_time,
 				});
+
+                setPublishedStatus(result.data.msg.published_status)
 
 				if (isEmpty(result.data.msg.data.blocks)) {
 					await editorInstance.current.clear();
@@ -138,7 +136,7 @@ const Editorpage = () => {
 			title: blogState.title,
 			data: await editorInstance.current.save(),
 			author: blogState.author,
-			published_status: blogState.published_status,
+			published_status: published_status,
 			header_image: blogState.header_image,
 			category: blogState.category,
 			published_time: blogState.published_time,
@@ -154,25 +152,15 @@ const Editorpage = () => {
 				},
 			});
 
+            if (result.data.success){
+                customToast('info', 'Data Saved Successfully')
+            }
+
+
 			if (result.data.success) {
 				if (location.search === "?newblog") {
 					history.push(`/blogs/${currentID.current}`);
 				}
-			}
-
-			if (blur === true) {
-				blogDispatch({
-					type: ACTIONS.BLOG_UPDATE_STATUS,
-					payload: blogState.published_status,
-				});
-
-				if (blogState.published_status) {
-					customToast("success", "Blog status is now published");
-				} else {
-					customToast("warning", "Blog status is now unpublished");
-				}
-			} else {
-				customToast("info", "Data Saved");
 			}
 		} catch (error) {
 			customToast("error", error.response.data.msg);
@@ -241,6 +229,16 @@ const Editorpage = () => {
 			</div>
 		</div>
 	);
+
+	const blogPublishHandler = () => {
+        setPublishedStatus(!published_status)
+
+        if (!published_status) {
+            customToast("success", "Blog status is now published");
+        } else {
+            customToast("warning", "Blog status is now unpublished");
+        }
+	};
 
 	return (
 		<div className="view">
@@ -328,12 +326,12 @@ const Editorpage = () => {
 								</div>
 
 								<div
-									className={`button button__status button__status-${blogState.published_status}`}
-									onClick={() => dataSaveHandler(true)}
+									className={`button button__status button__status-${!published_status}`}
+									onClick={blogPublishHandler}
 								>
-									{blogState.published_status
-										? "Click to Publish"
-										: "Rollback to Private"}
+									{published_status
+										? "Rollback to Private"
+										: "Click to Publish"}
 								</div>
 
 								<div

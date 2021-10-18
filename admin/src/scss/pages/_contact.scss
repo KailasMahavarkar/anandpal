@@ -38,5 +38,11 @@
 		&__message {
 			flex: 3 !important;
 		}
+
+        &__delete{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 	}
 }

@@ -15,7 +15,8 @@ function BusinessIntro() {
 							about our business
 						</h2>
 					</ScrollAnimation>
-					Some Text
+                    TRANSFORMING THE LIVES OF PEOPLE THROUGH WELLNESS
+
 					<p className="business_intro_content">
 						Brig Hart, one of the leading names in Relational
 						Marketing history, who brought a unique, new perspective
