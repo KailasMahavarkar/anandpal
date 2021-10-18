@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import auth from "../../auth";
-import { isEmpty } from "../../helper";
+import { isEmpty, url } from "../../helper";
 import customToast from "../blocks/swal/customToast";
+import axios from 'axios';
+import { isAuthenticated } from "../../auth";
 
 const Loginpage = (props) => {
 	const history = useHistory();
 
-    useEffect(()=>{
-        if (auth.isAuthenticated()){
-            history.push('/blogs');
-        }else{
-            localStorage.clear();
-        }
-    }, [])
+	useEffect(()=>{
+	    if (isAuthenticated()){
+	        history.push('/blogs');
+	    }else{
+	        localStorage.clear();
+	    }
+	}, [])
 
 	// const history = useHistory();
 	const [username, setUsername] = useState("");
@@ -29,29 +30,32 @@ const Loginpage = (props) => {
 	// 'top' | 'top-start' | 'top-end' | 'top-left' | 'top-right' |
 	// 'center' | 'center-start' | 'center-end' | 'center-left' | 'center-right' |
 	// 'bottom' | 'bottom-start' | 'bottom-end' | 'bottom-left' | 'bottom-right';
-	const loginHandler = async (e) => {
-        e.preventDefault();
+	const loginHandler = async () => {
+		// e.preventDefault();
 		try {
-			const result = await auth.login(username, password);
-			if (result) {
-                history.push("/blogs");
-				customToast("success", "Logged in successfully");
-			} else {
-				customToast("error", JSON.parse(auth.errorText).msg);
+			localStorage.clear();
+			const loginResult = await axios.post(url("/auth/login"), {
+				username: username,
+				password: password,
+			});
+
+			if (
+				loginResult.status === 200 &&
+				loginResult.data.msg === "success"
+			) {
+				localStorage.setItem(
+					"accessToken",
+					loginResult.data.accessToken
+				);
+				localStorage.setItem(
+					"refreshToken",
+					loginResult.data.refreshToken
+				);
+				localStorage.setItem("authed", true);
+                history.push('/blogs')
 			}
 		} catch (error) {
-			if (!isEmpty(error)) {
-				customToast("error", error.response.data);
-				setTimeout(() => {
-					customToast(
-						"error",
-						`Error Code ${error.response.data}`,
-						6000
-					);
-				}, 4000);
-			} else {
-				customToast("error", "connection to backend failed", 6000);
-			}
+			console.error('login error main -->', error.response);
 		}
 	};
 

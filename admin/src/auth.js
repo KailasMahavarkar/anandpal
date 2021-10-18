@@ -1,78 +1,35 @@
 import axios from "axios";
 import { isEmpty, url, typeMatch } from "./helper";
+import { useHistory } from "react-router-dom";
 
-class Auth {
-	constructor() {
-		this.errorText = "";
-	}
+const isAuthenticated = () => {
+	const accessToken = localStorage.getItem("accessToken");
+	const refreshToken = localStorage.getItem("refreshToken");
 
-	async login(username, password, cb) {
+	if (typeof accessToken === "string") {
+		return true;
+	} else if (refreshToken) {
+		localStorage.setItem("authed", false);
+		localStorage.setItem("accessToken", null);
 		try {
-			localStorage.clear();
-			const loginResult = await axios.post(url("/auth/login"), {
-				username: username,
-				password: password,
-			});
-
-			if (
-				loginResult.status === 200 &&
-				loginResult.data.msg === "success"
-			) {
-				localStorage.setItem(
-					"accessToken",
-					loginResult.data.accessToken
-				);
-				localStorage.setItem(
-					"refreshToken",
-					loginResult.data.refreshToken
-				);
-				localStorage.setItem("authed", true);
-			}
-			return this.authenticated;
-		} catch (error) {
-			if (!isEmpty(error.response)) {
-				this.errorText = JSON.stringify(error.response.data);
-			} else {
-				this.errorText = JSON.stringify(error.response.data);
-			}
+			axios
+				.post(url("/auth/verify"), {
+					token: accessToken,
+				})
+				.then((result) => {
+					localStorage.setItem(
+						"accessToken",
+						result.data.accessToken
+					);
+				})
+				.catch((error) => {
+					localStorage.setItem("authed", false);
+				});
+		} catch (errorx) {
+			console.log("renewed token error :(");
 		}
 	}
+	return false;
+};
 
-	logout(cb) {
-		this.authenticated = false;
-		localStorage.clear();
-
-		cb();
-	}
-
-	isAuthenticated() {
-		const accessToken = localStorage.getItem("accessToken");
-
-		if (accessToken) {
-			return true;
-		} else {
-			localStorage.clear();
-
-			try {
-				axios
-					.post(url("/auth/verify"), {
-						token: accessToken,
-					})
-					.then((result) => {
-						localStorage.setItem(
-							"accessToken",
-							result.data.accessToken
-						);
-					})
-					.catch((error) => {
-						localStorage.setItem("authed", false);
-					});
-			} catch (errorx) {
-				console.log("renewed token error :(");
-			}
-		}
-		return false;
-	}
-}
-
-export default new Auth();
+export { isAuthenticated }

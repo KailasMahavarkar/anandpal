@@ -33,6 +33,7 @@
     "animate.css": "^4.1.1",
     "axios": "^0.21.4",
     "editorjs-blocks-react-renderer": "^1.1.1",
+    "editorjs-react-renderer": "^2.7.3",
     "node-sass": "^6.0.1",
     "pretty-ms": "^7.0.1",
     "react": "^17.0.2",

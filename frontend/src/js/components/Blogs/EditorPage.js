@@ -1,15 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useEffectAsync } from "../../../helper";
 import axios from "axios";
 import { url } from "../../../helper";
 import { useLocation } from "react-router-dom";
-import Blocks from "editorjs-blocks-react-renderer";
+import Output from "editorjs-react-renderer";
 
 const EditorPage = () => {
 	const location = useLocation();
 	const currentID = useRef(location.pathname.split("/").pop());
-	const [articleData, setArticleData] = useState({});
-	const loaded = useRef(false);
+	const [loaded, setLoaded] = useState(false);
+	const [editorData, setEditorData] = useState({});
+
+	const Post = (props) => {
+		console.log("props -->", props.data);
+		return (
+			<section>
+				<Output data={props.data} />
+			</section>
+		);
+	};
 
 	useEffectAsync(async () => {
 		try {
@@ -18,8 +27,8 @@ const EditorPage = () => {
 			);
 
 			if (result.data.success) {
-				setArticleData(result.data.msg.data);
-				loaded.current = true;
+				setEditorData(result.data.msg.data);
+				setLoaded(true);
 			}
 		} catch (error) {
 			console.error(error.response);
@@ -29,12 +38,7 @@ const EditorPage = () => {
 	return (
 		<div className="editorjs__wrapper">
 			<div id="editorjs">
-				{console.log(articleData)}
-				{loaded.current ? (
-					<>
-						<Blocks data={articleData} />
-					</>
-				) : null}
+				{loaded ? <Post data={editorData} /> : null}
 			</div>
 		</div>
 	);
