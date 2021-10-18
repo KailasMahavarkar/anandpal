@@ -24,7 +24,7 @@ const Editorpage = () => {
 	const blogInitialState = {
 		title: "Blog title",
 		author: "AnandPal",
-		published_status: true,
+		published_status: false,
 		header_image: "",
 		category: "MEDICINE",
 		short_info: "Short Blog info",
@@ -97,11 +97,6 @@ const Editorpage = () => {
 				});
 
 				blogDispatch({
-					type: ACTIONS.BLOG_UPDATE_STATUS,
-					payload: result.data.msg.published_status,
-				});
-
-				blogDispatch({
 					type: ACTIONS.BLOG_UPDATE_HEADER_IMAGE,
 					payload: result.data.msg.header_image,
 				});
@@ -112,8 +107,8 @@ const Editorpage = () => {
 				});
 
 				blogDispatch({
-					type: ACTIONS.BLOG_UPDATE_PUBLISHED_TIME,
-					payload: result.data.msg.published_time,
+					type: ACTIONS.BLOG_UPDATE_PUBLISHED_STATUS,
+					payload: result.data.msg.published_status,
 				});
 
 				blogDispatch({
