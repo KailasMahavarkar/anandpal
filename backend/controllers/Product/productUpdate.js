@@ -103,7 +103,6 @@ const productUpdate = async (req, res) => {
         }
     )
 
-    console.log(px);
 
 	return res.status(200).json({
         msg: "product updated",

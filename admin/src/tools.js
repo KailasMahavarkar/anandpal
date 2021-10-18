@@ -55,7 +55,7 @@ export const EDITOR_JS_TOOLS = {
 		config: {
 			endpoints: {
                 // Your backend file uploader endpoint -> POST
-				byFile: "http://localhost:1000/blog/image", 
+				byFile: "http://localhost:1000/upload/blog", 
 			},
 		},
 	},

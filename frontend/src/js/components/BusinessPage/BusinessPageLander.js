@@ -10,7 +10,7 @@ function BusinessPageLander() {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit,
             adipisci?
           </p>
-          <button>more info</button>
+          <button className="business_page_lander_button">more info</button>
         </div>
       </div>
     </div>

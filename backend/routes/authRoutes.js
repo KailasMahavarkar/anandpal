@@ -16,12 +16,12 @@ const renewToken  = require("../controllers/Auth/auth").renewtoken;
 const verifyAccess  = require("../controllers/Auth/verfiyAccess").verfiyAccess;
 
 // routes
-router.route("/register").post(_nullCheckRegister,_apiKeyCheck, adminRegister);
+// router.route("/register").post(_nullCheckRegister,_apiKeyCheck, adminRegister);
 router.route("/login").post(_nullCheckLogin, adminLogin);
 router.route("/logout").post(adminLogout);
-router.route("/delete").delete(_apiKeyCheck, adminDelete);
+// router.route("/delete").delete(_apiKeyCheck, adminDelete);
 router.route("/refresh").post(renewToken);
-router.route('/verify').post(_authToken, verifyAccess);
+// router.route('/verify').post(_authToken, verifyAccess);
 
 
 

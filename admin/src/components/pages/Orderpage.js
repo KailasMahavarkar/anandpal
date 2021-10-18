@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../blocks/Navbar";
 import axios from "axios";
-import { url, useEffectAsync } from "../../helper";
+import { HEADER_PAYLOAD, url, useEffectAsync } from "../../helper";
 import yesNO from "../blocks/swal/yesNo";
 
 const OrderPage = () => {
@@ -10,7 +10,13 @@ const OrderPage = () => {
 
 	useEffectAsync(async () => {
 		try {
-			const result = await axios.get(url("/order/readall"), {});
+			const result = await axios.get(url("/order/xread"), {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                },
+            });
 			setOrders(result.data.msg);
 		} catch (error) {
             setOrders([])
@@ -21,7 +27,11 @@ const OrderPage = () => {
 		const yesCallback = async () => {
 			try {
 				const delRes = await axios.delete(url("/order/delete"), {
-					headers: {},
+					headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "accessToken"
+                        )}`,
+                    },
 					data: {
 						orderID: id,
 					},

@@ -1,17 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function NavigationBar() {
   const cartItems = useSelector((state) => state.cartItems);
+  const history = useHistory();
   return (
     <div className="nav_bar">
       <div className="company">
         <div className="relative_container">
-          <div className="company_logo" />
+          <div className="company_logo" onClick={()=>history.push('/')} />
         </div>
         <div className="relative_container">
-          <div className="company_text">anandpal</div>
+          <div className="company_text" onClick={()=>history.push('/')} >anandpal</div>
         </div>
       </div>
       <div className="nav_items">

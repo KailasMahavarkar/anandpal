@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useReducer } from "react";
 import Navbar from "./../blocks/Navbar";
-import { isEmpty, url, randomHash, useEffectAsync, xiter } from "../../helper";
+import { isEmpty, url, HEADER_PAYLOAD, useEffectAsync } from "../../helper";
 import axios from "axios";
 import Upload from "rc-upload";
 // import SnackBar from './../blocks/SnackBar';
@@ -11,6 +11,7 @@ import customToast from "../blocks/swal/customToast";
 import uploadWait from "../blocks/swal/uploadWait";
 import { useLocation, useHistory } from "react-router-dom";
 import useIncDec from "../../hooks/useIncDec";
+import SimpleImageSlider from "react-simple-image-slider";
 
 const NewProduct = (props) => {
 	const location = useLocation();
@@ -47,10 +48,11 @@ const NewProduct = (props) => {
 	const [currentImage, setCurrentImage] = useState(0);
 
 	useEffectAsync(async () => {
+
 		try {
 			if (location.search !== "?newproduct") {
 				const checkExists = await axios.get(
-					url(`/product/read/${currentID.current}`)
+					url(`/api/product/read/${currentID.current}`)
 				);
 
 				if (!isEmpty(checkExists.data.msg)) {
@@ -61,8 +63,11 @@ const NewProduct = (props) => {
 							info: checkExists.data.msg.info,
 							title: checkExists.data.msg.title,
 							images: checkExists.data.msg.images,
+							price: checkExists.data.msg.price,
+							discount_price: checkExists.data.msg.discount_price,
 						},
 					});
+
 					setPrice(checkExists.data.msg.price);
 					setAvailableQuantity(
 						checkExists.data.msg.available_quantity
@@ -86,10 +91,13 @@ const NewProduct = (props) => {
 			available_quantity: available_quantity,
 		};
 		try {
-			const result = await axios.post(
-				url("/product/create"),
-				productData
-			);
+			await axios.post(url("/product/create"), productData, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(
+						"accessToken"
+					)}`,
+				},
+			});
 
 			if (location.search === "?newproduct") {
 				history.push(`/products/${state.id}`);
@@ -109,12 +117,16 @@ const NewProduct = (props) => {
 	};
 
 	const uploadProps = {
-		action: url("/product/upload"),
+		action: url("/upload/product"),
 		method: "POST",
 		multiple: false,
+		headers: {
+			Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+		},
+		crossDomain: true,
 		onStart(file) {
 			console.log(file.name);
-			uploadWait(file.name);
+			// uploadWait(file.name);
 		},
 		onSuccess(result) {
 			const PAYLOAD = { number: currentImage["x"], url: result.file.url };
@@ -128,8 +140,8 @@ const NewProduct = (props) => {
 			);
 			productSaveHandler();
 		},
-		onError(err) {
-			console.log("onError", err);
+		onError(error) {
+			console.log("onError", error);
 		},
 		beforeUpload(file, fileList) {
 			console.log(file, fileList);
@@ -148,11 +160,11 @@ const NewProduct = (props) => {
 	};
 
 	const repeatUpload = (x) => (
-		<div className="card">
+		<div className="card" key={x}>
 			{state.images[x] ? (
 				<>
 					<div className="card__image">
-						<img src={state.images[x]} alt=""/>
+						<img src={state.images[x]} alt="" />
 					</div>
 					<div className="card__control">
 						<div className="card__control__button">
@@ -194,12 +206,33 @@ const NewProduct = (props) => {
 		</div>
 	);
 
+	const ImageCard = () => (
+		<div className="imagecard">
+			<div className="imagecard__image">
+				<img src={state.images[0]} alt="" />
+			</div>
+			<div className="imagecard__info">
+				<div className="imagecard__info__title">{state.title}</div>
+				<div className="imagecard__info__price">
+					<div className="imagecard__info__price__base">{price}</div>
+					<div className="imagecard__info__price__discounted">
+						{discount_price}
+					</div>
+				</div>
+				<div className="imagecard__info__description">{state.info}</div>
+				<div className="imagecard__button">Add to Cart</div>
+			</div>
+		</div>
+	);
+
 	return (
 		<div className="view">
 			<Navbar />
 
 			<div className="newproduct">
 				<div className="newproduct__main">
+					<ImageCard />
+					<div className="split"></div>
 					<div className="split">
 						<label htmlFor="" className="split__title">
 							Product Title
@@ -242,7 +275,7 @@ const NewProduct = (props) => {
 					</div>
 					<div className="split">
 						<label htmlFor="" className="split__title">
-							Discounted Price
+							Final Discounted Price
 						</label>
 						<div className="split__input">{DiscountPriceBlock}</div>
 					</div>

@@ -1,10 +1,11 @@
 .business_page_lander {
-  background: url(../../../images/AboutUS/aboutUsLander.jpg);
+  background: url(../../../images/compressed/AboutUS/aboutUsLander.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom;
   background-size: cover;
   height: 20rem;
+
 
   &_overlay {
     height: 100%;
@@ -20,8 +21,6 @@
     margin-left: 2rem;
     margin-right: 2rem;
 
-    & h1 {
-    }
     & p {
       font-size: 0.8rem;
     }
@@ -30,12 +29,14 @@
       border: 3px solid rgb(29, 163, 224);
       color: rgb(29, 163, 224);
       // color: white;
+
       font-weight: 800;
       background: transparent;
-      padding: 5px;
+      padding: 10px;
       outline: none;
-      border-radius: 100px;
+      border-radius: 5px;
       transition-duration: 0.5s;
+      cursor: pointer;
 
       &:hover {
         color: white;

@@ -14,7 +14,12 @@ const ACTIONS = {
     BLOG_UPDATE_TITLE: "blogUpdateTitle",
     BLOG_UPDATE_AUTHOR: "blogUpdateAuthor",
     BLOG_UPDATE_DATA: "blogUpdateData",
-    BLOG_UPDATE_STATUS: "blogUpdateStatus"    
+    BLOG_UPDATE_STATUS: "blogUpdateStatus",
+    BLOG_UPDATE_HEADER_IMAGE: "blogUpdateHeaderImage",
+    BLOG_SHOW_SETTING: "blogShowSetting",
+    BLOG_UPDATE_CATEGORY: "blogUpdateCategory",
+    BLOG_UPDATE_PUBLISHED_TIME: "blogUpdatePublishedTime",
+    BLOG_UPDATE_SHORT_INFO: "blogUpdateShortInfo"
 
 };
 

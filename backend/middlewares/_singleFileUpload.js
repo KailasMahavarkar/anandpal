@@ -4,6 +4,7 @@ const streamifier = require("streamifier");
 
 
 const _singleFileUpload = async (req, res, next) => {
+    console.log("starting ... single upload --")
 	try {
 
         cloudinary.config({
@@ -38,6 +39,8 @@ const _singleFileUpload = async (req, res, next) => {
         }
 
         req.singleImage = await upload(req)
+
+        console.log("leaving ... single upload --")
         next()
 
 	} catch (error) {

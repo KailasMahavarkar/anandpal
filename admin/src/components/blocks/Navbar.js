@@ -3,16 +3,13 @@ import { useState } from "react";
 import axios from "axios";
 import { url } from "../../helper";
 import { Link, useHistory } from "react-router-dom";
-import Cookies from "js-cookie";
-import auth from "../../auth";
 
 const Navbar = (props) => {
 	let history = useHistory();
 
 	const logoutHandler = () => {
-		auth.logout(() => {
-			history.push("/");
-		});
+		localStorage.clear();
+        history.push('/');
 	};
 
 	return (

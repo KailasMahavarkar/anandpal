@@ -1,3 +1,6 @@
+@import "./base/variables";
+@import './base/mixins';
+
 @import "./components/navigationBar";
 @import "./components/contactUs";
 @import "./components/connectWithUs";
@@ -25,6 +28,8 @@
 
 // Blogs Page
 @import "./components/BlogsPage/blogs";
+@import './components/BlogsPage/blogcard';
+@import './components/BlogsPage/editorjs';
 
 @import "./base/fonts";
 @import "./base/base";

@@ -16,7 +16,11 @@ const ContactPage = () => {
 	useEffectAsync(async () => {
 		try {
 			const result = await axios.get(url("/generic/contact/read"), {
-				headers: HEADER_PAYLOAD,
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(
+						"accessToken"
+					)}`,
+				},
 			});
 			setNotifications(result.data.msg);
 		} catch (error) {
@@ -28,7 +32,11 @@ const ContactPage = () => {
 		const yesCallback = async () => {
 			try {
 				await axios.delete(url("/generic/contact/delete"), {
-					headers: HEADER_PAYLOAD,
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem(
+							"accessToken"
+						)}`,
+					},
 					data: {
 						notificationID: id,
 					},
@@ -59,17 +67,18 @@ const ContactPage = () => {
 						<div className="notification__item__contact">
 							{notification.contact_phone}
 						</div>
-						<div className="notification__item__phone">
-							{notification.contact_phone}
-						</div>
+
 						<div className="notification__item__message">
 							{notification.contact_message}
 						</div>
 						<div className="notification__item__delete">
 							<button
-                                className="button button__delete"
+								className="button button__delete"
 								onClick={() => {
-									notificationDeleteHandler(notification._id, notification.contact_name);
+									notificationDeleteHandler(
+										notification._id,
+										notification.contact_name
+									);
 								}}
 							>
 								Delete
@@ -92,7 +101,6 @@ const ContactPage = () => {
 						<div className="notification__item__contact">
 							Contact
 						</div>
-						<div className="notification__item__phone">Phone</div>
 						<div className="notification__item__message">
 							Message
 						</div>

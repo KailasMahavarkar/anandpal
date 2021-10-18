@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import auth from "../../auth";
-import { isEmpty } from "../../helper";
+import { isEmpty, url } from "../../helper";
 import customToast from "../blocks/swal/customToast";
+import axios from 'axios';
+import { isAuthenticated } from "../../auth";
 
 const Loginpage = (props) => {
 	const history = useHistory();
+
+	useEffect(()=>{
+	    if (isAuthenticated()){
+	        history.push('/blogs');
+	    }else{
+	        localStorage.clear();
+	    }
+	}, [])
 
 	// const history = useHistory();
 	const [username, setUsername] = useState("");
@@ -22,28 +31,31 @@ const Loginpage = (props) => {
 	// 'center' | 'center-start' | 'center-end' | 'center-left' | 'center-right' |
 	// 'bottom' | 'bottom-start' | 'bottom-end' | 'bottom-left' | 'bottom-right';
 	const loginHandler = async () => {
+		// e.preventDefault();
 		try {
-			const result = await auth.login(username, password)
-            if (result){
-				history.push("/blogs");
-                customToast("success", "Logged in successfully");
+			localStorage.clear();
+			const loginResult = await axios.post(url("/auth/login"), {
+				username: username,
+				password: password,
+			});
 
-			}else{
-                customToast("error", await auth.isError().msg );
-            }
-		} catch (error) {
-			if (!isEmpty(error)) {
-				customToast("error", error.respose.data);
-				setTimeout(() => {
-					customToast(
-						"error",
-						`Error Code ${error.respose.data}`,
-						6000
-					);
-				}, 4000);
-			} else {
-				customToast("error", "connection to backend failed", 6000);
+			if (
+				loginResult.status === 200 &&
+				loginResult.data.msg === "success"
+			) {
+				localStorage.setItem(
+					"accessToken",
+					loginResult.data.accessToken
+				);
+				localStorage.setItem(
+					"refreshToken",
+					loginResult.data.refreshToken
+				);
+				localStorage.setItem("authed", true);
+                history.push('/blogs')
 			}
+		} catch (error) {
+			console.error('login error main -->', error.response);
 		}
 	};
 

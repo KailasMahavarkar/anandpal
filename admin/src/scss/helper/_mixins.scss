@@ -36,6 +36,7 @@
 @mixin button-outline($outline, $textcolor){
     border: 1px solid $outline;
     color: $outline;
+    cursor: pointer;
 
     &:hover{
         background-color: $outline;

@@ -1,72 +1,64 @@
 .small_introduction {
-  //   background-color: rgb(230, 230, 230);
-  padding-bottom: 1rem;
-  padding-top: 1rem;
-  background: url(../../../images/introductionBG.jpg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover;
+	//   background-color: rgb(230, 230, 230);
+	padding-bottom: 1rem;
+	padding-top: 1rem;
+	background: url(../../../images/compressed/introductionBG.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
 }
 
 .profile_img {
-  height: 10rem;
-  min-width: 10rem;
-  margin: 2rem;
-  border-radius: 400px;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
-  margin: 2rem;
+	height: 10rem;
+	min-width: 10rem;
+	margin: 2rem;
+	border-radius: 400px;
+	box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
+	margin: 2rem;
 }
 .introduction {
-  display: flex;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
-  grid-template-rows: 1fr;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  border-radius: 10px;
-  width: 50rem;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  &:hover {
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.7);
-    animation-name: boxshadow_hover;
-    animation-duration: 0.1s;
-    position: relative;
-    top: -5px;
-  }
-  @keyframes boxshadow_hover {
-    0% {
-      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
-      top: 0px;
-    }
+	display: flex;
+	box-shadow: $shadow_x300;
+	grid-template-rows: 1fr;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 3rem;
+	margin-bottom: 3rem;
+	border-radius: 10px;
+	width: 50rem;
+	background-color: tint(black, 100%);
 
-    100% {
-      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.7);
-      top: -3px;
-    }
-  }
+	backdrop-filter: blur(5px);
+	color: white;
+	&:hover {
+		cursor: pointer;
+		box-shadow: $shadow_x400;
+		// animation-name: boxshadow_hover;
+		animation-duration: 0.1s;
+		position: relative;
+		top: -5px;
+	}
 }
 
 .profile_img1 {
-  background: url(../../../images/profile.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-right: 1px solid white;
-  @extend .profile_img;
+	background: url(../../../images/profile.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	border-right: 1px solid white;
+	@extend .profile_img;
 }
 
 .profile_img2 {
-  background: url(../../../images/profile.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  @extend .profile_img;
+	background: url(../../../images/profile.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	@extend .profile_img;
 }
 
 .profile_intro {
-  padding: 1rem;
-  margin: 1rem;
+	padding: 1rem;
+	margin: 1rem;
 }
