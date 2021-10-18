@@ -1,25 +1,18 @@
 .imagecard {
 	display: flex;
 	align-items: center;
-	align-self: center;
-	justify-content: center;
 	flex-direction: column;
-	box-shadow: $shadow_x300;
+    box-shadow: $shadow_all;
 	padding: 15px;
 	width: 300px;
 	margin: 20px;
 
-    // transform: scale(0.7);
-
-    > div {
-        margin: 5px;
-    }
-
 	&__image {
+        padding: 10px !important;
 		> img {
-			width: 300px;
+			width: 280px;
             height: 250px;
-			box-shadow: $shadow_x300;
+			box-shadow: $shadow_200;
 		}
 	}
 
@@ -66,7 +59,7 @@
 			text-transform: none;
 			letter-spacing: 0;
 			color: #4e4e4e;
-			font-size: 0.7em;
+			font-size: 0.9em;
 			line-height: 1.6em;
 			text-align: justify;
 		}

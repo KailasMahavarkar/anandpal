@@ -73,7 +73,7 @@ const ContactPage = () => {
 						</div>
 						<div className="notification__item__delete">
 							<button
-								className="button button__delete"
+								className="button button-delete"
 								onClick={() => {
 									notificationDeleteHandler(
 										notification._id,

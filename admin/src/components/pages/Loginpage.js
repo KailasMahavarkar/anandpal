@@ -52,10 +52,12 @@ const Loginpage = (props) => {
 					loginResult.data.refreshToken
 				);
 				localStorage.setItem("authed", true);
+                customToast("success", "Login Successful")
                 history.push('/blogs')
 			}
 		} catch (error) {
 			console.error('login error main -->', error.response);
+            customToast("error", error.response.data.msg)
 		}
 	};
 

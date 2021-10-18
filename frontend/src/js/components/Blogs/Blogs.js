@@ -29,9 +29,9 @@ const BlogCard = ({ blogState }) => (
 						{blogState.author}
 					</div>
 					<div className="blogcard__about__info__timestamp">
-						{prettyMS(blogState.published_time, {
+						{prettyMS(Date.now() - blogState.published_time, {
 							compact: true,
-						})}
+						})} {" ago"}
 					</div>
 				</div>
 			</div>

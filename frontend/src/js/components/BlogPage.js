@@ -5,10 +5,7 @@ function BlogPage() {
 	return (
 		<div className="blogs">
 			<div className="blogs-lander">
-				Check Out our Blogs
-				<div className="blogs-lander-scroll-container">
-					<div className="blogs-lander-scroll"></div>
-				</div>
+				Checkout our Blogs
 			</div>
 			<div className="blogs-container">
 				<Blogs />
