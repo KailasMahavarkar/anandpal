@@ -1,5 +1,5 @@
 const ContactModel = require("../../models/contact.model");
-const { typeMatch, isEmpty } = require("../../Improve/Improve");
+const { typeMatch, isEmpty } = require("../../Improve/improve");
 const { randomHash } = require("../../Improve/encryption");
 
 const createContact = async (req, res, next) => {

@@ -10,17 +10,22 @@ const orderSchema = new Schema({
 		type: String,
 		required: true,
 	},
-    paid_status: {
-		type: String,
-		required: false,
-	},
     amount_paid: {
         type: Number,
         required: true
     },
-    items_ordered: {
+    phone_number:{
         type: Number,
+        required: true
+    },
+    items_ordered: {
+        type: Object,
         required: false
+    },
+    paid_status: {
+        type: Boolean,
+        required: false,
+        default: false
     },
     address: {
         type: String,

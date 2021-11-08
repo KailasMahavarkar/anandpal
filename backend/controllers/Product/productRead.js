@@ -1,5 +1,5 @@
 // importing models
-const { typeMatch, isEmpty } = require("../../Improve/Improve");
+const { typeMatch, isEmpty } = require("../../Improve/improve");
 const ProductModel = require("../../models/product.model");
 
 // importing logger

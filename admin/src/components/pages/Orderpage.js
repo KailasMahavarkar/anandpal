@@ -11,15 +11,15 @@ const OrderPage = () => {
 	useEffectAsync(async () => {
 		try {
 			const result = await axios.get(url("/order/xread"), {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
-                },
-            });
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(
+						"accessToken"
+					)}`,
+				},
+			});
 			setOrders(result.data.msg);
 		} catch (error) {
-            setOrders([])
+			setOrders([]);
 		}
 	}, [forceRenderCount]);
 
@@ -28,17 +28,17 @@ const OrderPage = () => {
 			try {
 				const delRes = await axios.delete(url("/order/delete"), {
 					headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "accessToken"
-                        )}`,
-                    },
+						Authorization: `Bearer ${localStorage.getItem(
+							"accessToken"
+						)}`,
+					},
 					data: {
 						orderID: id,
 					},
 				});
-                if (delRes.status === 200){
-                    setForceRenderCount((x) => x + 1);
-                }
+				if (delRes.status === 200) {
+					setForceRenderCount((x) => x + 1);
+				}
 			} catch (error) {
 				console.log(error);
 			}
@@ -59,7 +59,7 @@ const OrderPage = () => {
 							{order.order_name}
 						</div>
 						<div className="order__item__paidstatus">
-							{order.paid_status}
+							{order.items_ordered}
 						</div>
 						<div className="order__item__amountpaid">
 							{order.amount_paid}
@@ -67,9 +67,16 @@ const OrderPage = () => {
 						<div className="order__item__address">
 							{order.address}
 						</div>
-						<div className="order__item__delete">
+						<div
+							className="order__item__delete"
+							style={{
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+							}}
+						>
 							<button
-								className="button button__delete"
+								className="button button-delete"
 								onClick={() => {
 									orderDeleteHandler(
 										order._id,
@@ -95,7 +102,7 @@ const OrderPage = () => {
 						<div className="order__item__id">ID</div>
 						<div className="order__item__name">Order Name</div>
 						<div className="order__item__paidstatus">
-							Paid Status
+							Items Ordered
 						</div>
 						<div className="order__item__amountpaid">
 							Amount Paid

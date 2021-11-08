@@ -8,16 +8,20 @@ const cartItems = (state = [], action) => {
 		case "remove":
 			return [];
 		case "quantity":
-			state[action.payload.index].quantity += action.payload.quantity;
-			if (state[action.payload.index].quantity === 0) {
-				state.splice(action.payload.index, 1);
+			try {
+				state[action.payload.index].quantity += action.payload.quantity;
+			} catch (error) {
+				console.log("cant delete ");
 			}
-			if (
+
+			if (state[action.payload.index].quantity === 0) {
+				console.log("ran this");
+				state.splice(action.payload.index, 1);
+			}else if (
 				state[action.payload.index].available_quantity <
 				state[action.payload.index].quantity
 			) {
-                state[action.payload.index].quantity -= 1;
-				
+				state[action.payload.index].quantity -= 1;
 			}
 			return [...state];
 		default:

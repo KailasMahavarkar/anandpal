@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const { isEmpty, typeMatch } = require("../Improve/Improve");
+const { isEmpty, typeMatch } = require("./improve");
 
 const color = {
 	green: [0, 255, 0],

@@ -24,12 +24,13 @@ function Item({ dispatch, info, addedToCart }) {
 				<div className="imagecard__info__description">{info.info}</div>
 				<div
 					className="imagecard__button"
-					onClick={() =>
+					onClick={() => {
 						dispatch({
 							type: "add",
 							payload: { ...info, quantity: 1 },
-						})
-					}
+						});
+
+					}}
 				>
 					{addedToCart ? (
 						<>
