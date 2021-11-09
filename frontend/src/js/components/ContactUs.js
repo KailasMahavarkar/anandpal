@@ -64,9 +64,9 @@ function ContactUs() {
 						</p>
 						<h4>Bengluru</h4>
 						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing
+							{/* Lorem ipsum dolor sit amet consectetur adipisicing
 							elit. Facere, consequuntur. <br />
-							Telephone:
+							Telephone: */}
 							<span className="green"> +91 9090909090</span>
 							<br />
 							E-mail:

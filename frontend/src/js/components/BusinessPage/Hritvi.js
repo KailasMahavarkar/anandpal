@@ -103,7 +103,7 @@ function Hritvi() {
 					<h3 className="hritvi-branch-info_header">
 						{branch[selectedBranch].title}
 					</h3>
-					<p>{branch[selectedBranch].info}</p>
+					<p>Headoffice in Belur Branch, secondary office in bengluru branch</p>
 					<p>
 						<span className="green">Address:</span>
 						{branch[selectedBranch].address}

@@ -32,10 +32,10 @@ function NavigationBar() {
 				</Link>
 				<Link to="" className="nav_item">
 					dreams
-				</Link>
-				<Link to="/business" className="nav_item">
+				 </Link>
+				{/*<Link to="/business" className="nav_item">
 					business
-				</Link>
+				</Link> */}
 				{/* <a href="" className="nav_item">
           lifestyle & adventure
         </a> */}

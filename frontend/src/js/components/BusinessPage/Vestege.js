@@ -78,29 +78,19 @@ function Vestege() {
 					</div>
 					<div className="vestege-info-content">
 						<h3>WHY DIRECT SELLING INDUSTRY?</h3>
-						Lorem ipsum dolor, sit amet consectetur adipisicing
-						elit. Consequatur ea maxime dolorum facere corrupti
-						repellendus aliquid molestias, distinctio tenetur
-						aliquam error, autem excepturi architecto nam voluptate
-						quas laudantium saepe nostrum officia dolore itaque
-						inventore minus blanditiis quasi. Praesentium explicabo
-						accusantium nisi, ipsa minima atque voluptate ad
-						delectus cumque vel voluptatum.
+						Direct selling offers important benefits to people who
+						want an opportunity to earn income and build a business
+						of their own, to consumers as an alternative to retail
+						stores, and a cost effective way for business to bring
+						products to market. ... Start-up costs in direct selling
+						are typically low.
 					</div>
 				</div>
 			</section>
 			<section className="vestege-even-section">
 				<div className="vestege-info">
 					<div className="vestege-info-content">
-						<h3>HOW YOU CAN JOIN THIS BUSINESS AND GROW?</h3>
-						Lorem ipsum dolor, sit amet consectetur adipisicing
-						elit. Consequatur ea maxime dolorum facere corrupti
-						repellendus aliquid molestias, distinctio tenetur
-						aliquam error, autem excepturi architecto nam voluptate
-						quas laudantium saepe nostrum officia dolore itaque
-						inventore minus blanditiis quasi. Praesentium explicabo
-						accusantium nisi, ipsa minima atque voluptate ad
-						delectus cumque vel voluptatum.
+						<h3>JOIN US TO GROW YOUR BUSSINESS</h3>
 					</div>
 					<div className="vestege-video">
 						<iframe

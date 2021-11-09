@@ -27,11 +27,11 @@ function AboutUsContent() {
 							about pallavi
 						</div>
 					</a>
-					<a href="#about_business">
+					{/* <a href="#about_business">
 						<div className="about_us_nav_bar_content">
 							about our business
 						</div>
-					</a>
+					</a> */}
 					<a href="#contact_us_section">
 						<div className="about_us_nav_bar_content">
 							contact us
@@ -73,22 +73,22 @@ function AboutUsContent() {
 			<div className="about_us_content">
 				{/* about us */}
 				<div className="about_us_section" id="about_us">
-					<p className="about_us_heading_sub">about us</p>
-					<h1 className="about_us_heading_main">about us</h1>
-					<p>
-						Lorem ipsum dolor sit amet consectetur, adipisicing
+					{/* <p className="about_us_heading_sub">about us</p> */}
+					{/* <h1 className="about_us_heading_main">about us</h1> */}
+					{/* <p> */}
+						{/* Lorem ipsum dolor sit amet consectetur, adipisicing
 						elit. Assumenda quidem asperiores perferendis facere
-						nobis inventore culpa eaque! Sunt, est mollitia.
-					</p>
+						nobis inventore culpa eaque! Sunt, est mollitia. */}
+					{/* </p> */}
 					<p className="about_us_data">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
+						{/* Lorem ipsum dolor sit amet consectetur adipisicing elit.
 						Ratione cupiditate ex distinctio doloremque, officiis
 						officia impedit molestias assumenda! Placeat,
 						aspernatur! Optio molestias voluptatum, asperiores
 						distinctio ipsum voluptatem porro ad commodi repellat
 						hic error quaerat, amet in delectus itaque voluptates,
 						ullam facere suscipit? Ratione, et consequatur
-						voluptatum voluptates magnam similique neque.
+						voluptatum voluptates magnam similique neque. */}
 					</p>
 				</div>
 				{/* anand */}
@@ -138,7 +138,7 @@ function AboutUsContent() {
 					</div>
 				</div>
 				{/*about business  */}
-				<div className="about_us_section" id="about_business">
+				{/* <div className="about_us_section" id="about_business">
 					<p className="about_us_heading_sub">about our business</p>
 					<h1 className="about_us_heading_main">
 						about our business
@@ -158,7 +158,7 @@ function AboutUsContent() {
 						ullam facere suscipit? Ratione, et consequatur
 						voluptatum voluptates magnam similique neque.
 					</p>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);
