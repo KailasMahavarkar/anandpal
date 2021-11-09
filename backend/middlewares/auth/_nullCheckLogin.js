@@ -1,7 +1,7 @@
-const { isEmpty, typeMatch } = require('../../Improve/improve');
+const { isEmpty, typeMatch } = require("../../improve/improve");
 
 // import logger
-const { logger } = require('../../Improve/logger')
+const { logger } = require('../../improve/logger')
 const log = logger(__filename)
 
 
