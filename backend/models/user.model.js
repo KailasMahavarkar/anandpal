@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { timeNow } = require('./../Improve/Improve')
+const { timeNow } = require('./../improve/improve')
 
 
 const userSchema = new Schema({

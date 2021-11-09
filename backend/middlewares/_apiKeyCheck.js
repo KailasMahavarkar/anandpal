@@ -1,6 +1,6 @@
 // importing logger
-const { typeMatch } = require('../Improve/Improve')
-const { logger } = require('../Improve/logger')
+const { typeMatch } = require('../improve/improve')
+const { logger } = require('../improve/logger')
 const log = logger(__filename)
 
 

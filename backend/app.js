@@ -1,7 +1,7 @@
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-const { allowPublicCORS, allowPrivateCORS } = require("./Improve/helper");
+const { allowPublicCORS, allowPrivateCORS } = require("./improve/helper");
 dotenv.config();
 
 const express = require("express");

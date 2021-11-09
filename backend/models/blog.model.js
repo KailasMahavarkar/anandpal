@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { randomHash } = require("../Improve/encryption");
+const { randomHash } = require("../improve/encryption");
 
 const blogSchema = new Schema({
 	_id: {
