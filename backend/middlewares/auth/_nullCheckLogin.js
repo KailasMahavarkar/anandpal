@@ -91,4 +91,4 @@ const _nullCheckLogin = async (req, res, next) => {
 	next();
 };
 
-module.exports = { _nullCheckLogin };
+export { _nullCheckLogin };
