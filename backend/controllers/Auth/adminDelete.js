@@ -14,7 +14,6 @@ const log = logger(__filename)
 
 const adminDelete = async (req, res, next) => {
 	const { username, password } = req.body;
-
     if (!typeMatch(username) || !typeMatch(password) ){
         return res.status(404).json({
             msg: `arguments apikey, id, password needs to be string type`,
