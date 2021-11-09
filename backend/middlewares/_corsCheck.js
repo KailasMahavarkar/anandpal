@@ -4,7 +4,7 @@ const _allowPrivateCORS = (req, res, next) => {
     
     try{
         cors({
-            origin: ["http://localhost:4000", "http://localhost:4000/product/upload"]
+            origin: ["http://3.14.11.113:4000", "http://3.14.11.113:4000/product/upload"]
         })
         next();
     }catch(error){
