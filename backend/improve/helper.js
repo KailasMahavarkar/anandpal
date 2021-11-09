@@ -5,7 +5,7 @@ const allowPublicCORS = {
 }
 
 const allowPrivateCORS = {
-    origin: "http://localhost:4000"
+    origin: ["http://3.14.11.113:4000"]
 }
 
 
