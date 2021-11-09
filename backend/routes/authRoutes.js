@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // middlewares
-const _nullCheckLogin =
-	require("../middlewares/auth/_nullCheckLogin")._nullCheckLogin;
+const { _nullCheckLogin } = require("../middlewares/auth/_nullCheckLogin");
 
 // controllers
 const adminLogin = require("../controllers/Auth/adminLogin").adminLogin;
