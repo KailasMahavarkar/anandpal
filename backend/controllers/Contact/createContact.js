@@ -1,6 +1,6 @@
 const ContactModel = require("../../models/contact.model");
-const { typeMatch, isEmpty } = require("../../Improve/improve");
-const { randomHash } = require("../../Improve/encryption");
+const { typeMatch, isEmpty } = require("../../improve/improve");
+const { randomHash } = require("../../improve/encryption");
 
 const createContact = async (req, res, next) => {
 	const { contact_name, contact_phone, contact_message, contact_email } = req.body ?? {};

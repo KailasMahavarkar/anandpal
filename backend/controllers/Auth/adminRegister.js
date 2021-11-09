@@ -1,6 +1,6 @@
 const AdminModel = require("../../models/admin.model");
 const User = require("../../models/user.model");
-const { isEmpty } = require("../../Improve/Improve");
+const { isEmpty } = require("../../improve/improve");
 
 
 /*
@@ -10,7 +10,7 @@ const { isEmpty } = require("../../Improve/Improve");
 */
 
 // importing logger
-const { logger } = require('../../Improve/logger')
+const { logger } = require('../../improve/logger')
 const log = logger(__filename)
 
 const adminRegister = async (req, res, next) => {

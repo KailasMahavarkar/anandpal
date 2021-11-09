@@ -1,6 +1,6 @@
 const OrderModel = require("../../models/order.model");
-const { typeMatch, isEmpty } = require("../../Improve/improve");
-const { randomHash } = require("../../Improve/encryption");
+const { typeMatch, isEmpty } = require("../../improve/improve");
+const { randomHash } = require("../../improve/encryption");
 // with fields { id ,order_name,paid status,amount paid,items ordered(products ordered),address}
 
 const createOrder = async (req, res, next) => {

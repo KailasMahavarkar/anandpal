@@ -1,4 +1,4 @@
-const { isEmpty, typeMatch } = require('../../Improve/Improve');
+const { isEmpty, typeMatch } = require('../../improve/improve');
 // tree shakable import 
 const isEmail  = require('validator/lib/isEmail');
 

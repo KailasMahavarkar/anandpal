@@ -1,9 +1,9 @@
 // importing models
-const { typeMatch, isEmpty } = require("../../Improve/improve");
+const { typeMatch, isEmpty } = require("../../improve/improve");
 const OrderModel = require("../../models/order.model");
 
 // importing logger
-const { logger } = require("../../Improve/logger");
+const { logger } = require("../../improve/logger");
 const log = logger(__filename);
 
 const xreadAllOrders = async (req, res, next) => {

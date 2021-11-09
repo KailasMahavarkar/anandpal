@@ -1,5 +1,5 @@
-const { isEmpty, typeMatch } = require('../../Improve/Improve')
-const { logger } = require("../../Improve/logger")
+const { isEmpty, typeMatch } = require('../../improve/improve')
+const { logger } = require("../../improve/logger")
 
 const _nullCheckDelete = async (req, res, next) => {
 

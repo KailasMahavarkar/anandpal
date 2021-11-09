@@ -1,4 +1,4 @@
-const { isEmpty, typeMatch } = require("../../Improve/Improve");
+const { isEmpty, typeMatch } = require("../../improve/improve");
 const refreshToken = require("../../models/refreshToken.model");
 
 /*
@@ -8,7 +8,7 @@ const refreshToken = require("../../models/refreshToken.model");
 */
 
 // importing logger
-const { logger } = require('../../Improve/logger')
+const { logger } = require('../../improve/logger')
 const log = logger(__filename)
 
 const adminLogout = async (req, res) => {

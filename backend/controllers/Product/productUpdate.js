@@ -1,4 +1,4 @@
-const { typeMatch, isEmpty } = require("../../Improve/Improve");
+const { typeMatch, isEmpty } = require("../../improve/improve");
 const ProductModel = require("../../models/product.model")
 
 

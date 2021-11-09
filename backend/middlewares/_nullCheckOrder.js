@@ -1,4 +1,4 @@
-const { typeMatch, isEmpty } = require("../Improve/improve");
+const { typeMatch, isEmpty } = require("../improve/improve");
 // with fields { id ,order_name,paid status,amount paid,items ordered(products ordered),address}
 
 const _nullCheckOrder = async (req, res, next) => {

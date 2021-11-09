@@ -1,9 +1,9 @@
 // importing models
 const AdminModel = require("../../models/admin.model");
-const { isEmpty, typeMatch } = require("../../Improve/Improve");
+const { isEmpty, typeMatch } = require("../../improve/improve");
 
 // importing logger
-const { logger } = require("../../Improve/logger") 
+const { logger } = require("../../improve/logger") 
 const log = logger(__filename)
 
 /*

@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 const smtpTransport = require("nodemailer-smtp-transport");
-const { fakeID } = require("../Improve/encryption");
+const { fakeID } = require("../improve/encryption");
 
 /*
     CE:   0  

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { isEmpty } = require('../Improve/Improve')
+const { isEmpty } = require('../improve/improve')
 
 
 const _authToken = async (req, res, next) => {

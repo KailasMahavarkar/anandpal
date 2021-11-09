@@ -6,7 +6,7 @@ const refreshToken = require("../../models/refreshToken.model");
 const { generateAccessToken, generateRefreshToken } = require("./auth");
 
 // importing helpers
-const { isEmpty } = require("../../Improve/Improve");
+const { isEmpty } = require("../../improve/improve");
 
 // importing logger
 const { logger } = require("../../improve/logger");
