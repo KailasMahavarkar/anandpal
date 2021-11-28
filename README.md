@@ -1,4 +1,5 @@
 
+  
 # AnandPal is blogging website + ecommerce store
 ### AnandPal is created using MERN stack + EditorJS support
 
@@ -21,16 +22,16 @@
 
 
 #### Installation
- - cd frontend 
- - yarn
- - yarn start
 
+	 1. cd frontend
+	 2. yarn 
+	 3. yarn start
+ ----------------
+	 1. cd backend 
+	 2. yarn 
+	 3. yarn start
+ ----------------
+	 1. cd admin
+	 2. yarn 
+	 3. yarn start
 
- - cd backend
- - yarn
- - yarn start
- 
- 
- - cd admin
- - yarn
- - yarn start
