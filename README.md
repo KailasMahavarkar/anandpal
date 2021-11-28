@@ -20,15 +20,17 @@
  - [x] *Secure Image Upload to Cloudindary Server*
 
 
----- Installation ---
-cd frontend 
-yarn
-yarn start
+#### Installation
+ - cd frontend 
+ - yarn
+ - yarn start
 
-cd backend
-yarn
-yarn start
 
-cd admin
-yarn
-yarn start
+ - cd backend
+ - yarn
+ - yarn start
+ 
+ 
+ - cd admin
+ - yarn
+ - yarn start
