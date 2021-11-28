@@ -15,6 +15,7 @@ import CheckList from "@editorjs/checklist";
 import Delimiter from "@editorjs/delimiter";
 import InlineCode from "@editorjs/inline-code";
 import SimpleImage from "@editorjs/simple-image";
+import { url } from "./helper";
 
 export const EDITOR_JS_TOOLS = {
 	header: {
@@ -54,8 +55,8 @@ export const EDITOR_JS_TOOLS = {
 		class: Image,
 		config: {
 			endpoints: {
-                // Your backend file uploader endpoint -> POST
-				byFile: "http://localhost:1000/upload/blog", 
+				// Your backend file uploader endpoint -> POST
+				byFile: url('/upload/blog'),
 			},
 		},
 	},

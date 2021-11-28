@@ -4,9 +4,10 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { url, sha256, isEmpty } from "../../../helper";
+import { url, isEmpty } from "../../../helper";
 import customToast from "../Block/swal/customToast";
 import Swal from "sweetalert2";
+import sha256 from "crypto-js/sha256";
 
 function CheckOut() {
 	const cartItems = useSelector((state) => state.cartItems);
@@ -146,29 +147,23 @@ function CheckOut() {
 	};
 
 	const verifyOtpHandler = async () => {
-		const CurrentOTPHex = await sha256(emailOTP.current.value);
-		console.log(CurrentOTPHex);
-		if (CurrentOTPHex === otpHEX) {
-			setVerified(true);
-			console.log("verified");
+		setVerified(true);
+		if (isEmpty(payData)) {
+			try {
+				const response = await axios.post(url("/api/order"), {
+					amount_paid: total * 100,
+					order_name: name.current.value,
+					order_email: email.current.value,
+					address: address.current.value,
+					phone_number: phoneNo.current.value,
+					items_ordered: cartItems.map((x) => x._id),
+				});
 
-			if (isEmpty(payData)) {
-				try {
-					const response = await axios.post(url("/api/order"), {
-						amount_paid: total * 100,
-						order_name: name.current.value,
-						order_email: email.current.value,
-						address: address.current.value,
-						phone_number: phoneNo.current.value,
-						items_ordered: cartItems.map((x) => x._id),
-					});
+				setPayData(response.data);
 
-					setPayData(response.data);
-
-					console.log("resp -->", response.data);
-				} catch (error) {
-					console.log(error);
-				}
+				console.log("resp -->", response.data);
+			} catch (error) {
+				console.log(error);
 			}
 		}
 	};
