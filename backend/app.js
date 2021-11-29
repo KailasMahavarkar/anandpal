@@ -31,22 +31,21 @@ app.set("json spaces", 2);
 // public api routes
 app.use("/api", cors(allowPublicCORS), publicHandlers);
 
-
 // private api routes
-app.use("/auth", cors(allowPrivateCORS),  authHandlers);
-app.use("/blog", cors(allowPrivateCORS),  _authToken,  blogHandlers);
-app.use("/product", cors(allowPrivateCORS), _authToken,  productHandlers);
-app.use("/generic", cors(allowPrivateCORS), _authToken,  genericHandlers);
-app.use("/order", cors(allowPrivateCORS), _authToken,  orderHandlers);
-app.use("/upload", cors(allowPublicCORS),  uploadHandlers);
+app.use("/auth", cors(allowPrivateCORS), authHandlers);
+app.use("/blog", cors(allowPrivateCORS), _authToken, blogHandlers);
+app.use("/product", cors(allowPrivateCORS), _authToken, productHandlers);
+app.use("/generic", cors(allowPrivateCORS), _authToken, genericHandlers);
+app.use("/order", cors(allowPrivateCORS), _authToken, orderHandlers);
+app.use("/upload", cors(allowPublicCORS), uploadHandlers);
 
 // Assume 404 since no middleware responded
-app.use(function (req, res, next)  {
-    console.log('error (404)');
-    return res.status(404).json({
-        url: req.url,
-        error: 'Not found'
-    });
+app.use(function (req, res, next) {
+	console.log("error (404)");
+	return res.status(404).json({
+		url: req.url,
+		error: "Not found",
+	});
 });
 
 // run cron
@@ -57,6 +56,11 @@ app.listen(1000, (err) => {
 		console.log("could not connect to node");
 	} else {
 		console.log("connected to NodeJS");
-		mongo.connect();
+
+		try {
+			mongo.connect();
+		} catch (error) {
+			console.log("could not connect to mongoDB");
+		}
 	}
 });

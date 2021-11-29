@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js -e html,js,css"
+    "dev": "nodemon app.js -e html,js,css",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "deploy": "serve -s build"
+    
   },
   "author": "",
   "license": "ISC",
