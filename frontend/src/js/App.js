@@ -10,7 +10,8 @@ import ConnectWithUs from "./components/ConnectWithUs";
 import "animate.css/animate.min.css";
 import ShoppingCart from "./components/ShoppingCart";
 import CheckOut from "./components/Cart/CheckOut";
-import EditorPage from './components/Blogs/EditorPage';
+import EditorPage from "./components/Blogs/EditorPage";
+import { MODE, SERVER } from "./../helper";
 
 // import { library } from "@fortawesome/fontawesome-svg-core";
 
@@ -18,6 +19,10 @@ import EditorPage from './components/Blogs/EditorPage';
 //  basename="C:/Users/LKGR8/Desktop/AnandPal/AnandPal/frontend/build"
 
 function App() {
+	if (MODE === "DEV") {
+		console.log("mode -->", MODE);
+		console.log("BACKEND SERVER --> ", SERVER);
+	}
 	return (
 		<div className="App">
 			<NavigationBar />
@@ -28,7 +33,7 @@ function App() {
 				<Route exact path="/about_us" component={AboutUs} />
 				<Route exact path="/business" component={BusinessPage} />
 				<Route exact path="/blogs" component={BlogPage} />
-                <Route exact path="/blogs/:id" component={EditorPage} />
+				<Route exact path="/blogs/:id" component={EditorPage} />
 				<Route exact path="/shop" component={ShoppingCart} />
 				<Route exact path="/checkout" component={CheckOut} />
 			</Switch>

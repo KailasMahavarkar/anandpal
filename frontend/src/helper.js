@@ -1,7 +1,17 @@
 import { useEffect } from "react";
 
+const MODE = process.env.REACT_APP_MODE;
+
+const isMode = (mode) => {
+	return mode === MODE;
+};
+
+const SERVER = isMode("DEV")
+	? process.env.REACT_APP_LOCAL_BACKEND
+	: process.env.REACT_APP_BACKEND;
+
 const url = (endpoint) => {
-	return `http://localhost:1000${endpoint}`;
+	return `${SERVER}${endpoint}`;
 };
 
 const isEmpty = (arg) => {
@@ -105,5 +115,15 @@ function sha256(str) {
 	});
 }
 
-
-export { url, isEmpty, useEffectAsync, randomHash, xrange, xiter, sha256 };
+export {
+	url,
+	isEmpty,
+	useEffectAsync,
+	randomHash,
+	xrange,
+	xiter,
+	sha256,
+	MODE,
+    isMode,
+    SERVER
+};
