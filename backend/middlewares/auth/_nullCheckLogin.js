@@ -1,8 +1,5 @@
 const { isEmpty, typeMatch } = require('../../improve/improve')
 
-console.log(isEmpty);
-
-
 // import logger
 const { logger } = require('../../improve/logger')
 const log = logger(__filename)
