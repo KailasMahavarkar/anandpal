@@ -11,16 +11,16 @@ import TestPage from "./components/pages/TestPage";
 import ContactPage from "./components/pages/Contactpage";
 import OrderPage from "./components/pages/Orderpage";
 import { Switch, Route, useHistory } from "react-router-dom";
-import { url, useEffectAsync, isEmpty } from "./helper";
-import dotenv from "dotenv";
 import NewProduct from "./components/pages/NewProduct";
+import { SERVER, MODE } from "./helper";
 
 // env config
-dotenv.config();
 
 function App(props) {
-	const history = useHistory();
-
+	if (MODE === "DEV") {
+        console.log('mode -->', MODE);
+		console.log("BACKEND SERVER --> ", SERVER);
+	}
 	return (
 		<div className="App">
 			<Switch>
