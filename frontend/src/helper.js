@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 const url = (endpoint) => {
-	return `http://3.14.11.113:1000${endpoint}`;
+	return `http://localhost:1000${endpoint}`;
 };
 
 const isEmpty = (arg) => {

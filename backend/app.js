@@ -57,10 +57,6 @@ app.listen(1000, (err) => {
 	} else {
 		console.log("connected to NodeJS");
 
-		try {
-			mongo.connect();
-		} catch (error) {
-			console.log("could not connect to mongoDB");
-		}
+		mongo.connect();
 	}
 });
