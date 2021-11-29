@@ -28,6 +28,7 @@ app.use(express.json({ limit: "10mb", extended: true }));
 app.use(express.static(rootPath));
 app.set("json spaces", 2);
 
+
 // public api routes
 app.use("/api", cors(allowPublicCORS), publicHandlers);
 
@@ -51,7 +52,7 @@ app.use(function (req, res, next) {
 // run cron
 // cron.runCrons();
 
-app.listen(1000, (err) => {
+app.listen(process.env.PORT || 2000, (err) => {
 	if (err) {
 		console.log("could not connect to node");
 	} else {
