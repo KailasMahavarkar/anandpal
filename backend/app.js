@@ -57,7 +57,10 @@ app.listen(process.env.PORT || 2000, (err) => {
 		console.log("could not connect to node");
 	} else {
 		console.log("connected to NodeJS");
-
-		mongo.connect();
+        try{
+            mongo.connect();
+        }catch(error){
+            console.log('could not connect to mongodb')
+        }
 	}
 });
