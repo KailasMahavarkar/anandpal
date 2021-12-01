@@ -2,7 +2,7 @@
 	//   background-color: rgb(230, 230, 230);
 	padding-bottom: 1rem;
 	padding-top: 1rem;
-	background: url(../../../images/compressed/introductionBG.jpg);
+	background: $SMALL_INTRODUCTION;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: center;
@@ -14,7 +14,8 @@
 	min-width: 10rem;
 	margin: 2rem;
 	border-radius: 400px;
-	box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
+    filter: grayscale(0%);
+	box-shadow: $shadow_400;
 	margin: 2rem;
 }
 .introduction {
@@ -28,22 +29,19 @@
 	border-radius: 10px;
 	width: 50rem;
 
-	backdrop-filter: blur(5px);
-	background-color: rgba(255, 255, 255, 0.5);
+	backdrop-filter: blur(10px);
 
 	// color: white;
 	&:hover {
 		cursor: pointer;
 		box-shadow: $shadow_x400;
-		// animation-name: boxshadow_hover;
-		animation-duration: 0.1s;
 		position: relative;
 		top: -5px;
 	}
 }
 
 .profile_img1 {
-	background: url(../../../images/profile.png);
+	background: $PROFILE_IMG1;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -52,7 +50,7 @@
 }
 
 .profile_img2 {
-	background: url(../../../images/profile.png);
+	background: $PROFILE_IMG2;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;

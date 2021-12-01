@@ -5,9 +5,9 @@ import HomePage from "./components/HomePage";
 import ContactUs from "./components/ContactUs";
 import BusinessPage from "./components/BusinessPage";
 import BlogPage from "./components/BlogPage";
-import ConnectWithUs from "./components/ConnectWithUs";
+import Footer from './components/Footer/Footer';
 
-import "animate.css/animate.min.css";
+
 import ShoppingCart from "./components/ShoppingCart";
 import CheckOut from "./components/Cart/CheckOut";
 import EditorPage from "./components/Blogs/EditorPage";
@@ -26,8 +26,6 @@ function App() {
 	return (
 		<div className="App">
 			<NavigationBar />
-			<ConnectWithUs />
-
 			<Switch>
 				<Route exact path="/" component={HomePage} />
 				<Route exact path="/about_us" component={AboutUs} />
@@ -38,6 +36,7 @@ function App() {
 				<Route exact path="/checkout" component={CheckOut} />
 			</Switch>
 			<ContactUs />
+            <Footer />
 		</div>
 	);
 }

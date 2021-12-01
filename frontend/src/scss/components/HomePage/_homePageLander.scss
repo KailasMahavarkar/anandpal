@@ -4,7 +4,7 @@
 .lander_home_page {
 	position: relative;
 	height: 100vh;
-	background: url(../../../images/compressed/lander.jpg);
+	background: $LANDER_HOMEPAGE;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: center;
@@ -16,16 +16,15 @@
 		// color: white;
 
 		&--header {
-
 			// background: -webkit-linear-gradient(
-            //     right,
+			//     right,
 			// 	#bf953f,
 			// 	#fcf6ba,
 			// 	#b38728,
 			// 	#fbf5b7,
 			// 	#aa771c
 			// );
-            // -webkit-background-clip: text;
+			// -webkit-background-clip: text;
 			// -webkit-text-fill-color: transparent;
 
 			font-weight: 600;
@@ -39,7 +38,7 @@
 	&_logo {
 		width: 10rem;
 		height: 10rem;
-		background: url(../../../images/ap_logo.webp);
+		background: $LANDER_HOMEPAGE_LOGO;
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: cover;

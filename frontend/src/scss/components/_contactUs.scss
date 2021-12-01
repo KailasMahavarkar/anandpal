@@ -1,157 +1,51 @@
-.contact_us_container {
-  background: url(../../images/compressed/contactUs.jpg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover;
-  // background-color: #2c332d;
-}
+.input_text {
+	border: none;
+	border-bottom: 2px solid transparent;
+	outline: none;
+	border-radius: 3px;
+	padding: 0 10px;
+	border: 1px solid #eee;
 
-.contact_overlay {
-  background-color: rgba(0, 0, 0, 0.6);
-  width: 100%;
-  height: 100%;
-  padding-top: 1rem;
+	&:focus {
+		border-bottom: 2px solid yellowgreen;
+		animation-name: inputActive;
+		animation-duration: 0.5s;
+	}
 }
 
 .contact_us {
-  display: flex;
-  justify-content: space-around;
-  gap: 5rem;
-  padding: 1rem 3rem;
-  background-color: rgba(0, 0, 0, 0.7);
+	display: flex;
+	gap: 5rem;
+	padding: 1rem 3rem;
+	border-top: 5px double black;
 
-  &_header {
-    color: white;
-    text-transform: uppercase;
-    margin: 0;
-    padding: 1rem 3rem;
-  }
+	p {
+		font-size: 0.8rem;
+		padding-right: 3rem;
+		color: #b0b0b0;
+	}
 
-  &_form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 2fr 1fr;
-    grid-template-areas:
-      "one two"
-      "three three"
-      "four four"
-      "five five";
-    row-gap: 1rem;
-    column-gap: 2rem;
-    .input_text {
-      border: none;
-      border-bottom: 2px solid transparent;
-      outline: none;
-      border-radius: 3px;
-      padding: 0 10px;
-
-      &:focus {
-        border-bottom: 2px solid yellowgreen;
-        animation-name: inputActive;
-        animation-duration: 0.5s;
-      }
-    }
-    input:nth-of-type(1) {
-      grid-area: one;
-      @extend .input_text;
-    }
-    input:nth-of-type(2) {
-      grid-area: two;
-      @extend .input_text;
-    }
-    input:nth-of-type(3) {
-      grid-area: three;
-      @extend .input_text;
-    }
-    input:nth-of-type(4) {
-      border: none;
-      padding: 0.5rem;
-      grid-area: five;
-      border-radius: 3px;
-      background-color: #b0b0b0;
-
-      &:hover {
-        animation-name: submitButtonHover;
-        animation-duration: 0.5s;
-        background-color: yellowgreen;
-      }
-    }
-    textarea {
-      border: none;
-      border-bottom: 2px solid transparent;
-      outline: none;
-      width: 100%;
-      resize: none;
-      grid-area: four;
-      border-radius: 3px;
-      padding: 10px;
-      &:focus {
-        animation-name: inputActive;
-        animation-duration: 0.5s;
-        border-bottom: 2px solid yellowgreen;
-      }
-    }
-  }
+	&_form {
+		display: flex;
+		flex-direction: column;
+		row-gap: 1rem;
+		column-gap: 2rem;
+	}
 }
 
-@keyframes inputActive {
-  0% {
-    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
-  }
+.contact_us_form_wrapper {
+	padding: 30px;
+	box-shadow: $shadow_all;
 
-  100% {
-    border-bottom: 2px solid yellowgreen;
-  }
-}
-@keyframes submitButtonHover {
-  0% {
-    background-color: initial;
-  }
-
-  100% {
-    background-color: yellowgreen;
-  }
-}
-
-.contact_us h1,
-.contact_us h4 {
-  color: white;
-  text-transform: uppercase;
-}
-.contact_us p {
-  font-size: 0.8rem;
-  padding-right: 3rem;
-  color: #b0b0b0;
-}
-
-.green {
-  color: yellowgreen;
+	h3 {
+		text-align: center;
+		text-transform: uppercase;
+	}
 }
 
 .contact_map {
-  padding: 1.5rem 1rem 1rem 1rem;
-  width: 100%;
-  height: 315px;
-  border: none;
-}
-
-.contact_us_bottom {
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  height: 40px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #b0b0b0;
-  & svg {
-    font-size: 15px;
-    margin: 0 10px;
-    transition-duration: 0.3s;
-    color: white;
-
-    &:hover {
-      transform: scale(1.5);
-    }
-  }
+	padding: 1.5rem 1rem 1rem 1rem;
+	width: 100%;
+	height: 315px;
+	border: none;
 }

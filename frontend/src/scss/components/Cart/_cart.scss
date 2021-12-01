@@ -1,24 +1,24 @@
 .cart-icon {
-  padding: 20px;
-  border-radius: 50%;
-  position: fixed;
-  margin: 5px;
-  top: 3rem;
-  right: 0;
-  z-index: 100;
-  background-color: darken(#6ec3e7, 10%);
-  &:hover {
-    background: darken(#6ec3e7, 30%);
-    transition: all 0.4s ease-in-out;
-  }
+	padding: 20px;
+	border-radius: 50%;
+	position: fixed;
+	margin: 5px;
+	top: 3rem;
+	right: 0;
+	z-index: 100;
+	background-color: darken(#6ec3e7, 10%);
+	&:hover {
+		background: darken(#6ec3e7, 30%);
+		transition: all 0.4s ease-in-out;
+	}
 }
 
 .cart-container {
-//   display: grid;
-//   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-//   gap: 5px;
-//   padding: 20px;
-//   margin: 0 auto;
+	//   display: grid;
+	//   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	//   gap: 5px;
+	//   padding: 20px;
+	//   margin: 0 auto;
 }
 
 // .items-container {

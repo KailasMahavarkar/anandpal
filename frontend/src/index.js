@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./js/App";
 
-// SCSS
-import "./scss/main.scss";
 // to work with store in redux
 import { createStore } from "redux";
 
@@ -15,6 +13,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 // all the reducer after combining
 import rootReducers from "../src/js/redux/reducers";
+import "./scss/main.css";
+import "animate.css/animate.min.css";
 
 // creating a store
 let store = createStore(

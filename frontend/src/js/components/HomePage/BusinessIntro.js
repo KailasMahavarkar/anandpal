@@ -6,17 +6,10 @@ function BusinessIntro() {
 		<div className="business_intro_container">
 			<div className="business_overlay">
 				<div className="business_intro">
-					<ScrollAnimation
-						animateIn="animate__pulse"
-						animateOnce
-						initiallyVisible
-					>
-						<h2 className="business_intro_header">
-							about our business
-						</h2>
-					</ScrollAnimation>
-                    TRANSFORMING THE LIVES OF PEOPLE THROUGH WELLNESS
-
+					<h2 className="business_intro_header">
+						about our business
+					</h2>
+					TRANSFORMING THE LIVES OF PEOPLE THROUGH WELLNESS
 					<p className="business_intro_content">
 						Brig Hart, one of the leading names in Relational
 						Marketing history, who brought a unique, new perspective
