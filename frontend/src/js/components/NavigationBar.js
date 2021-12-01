@@ -30,9 +30,9 @@ function NavigationBar() {
 				<Link to="/about_us" className="nav_item">
 					about us
 				</Link>
-				<Link to="" className="nav_item">
+				{/* <Link to="" className="nav_item">
 					dreams
-				 </Link>
+				 </Link> */}
 				{/*<Link to="/business" className="nav_item">
 					business
 				</Link> */}
