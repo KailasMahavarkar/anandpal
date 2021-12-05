@@ -1,0 +1,13 @@
+// login
+export const ADD_LOGIN = "ADD_LOGIN";
+export const LOGIN_LOADING = "LOGIN_LOADING";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+export const REMOVE_LOGIN = "REMOVE_LOGIN";
+
+// Pastes
+export const CART_REMOVE_ITEM = "CART_REMOVE_ITEM";
+export const CART_CLEAR = "CART_CLEAR"
+export const CARD_ADD_SINGLE_ITEM = "CARD_ADD_SINGLE_ITEM";
+export const CART_INCREMENT_ITEM = "CART_INCREMENT_ITEM";
+export const CART_DECREMENT_ITEM = "CART_DECREMENT_ITEM";
+export const LAST_ORDER = "LAST_ORDER";
