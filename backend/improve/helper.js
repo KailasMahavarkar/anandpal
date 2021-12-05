@@ -3,7 +3,7 @@ const isMode = (mode) => process.env.MODE === mode;
 const MODE = process.env.MODE;
 
 const HOSTNAME = isMode("DEV")
-	? process.env.LOCAL_HOSTNAME
+	? "http://localhost:4000"
 	: process.env.HOSTNAME;
 
 const url = (endpoint) => {

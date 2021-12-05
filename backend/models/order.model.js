@@ -30,6 +30,10 @@ const orderSchema = new Schema({
     address: {
         type: String,
         required: false
+    },
+    track: {
+        type: String,
+        required: false
     }
 });
 

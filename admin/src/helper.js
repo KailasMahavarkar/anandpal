@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 
-const LOCAL = "http://localhost:2000";
-
-const SERVER = process.env.REACT_APP_BACKEND || LOCAL;
 const MODE = process.env.REACT_APP_MODE || "DEV";
 
+const SERVER =
+	MODE === "DEV"
+		? process.env.REACT_APP_LOCAL_BACKEND || "http://localhost:2000"
+		: process.env.REACT_APP_BACKEND;
 
 const url = (endpoint) => {
 	return `${SERVER}${endpoint}`;
@@ -28,7 +29,6 @@ function useEffectAsync(effect, inputs) {
 		effect();
 	}, inputs);
 }
-
 
 const replaceWithIndex = (array, index, element) => {
 	array.splice(index, 1, element);
@@ -94,7 +94,7 @@ export {
 	typeMatch,
 	xrange,
 	xiter,
-    SERVER,
-    MODE,
+	SERVER,
+	MODE,
 	HEADER_PAYLOAD,
 };

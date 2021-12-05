@@ -26,30 +26,47 @@ const transporter = nodemailer.createTransport(
 	})
 );
 
-const mailOptions = {
-	from: "trailmusic1@gmail.com",
-	to: "trailmusic1@gmail.com",
-	subject: `Secure transaction OTP`,
-	text: `Secure transaction OTP for anandpal is ${fakeID(6)}`,
+const mailOptions = (name, email) => {
+	return {
+		from: "trailmusic1@gmail.com",
+		to: email,
+		subject: `Secure transaction OTP`,
+		text: `
+            Hey, ${name}, 
+            transaction OTP for Shopping with anandpal is ${fakeID(6)}
+        `,
+	};
 };
 
 const _sendMail = async (req, res, next) => {
-	try {
-		transporter.sendMail(mailOptions, function (error, info) {
-			if (error) {
-                console.log(error)
-				res.status(400).json({
-					msg: "stmp error",
-					success: false,
-				});
-			} else {
-				res.status(200).json({
-					msg: "mail sent",
-					success: true,
-				});
-				console.log("Email sent: " + info.response);
-			}
+	const { fullname, email, phone } = req.body;
+
+	if (!fullname || !email || !phone) {
+		return res.status(400).json({
+			error: "Mail Sending Failed",
+			message: "Sending Mail Requires Name, Email & Phone",
 		});
+	}
+
+	try {
+		transporter.sendMail(
+			mailOptions(fullname, email),
+			function (error, info) {
+				if (error) {
+					console.log(error);
+					res.status(400).json({
+						msg: "stmp error",
+						success: "failed",
+					});
+				} else {
+					res.status(200).json({
+						msg: "mail sent",
+						success: "sent",
+					});
+					console.log("Email sent: " + info.response);
+				}
+			}
+		);
 	} catch (error) {
 		return res.status(400).json({ msg: "Mail Sending Failed" });
 	}

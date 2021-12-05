@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 let url = "";
-if (process.env.MODE === "dev") {
+if (process.env.MODE === "DEV") {
 	url = process.env.MONGO_TEST_URL;
 } else {
 	url = process.env.MONGO_URL;
@@ -39,6 +39,7 @@ const _connect = async () => {
 				STATUS[mongoose.connection.readyState]
 			}`
 		);
+		console.log("Mode: ", process.env.MODE === "DEV" ? "local" : "prod");
 	} catch (error) {
 		console.log(`connection to MongoDB status: Failed [fatal error]`);
 		process.exit();

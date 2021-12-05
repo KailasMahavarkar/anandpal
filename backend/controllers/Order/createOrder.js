@@ -30,6 +30,7 @@ const createOrder = async (req, res, next) => {
 			order_id: res_save.id,
             amount: res_save.amount_paid,
 			msg: "new order request created",
+            success: "order created"
 		});
 	} catch (error) {
         console.log(error);

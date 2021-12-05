@@ -5,11 +5,12 @@ const { isEmpty } = require('../improve/improve')
 const _authToken = async (req, res, next) => {
 	const authHeader = req.headers["authorization"];
 
-    try{
-        console.log("starting... _authToken", authHeader[7])
-    }catch(error){
-        console.log("ended auth .. ERROR")
-    }
+    // try{
+    //     console.log("starting... _authToken")
+    // }catch(error){
+    //     console.log("ended auth .. ERROR")
+    // }
+    
 
     // return on empty
     if (isEmpty(authHeader)){

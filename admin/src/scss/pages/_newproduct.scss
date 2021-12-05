@@ -10,9 +10,8 @@
 	box-shadow: $shadow_x200;
 
 	input {
-		align-self: center;
-		width: 90%;
-		height: 30px;
+		display: flex;
+
 		outline: none;
 		border: none;
 
@@ -41,18 +40,26 @@
 		padding: 10px;
 	}
 
-    &__input{
-        flex: 4;
+	&__input {
+		flex: 4;
+		// height: 100%;
 
-    }
+        &-title{
+            height: 150px !important;
+        }
+
+		&-info {
+			height: 300px;
+		}
+	}
 
 	&__title {
 		flex: 1;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #eee;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid #eee;
 		text-align: center;
 	}
 
@@ -77,20 +84,20 @@
 	}
 
 	&__image {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        align-self: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		align-self: center;
 		margin: 5px;
 
-        > img {
-            box-shadow: $shadow_x200;
-            object-fit: contain;
-            width: 500px;
-            height: 300px;
-            max-width:100%;
-            max-height:100%;
-        }
+		> img {
+			box-shadow: $shadow_x200;
+			object-fit: contain;
+			width: 500px;
+			height: 300px;
+			max-width: 100%;
+			max-height: 100%;
+		}
 	}
 
 	&__upload {
@@ -108,7 +115,7 @@
 			background-color: $warning;
 		}
 
-        &__delete {
+		&__delete {
 			cursor: pointer;
 			font-size: 0.9em;
 			padding: 10px 20px;
@@ -118,17 +125,20 @@
 		}
 	}
 
-    &__control{
-        display: flex;
-        flex-direction: row;
-        &__button {
-            flex: 1;
-            display: inline;
-            padding: 10px;
-            cursor: pointer;
-            text-align: center;
-            color: black;
-        }
-    }
-	
+	&__control {
+		display: flex;
+		flex-direction: row;
+		&__button {
+			flex: 1;
+			display: inline;
+			padding: 10px;
+			cursor: pointer;
+			text-align: center;
+			color: black;
+		}
+	}
+}
+
+.product__info {
+	// height: 300px !important;
 }

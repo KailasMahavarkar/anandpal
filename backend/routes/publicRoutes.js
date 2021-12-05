@@ -27,8 +27,10 @@ router.route("/sendmail").post(_sendMail);
 const { createOrder } = require("../controllers/Order/createOrder");
 const { _nullCheckOrder } = require("../middlewares/_nullCheckOrder");
 const { orderSuccess } = require("../controllers/Order/orderSuccess");
+const { trackOrder } = require("../controllers/Order/trackOrder");
 
 router.route("/order").post(_nullCheckOrder, createOrder);
 router.route("/order/success").post(orderSuccess);
+router.route("/order/track").post(trackOrder);
 
 module.exports = router;

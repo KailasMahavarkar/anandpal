@@ -4,6 +4,20 @@ import axios from "axios";
 import { HEADER_PAYLOAD, url, useEffectAsync } from "../../helper";
 import yesNO from "../blocks/swal/yesNo";
 
+const getNextStatus = (status) => {
+	if (status === "order created") {
+		return "shipped by seller";
+	} else if (status === "shipped by seller") {
+		return "delivered to nearest hub";
+	} else if (status === "delivered to nearest hub") {
+		return "out of delivery";
+	} else if (status === "out of delivery") {
+		return "delivered to customer";
+	} else if (status === "delivered to customer") {
+		return "order created";
+	}
+};
+
 const OrderPage = () => {
 	const [orders, setOrders] = useState([]);
 	const [forceRenderCount, setForceRenderCount] = useState(0);
@@ -23,28 +37,29 @@ const OrderPage = () => {
 		}
 	}, [forceRenderCount]);
 
-	const orderDeleteHandler = async (id, name) => {
-		const yesCallback = async () => {
-			try {
-				const delRes = await axios.delete(url("/order/delete"), {
+	const orderStatusChangeHandler = async (id) => {
+		try {
+			const BearerToken = `Bearer ${localStorage.getItem("accessToken")}`;
+			const updateRes = await axios.post(
+				url("/order/update"),
+				{
+                    order_id: id,
+                },
+				{
 					headers: {
-						Authorization: `Bearer ${localStorage.getItem(
-							"accessToken"
-						)}`,
+						Authorization: BearerToken,
 					},
-					data: {
-						orderID: id,
-					},
-				});
-				if (delRes.status === 200) {
-					setForceRenderCount((x) => x + 1);
 				}
-			} catch (error) {
-				console.log(error);
-			}
-		};
+			);
 
-		yesNO(`${name} details`, await yesCallback);
+			console.log(updateRes);
+
+			// 	if (delRes.status === 200) {
+			// 		setForceRenderCount((x) => x + 1);
+			// }
+		} catch (error) {
+			console.log(error.response);
+		}
 	};
 
 	const renderorders = () => {
@@ -78,10 +93,11 @@ const OrderPage = () => {
 							<button
 								className="button button-delete"
 								onClick={() => {
-									orderDeleteHandler(
+									orderStatusChangeHandler(
 										order._id,
 										order.order_name
 									);
+
 								}}
 							>
 								Delete

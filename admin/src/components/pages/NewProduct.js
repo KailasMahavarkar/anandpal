@@ -48,7 +48,6 @@ const NewProduct = (props) => {
 	const [currentImage, setCurrentImage] = useState(0);
 
 	useEffectAsync(async () => {
-
 		try {
 			if (location.search !== "?newproduct") {
 				const checkExists = await axios.get(
@@ -237,9 +236,9 @@ const NewProduct = (props) => {
 						<label htmlFor="" className="split__title">
 							Product Title
 						</label>
-						<input
+						<textarea
 							type="text"
-							className="split__input"
+							className="split__input split__input-title"
 							placeholder="...."
 							onChange={({ target: { value } }) =>
 								dispatch({
@@ -247,16 +246,16 @@ const NewProduct = (props) => {
 									payload: value,
 								})
 							}
-							value={state.title}
+							value={state.title.substring(0, 250)}
 						/>
 					</div>
 					<div className="split">
 						<label htmlFor="" className="split__title">
 							Product Info
 						</label>
-						<input
+						<textarea
 							type="text"
-							className="split__input"
+							className="split__input split__input-info"
 							placeholder="...."
 							onChange={({ target: { value } }) =>
 								dispatch({
@@ -271,13 +270,17 @@ const NewProduct = (props) => {
 						<label htmlFor="" className="split__title">
 							Product Price
 						</label>
-						<div className="split__input">{PriceBlock}</div>
+						<div className="split__input">
+							{PriceBlock}
+						</div>
 					</div>
 					<div className="split">
 						<label htmlFor="" className="split__title">
 							Final Discounted Price
 						</label>
-						<div className="split__input">{DiscountPriceBlock}</div>
+						<div className="split__input">
+							{DiscountPriceBlock}
+						</div>
 					</div>
 					<div className="split">
 						<label htmlFor="" className="split__title">

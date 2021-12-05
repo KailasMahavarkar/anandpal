@@ -26,6 +26,8 @@ const { _authToken } = require("./middlewares/_authToken");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: "10mb", extended: true }));
 
+
+
 // set a static folder
 app.set("json spaces", 2);
 
