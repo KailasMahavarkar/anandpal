@@ -44,3 +44,7 @@ next
 # env file
 .env
 .env.local
+
+
+yarn.lock
+package-json.lock
