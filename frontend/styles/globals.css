@@ -24,7 +24,8 @@
 
 html {
   font-size: 1em;
-  scroll-behavior: smooth; }
+  scroll-behavior: smooth;
+  height: 100%; }
   @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
     html {
       font-size: 1.1em; } }
@@ -34,6 +35,17 @@ html {
   @media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
     html {
       font-size: 1.3em; } }
+
+html,
+body {
+  margin: 0; }
+
+#__next {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
 
 body {
   /* by default all the block display are border-box*/
@@ -156,6 +168,8 @@ textarea {
     background-color: #2ab34a; }
   .title__lander-checkout {
     background-color: #4472caff; }
+  .title__lander-recent {
+    background-color: #1a304a; }
 
 @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   .w500 {
@@ -168,6 +182,15 @@ textarea {
 @media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
   .w500 {
     max-width: 500px; } }
+
+.error-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: larger;
+  font-weight: bold;
+  width: 100%;
+  height: 100% !important; }
 
 .fontXSmall {
   font-size: 0.8rem;
@@ -1089,6 +1112,22 @@ textarea {
   .checkout__action > div {
     margin: 10px; }
 
+.checkout__pay {
+  display: flex;
+  margin: 5px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  text-transform: uppercase;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: #55c26e; }
+
 .imagecard {
   display: flex;
   align-items: center;
@@ -1155,6 +1194,66 @@ textarea {
     background-color: green; }
   .imagecard__button-exists {
     background-color: #1d7d34; }
+
+.recent-order {
+  width: 100%;
+  height: 100%; }
+
+.order-overview-main {
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+  margin: 20px 0;
+  padding: 10px; }
+
+.order-overview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #999;
+  width: 100%; }
+  .order-overview-item p {
+    font-size: 0.8em;
+    color: #999; }
+  .order-overview-item h2 {
+    color: #999;
+    font-weight: lighter;
+    padding: 20px; }
+    .order-overview-item h2::before {
+      content: '$'; }
+
+.last {
+  border-right: none; }
+
+.recent-order-table-wrapper {
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+  background-color: #eeeeee;
+  height: 100vh;
+  margin: 30px; }
+
+table.recent-order-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-width: 0px;
+  border-color: #7ea8f8;
+  border-style: solid;
+  color: #000000; }
+  table.recent-order-table tbody {
+    width: 100%; }
+  table.recent-order-table td,
+  table.recent-order-table th {
+    border-width: 0px;
+    border-style: solid; }
+  table.recent-order-table .thead {
+    background-color: #1a304a;
+    color: #eeeeee; }
+  table.recent-order-table th {
+    font-weight: normal;
+    padding: 15px; }
+  table.recent-order-table td {
+    text-align: center;
+    padding: 10px; }
 
 .blogs {
   width: 100%;

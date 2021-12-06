@@ -17,7 +17,7 @@ const trackOrder = async (req, res, next) => {
 			}
 
 			return res.status(200).json({
-				msg: "new order request created",
+				msg: "order id exists",
 				success: "success",
 				tracking_status: fetchResult?.track,
 			});

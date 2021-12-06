@@ -9,6 +9,7 @@ const orderSuccess = async (req, res, next) => {
 		},
 		{
 			paid_status: true,
+            track: "order created"
 		}
 	);
 

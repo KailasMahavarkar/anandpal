@@ -5,16 +5,25 @@ import { faShoppingCart, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import axios from "axios";
-import { url, isEmpty } from "../helper";
+import { url, isEmpty, isNetworkError } from "../helper";
+import { useRouter } from "next/router";
 // import { addItemToCart } from "../redux/actions/cartCreator";
 
 function shop() {
 	const [items, setItems] = useState({});
 	const cartItems = useSelector((state) => state.shop.cart);
+	const router = useRouter();
 
 	useEffect(async () => {
-		const { data } = await axios.get(url("/api/product/read"));
-		setItems(data);
+		try {
+			const { data } = await axios.get(url("/api/product/read"));
+			setItems(data);
+		} catch (error) {
+			if (isNetworkError(error)) {
+				return router.push("/error/500");
+			}
+			console.log("could not fetch items");
+		}
 	}, []);
 
 	return (

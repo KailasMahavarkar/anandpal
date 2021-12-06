@@ -39,31 +39,25 @@ const Header = () => {
 			</div>
 
 			<nav className="navbar__items">
-				<div className="navbar__item">
-					<Link href="/">home</Link>
-				</div>
-				<div className="navbar__item">
-					<Link href="/about" className="navbar__item">
-						about
-					</Link>
-				</div>
-				<div className="navbar__item">
-					<Link href="/blogs" className="navbar__item">
-						blogs
-					</Link>
-				</div>
-				<div className="navbar__item">
-					<Link href="/shop" className="navbar__item">
-						Shop
-					</Link>
-				</div>
-				<div className="navbar__item">
-					<Link href="/checkout" className="navbar__item">
+				<Link href="/">
+					<div className="navbar__item">Home</div>
+				</Link>
+				<Link href="/about">
+					<div className="navbar__item">about</div>
+				</Link>
+				<Link href="/blogs">
+					<div className="navbar__item">blogs</div>
+				</Link>
+				<Link href="/shop">
+					<div className="navbar__item">Shop</div>
+				</Link>
+				<Link href="/checkout">
+					<div className="navbar__item">
 						{cartItems?.length === 0 ? null : (
 							<div className="itemsInCart">Cart</div>
 						)}
-					</Link>
-				</div>
+					</div>
+				</Link>
 			</nav>
 		</header>
 	);

@@ -28,3 +28,15 @@ export const removeItemFromCart = (payload) => ({
 export const clearItemFromCart = () => ({
 	type: ActionTypes.CART_CLEAR,
 });
+
+
+// clear item
+export const pushRecentOrder = (payload) => ({
+	type: ActionTypes.PUSH_RECENT_ORDER,
+    payload: payload,
+});
+
+
+export const recentUpdatedTimestamp = (id) => ({
+    type: ActionTypes.RECENT_UPDATED_TIMESTAMP,
+})

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
-import { url, isEmpty, sha256 } from "../../helper";
+import { url, isEmpty, sha256, isNetworkError } from "../../helper";
 import customToast from "../Block/swal/customToast";
 import yesNO from "../Block/swal/yesNo";
 import Swal from "sweetalert2";
@@ -13,7 +13,10 @@ import {
 	clearItemFromCart,
 	decrementItemToCart,
 	incrementItemToCart,
+	pushRecentOrder,
 } from "../../redux/actions/CartCreator";
+import { Router } from "react-router";
+import { useRouter } from "next/router";
 
 function CheckOut() {
 	const shopState = useSelector((state) => state.shop);
@@ -25,9 +28,8 @@ function CheckOut() {
 		subtotal,
 	} = shopState;
 
-	useEffect(() => {
-		// console.log("cartItems -->", shopState);
-	}, []);
+	const router = useRouter();
+	const dispatch = useDispatch();
 
 	const name = useRef(null);
 	const email = useRef(null);
@@ -41,8 +43,6 @@ function CheckOut() {
 	const [verified, setVerified] = useState(false);
 	const [sentOTP, setSentOTP] = useState(false);
 	const [otpHEX, setOtpHEX] = useState(0);
-
-	const dispatch = useDispatch();
 
 	const paymentOptions = (amount, order_id) => {
 		return {
@@ -80,9 +80,18 @@ function CheckOut() {
 							"Please Save your order id",
 							paymentResponse.data.order_id
 						);
-						dispatch({
-							type: "remove",
-						});
+						dispatch(
+							pushRecentOrder({
+								order_id: paymentResponse.data.order_id,
+								amount: total,
+								timestamp: Date.now(),
+								quantity: quantity,
+								track: "order created",
+							})
+						);
+						setTimeout(() => {
+							dispatch(clearItemFromCart());
+						}, 1000);
 					} else {
 						customToast("error", paymentResponse.data.msg);
 					}
@@ -179,6 +188,7 @@ function CheckOut() {
 					amount_paid: total * 100,
 					order_name: name.current.value,
 					order_email: email.current.value,
+					paid_status: false,
 					address: address.current.value,
 					phone_number: phoneNo.current.value,
 					items_ordered: Object.keys(cartItems),
@@ -190,15 +200,15 @@ function CheckOut() {
 						text: `Save your order ID for tracking | ${apiResult.data.order_id}`,
 						icon: "success",
 						confirmButtonText: "OK",
-					}).then(() => {
-						setTimeout(() => {
-							dispatch(clearItemFromCart());
-						}, 1000);
 					});
 				}
-
+				setVerified(true);
+				customToast("success", "OTP verified successfully");
 				setPayData(apiResult.data);
 			} catch (error) {
+				if (isNetworkError(error)) {
+					return router.push("/error/500");
+				}
 				console.log(error);
 			}
 		} else {
@@ -210,7 +220,6 @@ function CheckOut() {
 		const clearFunction = () => {
 			dispatch(clearItemFromCart());
 		};
-
 		yesNO("Sure Want to clear Cart ?", clearFunction);
 	};
 
@@ -335,14 +344,6 @@ function CheckOut() {
 		);
 	};
 
-	const trackOrderIDChangeHandler = () => {
-		return null;
-	};
-
-    const lastOrderHandler = () => {
-
-    }
-
 	return (
 		<>
 			<div className="title__lander title__lander-checkout">checkout</div>
@@ -367,7 +368,7 @@ function CheckOut() {
 
 						<div
 							className="checkout__button checkout__button-recent"
-							onClick={lastOrderHandler}
+							onClick={() => router.push("/recent")}
 						>
 							recent order
 						</div>
@@ -464,50 +465,51 @@ function CheckOut() {
 										required={true}
 									/>
 
+									{!verified && (
+										<input
+											type="submit"
+											value="submit"
+											id="send_otp_button"
+											className="input"
+											value={`${"Send Otp & Place order"}`}
+										/>
+									)}
+								</form>
+							)}
+
+							{!verified && sentOTP && (
+								<form
+									className="baseform__form__inner"
+									action="javascript:void(0);"
+									// method="post"
+									onSubmit={verifyOtpHandler}
+								>
+									<p>A OTP has been sent to your E-mail.</p>
+									<input
+										type="text"
+										name="otp"
+										className="input"
+										placeholder="Enter E-mail OTP"
+										id=""
+										ref={emailOTP}
+										required
+									/>
 									<input
 										type="submit"
+										id="verify_button"
 										value="submit"
-										id="send_otp_button"
-										className="input"
-										value={`${"Send Otp & Place order"}`}
 									/>
 								</form>
 							)}
 
-							{sentOTP && (
-								<>
-									<form
-										className="checkout-form"
-										action="javascript:void(0);"
-										// method="post"
-										onSubmit={verifyOtpHandler}
-									>
-										<p>
-											A OTP has been sent to your E-mail.
-										</p>
-										<input
-											type="text"
-											name="otp"
-											placeholder="Enter E-mail OTP"
-											id=""
-											ref={emailOTP}
-											required
-										/>
-										<input
-											type="submit"
-											id="verify_button"
-											value="submit"
-										/>
-									</form>
-								</>
-							)}
 							{/* <p>
                                         The contact number and the email address will be the
                                         same while paying.
                                     </p> */}
-							{verified && (
+							{verified && !paymentDone && (
 								<button
 									id="checkout_button"
+									className="checkout__pay"
 									onClick={(e) => razorpayHandler(e)}
 								>
 									<FontAwesomeIcon

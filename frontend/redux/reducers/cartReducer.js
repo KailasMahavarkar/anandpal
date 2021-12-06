@@ -3,9 +3,10 @@ import produce from "immer";
 
 const initalCartState = {
 	cart: {},
-    lastorder: {},
+	recent_order: [],
 	total: 0,
 	subtotal: 0,
+    recent_updated_timestamp: new Date(),
 	quantity: 0,
 	discount: 0,
 };
@@ -98,8 +99,8 @@ export const cartReducer = (state = initalCartState, action) => {
 					// global total
 					draft.total -= item.discount_price;
 
-                    // global subtotal
-                    draft.subtotal -= item.price;
+					// global subtotal
+					draft.subtotal -= item.price;
 
 					// gloabl quantity
 					draft.quantity -= 1;
@@ -110,11 +111,28 @@ export const cartReducer = (state = initalCartState, action) => {
 			});
 
 		case ActionTypes.CART_CLEAR:
-			return initalCartState;
+			return  produce(state, (draft) => {
+                draft.cart = {};
+                draft.total = 0;
+                draft.subtotal = 0;
+                draft.quantity = 0;
+                draft.discount = 0;
+            });
 
-        case ActionTypes.LAST_ORDER:
-            return state.lastorder;
-            
+		case ActionTypes.RECENT_ORDER:
+			return state.recent_order;
+
+		case ActionTypes.PUSH_RECENT_ORDER:
+			return produce(state, (draft) => {
+				draft.recent_order.push(action.payload);
+			});
+
+        case ActionTypes.RECENT_UPDATED_TIMESTAMP:
+            return produce(state, (draft) => {
+                draft.recent_updated_timestamp = Date.now();
+            });
+
+
 		default:
 			return state;
 	}

@@ -38,3 +38,4 @@ export const addUserPaste = (id) => ({
     type: ActionTypes.ADD_USER_PASTE,
     payload: id
 })
+

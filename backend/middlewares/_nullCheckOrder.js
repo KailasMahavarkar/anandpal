@@ -2,8 +2,15 @@ const { typeMatch, isEmpty } = require("../improve/improve");
 // with fields { id ,order_name,paid status,amount paid,items ordered(products ordered),address}
 
 const _nullCheckOrder = async (req, res, next) => {
-	const { order_name, phone_number, amount_paid, items_ordered, address, paid_status } =
-		req.body;
+	const {
+		order_name,
+		phone_number,
+		amount_paid,
+		items_ordered,
+		address,
+		paid_status,
+		order_email,
+	} = req.body;
 
 	/* ---------------------  START NULL CHECK ------------------------------- */
 
@@ -37,6 +44,13 @@ const _nullCheckOrder = async (req, res, next) => {
 		});
 	}
 
+    
+	if (isEmpty(order_email)) {
+		return res.status(400).json({
+			msg: `email should not be empty`,
+		});
+	}
+
 	// /* ---------------------  END NULL CHECK ------------------------------- */
 
 	// /* ---------------------  START TYPE CHECK ------------------------------- */
@@ -53,7 +67,6 @@ const _nullCheckOrder = async (req, res, next) => {
 		});
 	}
 
-
 	if (!typeMatch(items_ordered, "object")) {
 		return res.status(400).json({
 			msg: `items ordered should be number only`,
@@ -66,6 +79,14 @@ const _nullCheckOrder = async (req, res, next) => {
 		});
 	}
 
+    
+	if (!typeMatch(order_email)) {
+		return res.status(400).json({
+			msg: `email ordered should be text only`,
+		});
+	}
+
+
 	// /* ---------------------  END TYPE CHECK ------------------------------- */
 
 	req.body = {
@@ -74,7 +95,8 @@ const _nullCheckOrder = async (req, res, next) => {
 		amount_paid,
 		items_ordered,
 		address,
-        paid_status
+		paid_status,
+		order_email,
 	};
 	next();
 };
