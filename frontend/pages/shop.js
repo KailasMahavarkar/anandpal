@@ -41,7 +41,7 @@ function shop() {
 					</div>
 				</Link>
 			)}
-			<div className="view">
+			<div className="shop-page block">
 				<div className="cart-container">
 					{!isEmpty(items) ? (
 						items.map((item, key) => {

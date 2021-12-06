@@ -5,19 +5,12 @@ import storage from "redux-persist/lib/storage";
 
 // importing all reducers fro mstore
 import { cartReducer } from "./reducers/cartReducer";
-
 import logger from "redux-logger";
-
-const config = {
-	key: "shop",
-	storage,
-	debug: true,
-};
+const { composeWithDevTools } = require("redux-devtools-extension");
 
 const bindMiddleware = (middleware) => {
-	if (process.env.NODE_ENV !== "production") {
-		// I require this only in dev environment
-		const { composeWithDevTools } = require("redux-devtools-extension");
+    // run only in dev environment
+    if (process.env.NEXT_PUBLIC_MODE === "DEV") {
 		return composeWithDevTools(applyMiddleware(...middleware));
 	}
 	return bindMiddleware(...middleware);
@@ -25,9 +18,16 @@ const bindMiddleware = (middleware) => {
 
 export const configureStore = () => {
 	const store = createStore(
-		persistCombineReducers(config, {
-			shop: cartReducer,
-		}),
+		persistCombineReducers(
+			{
+				key: "shop",
+				storage: storage,
+				debug: true,
+			},
+			{
+				shop: cartReducer,
+			}
+		),
 		bindMiddleware([thunk, logger])
 	);
 	const persistor = persistStore(store);
