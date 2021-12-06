@@ -879,6 +879,9 @@ textarea {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
+  min-height: 80vh;
+  width: 100%;
   align-items: center;
   color: rgba(0, 0, 0, 0.9); }
   @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
@@ -1108,7 +1111,10 @@ textarea {
     background-color: #7c9cda; }
 
 .checkout__action {
-  display: flex; }
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center; }
   .checkout__action > div {
     margin: 10px; }
 
@@ -1197,63 +1203,38 @@ textarea {
 
 .recent-order {
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  min-height: 80vh; }
 
-.order-overview-main {
+.recent-order-group {
+  margin-top: 30px;
   display: flex;
-  justify-content: center;
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
-  margin: 20px 0;
-  padding: 10px; }
+  flex-direction: column; }
+  @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+    .recent-order-group {
+      flex-direction: row; } }
 
-.order-overview-item {
+.recent-order-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid #999;
-  width: 100%; }
-  .order-overview-item p {
-    font-size: 0.8em;
-    color: #999; }
-  .order-overview-item h2 {
-    color: #999;
-    font-weight: lighter;
-    padding: 20px; }
-    .order-overview-item h2::before {
-      content: '$'; }
-
-.last {
-  border-right: none; }
-
-.recent-order-table-wrapper {
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
-  background-color: #eeeeee;
-  height: 100vh;
-  margin: 30px; }
-
-table.recent-order-table {
+  border: none;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   width: 100%;
-  border-collapse: collapse;
-  border-width: 0px;
-  border-color: #7ea8f8;
-  border-style: solid;
-  color: #000000; }
-  table.recent-order-table tbody {
+  max-width: 500px;
+  margin: 30px; }
+  .recent-order-item div {
+    display: flex;
     width: 100%; }
-  table.recent-order-table td,
-  table.recent-order-table th {
-    border-width: 0px;
-    border-style: solid; }
-  table.recent-order-table .thead {
-    background-color: #1a304a;
-    color: #eeeeee; }
-  table.recent-order-table th {
-    font-weight: normal;
-    padding: 15px; }
-  table.recent-order-table td {
-    text-align: center;
-    padding: 10px; }
+    .recent-order-item div label,
+    .recent-order-item div div {
+      padding: 20px;
+      border-bottom: 1px solid #eee; }
+    .recent-order-item div label {
+      flex: 1;
+      color: #4d5e72;
+      font-weight: bold; }
+    .recent-order-item div div {
+      flex: 3; }
 
 .blogs {
   width: 100%;

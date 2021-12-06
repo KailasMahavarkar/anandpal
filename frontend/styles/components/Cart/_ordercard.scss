@@ -1,84 +1,46 @@
-.recent-order{
-    width: 100%;
-    height: 100%;
+.recent-order {
+	width: 100%;
+	height: 100%;
+	min-height: 80vh;
 }
 
-
-// paste overview
-.order-overview-main {
+.recent-order-group {
+	margin-top: 30px;
 	display: flex;
-	justify-content: center;
+    flex-direction: column;
 
-	box-shadow: $shadow_x200;
-	margin: 20px 0;
-	padding: 10px;
+	@include tablet {
+		flex-direction: row;
+	}
 }
 
-.order-overview-item {
+.recent-order-item {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	border-right: 1px solid #999;
-	width: 100%; // margin: 10px;
-
-	p {
-		font-size: 0.8em;
-		color: #999;
-	}
-
-	h2 {
-        color: #999;
-		font-weight: lighter;
-		padding: 20px;
-
-        &::before{
-            content: '$';
-        }
-	}
-}
-
-.last {
-	border-right: none;
-}
-
-.recent-order-table-wrapper {
-	box-shadow: $shadow_x200;
-	background-color: $white;
-	height: 100vh;
-    margin: 30px;
-}
-
-table.recent-order-table {
+	border: none;
+	box-shadow: $shadow_200;
 	width: 100%;
-	border-collapse: collapse;
-	border-width: 0px;
-	border-color: #7ea8f8;
-	border-style: solid;
-	color: #000000;
+	max-width: 500px;
+    margin: 30px;
 
-	tbody {
+	div {
+		display: flex;
 		width: 100%;
-	}
 
-	td,
-	th {
-		border-width: 0px;
-		border-style: solid;
-	}
+		label,
+		div {
+			padding: 20px;
+			border-bottom: 1px solid #eee;
+		}
 
-	.thead {
-		background-color: tint($primary, 10);
-		color: $white;
-	}
+		label {
+			flex: 1;
+            color: tint($primary, 30%);
+            font-weight: bold;
+		}
 
-	th {
-		font-weight: normal;
-		padding: 15px;
-	}
-
-	td {
-		text-align: center;
-		padding: 10px;
+		div {
+			flex: 3;
+		}
 	}
 }

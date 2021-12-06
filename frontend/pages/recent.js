@@ -92,39 +92,41 @@ const recent = () => {
 			<div className="title__lander title__lander-recent">
 				Recent Orders
 			</div>
-			<div className="recent-order">
-				<div className="recent-order-table-wrapper">
-					<table className="recent-order-table">
-						<tbody>
-							<tr className="thead">
-								<th>Order Id</th>
-								<th>Amount</th>
-								<th>Quantity</th>
-								<th>Timestamp</th>
-								<th>Status</th>
-							</tr>
-							{recent.map((order) => (
-								<tr key={order.id}>
-									<td>{order.order_id}</td>
-									<td>{order.amount}</td>
-									<td>{order.quantity}</td>
-									<td>
+			<div className="block">
+				<div className="recent-order">
+					<div className="recent-order-group">
+						{recent.map((order) => (
+							<div key={order.id} className='recent-order-item'>
+								<div className="recent-order-item-id">
+									<label>Order Id</label>
+									<div>{order.order_id}</div>
+								</div>
+								<div className="recent-order-item-amount">
+									<label>Amount</label>
+									<div>{order.amount}</div>
+								</div>
+								<div className="recent-order-item-timestamp">
+									<label>Amount</label>
+									<div>
 										{new Date(
 											order.timestamp
 										).toLocaleString("en-us", {
 											weekday: "long",
 											year: "numeric",
-											month: "short",
+											mondiv: "short",
 											day: "numeric",
 											hour: "2-digit",
 											minute: "2-digit",
 										})}
-									</td>
-									<td>{recentResult[order.order_id]}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
+									</div>
+								</div>
+								<div className="rrecent-order-item-status">
+									<label>Status</label>
+									<div>{order.track}</div>
+								</div>
+							</div>
+						))}
+					</div>
 				</div>
 			</div>
 		</>

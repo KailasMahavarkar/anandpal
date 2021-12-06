@@ -349,7 +349,6 @@ function CheckOut() {
 			<div className="title__lander title__lander-checkout">checkout</div>
 			<div className="block">
 				<div className="checkout__header">
-					<h2>Shopping Cart</h2>
 					<div className="checkout__action">
 						{quantity > 0 && (
 							<div
@@ -524,7 +523,14 @@ function CheckOut() {
 							)}
 						</div>
 					) : (
-						<div>Nothing in cart</div>
+						<div
+							style={{
+								width: "100%",
+								height: "100%",
+							}}
+						>
+							Nothing in cart
+						</div>
 					)}
 				</div>
 			</div>

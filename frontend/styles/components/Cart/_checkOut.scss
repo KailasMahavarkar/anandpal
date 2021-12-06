@@ -5,6 +5,9 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	height: 100%;
+	min-height: 80vh;
+	width: 100%;
 	align-items: center;
 
 	color: rgba(0, 0, 0, 0.9);
@@ -337,27 +340,28 @@
 
 .checkout__action {
 	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
 
 	> div {
 		margin: 10px;
 	}
 }
 
-
-
-.checkout__pay{
-    display: flex;
-    margin: 5px;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: white;
-    text-transform: uppercase;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    background-color: tint($success, 20%);
+.checkout__pay {
+	display: flex;
+	margin: 5px;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding: 10px 20px;
+	border-radius: 5px;
+	color: white;
+	text-transform: uppercase;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background-color: tint($success, 20%);
 }

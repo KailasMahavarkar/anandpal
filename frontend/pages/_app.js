@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>
-				<UserContext.Provider value={width}>
+				<UserContext.Provider value={{ width }}>
 					<Meta />
 					<Header />
 					<Component {...pageProps} />
