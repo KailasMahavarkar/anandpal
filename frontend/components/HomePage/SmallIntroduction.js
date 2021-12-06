@@ -1,5 +1,4 @@
 import React from "react";
-import ScrollAnimation from "react-animate-on-scroll";
 import { ANAND, PALLAVI } from "../../data/about.data";
 
 function SmallIntroduction() {
