@@ -29,7 +29,7 @@ function BusinessIntro() {
 					Here is a short introductory video :
 				</p>
 				<iframe
-					src="http://www.youtube.com/embed/W7qWa52k-nE"
+					src="https://www.youtube.com/embed/W7qWa52k-nE"
 					width="100%"
 					height="315"
 					frameBorder="0"
