@@ -14,7 +14,6 @@ import {
 	incrementItemToCart,
 	pushRecentOrder,
 } from "../redux/actions/CartCreator";
-import { Router } from "react-router";
 import { useRouter } from "next/router";
 
 function CheckOut() {
