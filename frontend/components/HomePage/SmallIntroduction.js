@@ -1,4 +1,3 @@
-import React from "react";
 import { ANAND, PALLAVI } from "../../data/about.data";
 
 function SmallIntroduction() {

@@ -1,20 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
-import { url, isEmpty, sha256, isNetworkError } from "../../helper";
-import customToast from "../Block/swal/customToast";
-import yesNO from "../Block/swal/yesNo";
+import { url, sha256, isNetworkError } from "../helper";
+import customToast from "../components/Block/swal/customToast";
+import yesNO from "../components/Block/swal/yesNo";
 import Swal from "sweetalert2";
-import Link from "next/link";
 
 import {
 	clearItemFromCart,
 	decrementItemToCart,
 	incrementItemToCart,
 	pushRecentOrder,
-} from "../../redux/actions/CartCreator";
+} from "../redux/actions/CartCreator";
 import { Router } from "react-router";
 import { useRouter } from "next/router";
 
@@ -467,7 +466,6 @@ function CheckOut() {
 									{!verified && (
 										<input
 											type="submit"
-											value="submit"
 											id="send_otp_button"
 											className="input"
 											value={`${"Send Otp & Place order"}`}

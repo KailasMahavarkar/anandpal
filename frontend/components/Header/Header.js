@@ -33,7 +33,7 @@ const Header = () => {
 		<header className="navbar">
 			<div className="navbar__action">
 				<div className="navbar__action__logo">
-					<Link href="/">AnandPal</Link>
+					<Link href="/" passHref>AnandPal</Link>
 				</div>
 				<div
 					className="navbar__action__hamburger"
@@ -44,7 +44,7 @@ const Header = () => {
 			</div>
 
 			<nav className="navbar__items" hidden={menuOpen && width < 768}>
-				<Link href="/">
+				<Link href="/" passHref>
 					<div
 						className="navbar__item"
 						onClick={hideMenuOnMobileClick}
@@ -52,16 +52,16 @@ const Header = () => {
 						Home
 					</div>
 				</Link>
-				<Link href="/about">
+				<Link href="/about" passHref>
 					<div className="navbar__item" onClick={hideMenuOnMobileClick}>about</div>
 				</Link>
-				<Link href="/blogs">
+				<Link href="/blogs" passHref>
 					<div className="navbar__item" onClick={hideMenuOnMobileClick}> blogs</div>
 				</Link>
-				<Link href="/shop">
+				<Link href="/shop" passHref>
 					<div className="navbar__item" onClick={hideMenuOnMobileClick}>Shop</div>
 				</Link>
-				<Link href="/checkout">
+				<Link href="/checkout" passHref>
 					<div className="navbar__item" onClick={hideMenuOnMobileClick}>
 						{cartItems?.length === 0 ? null : (
 							<div className="itemsInCart">Cart</div>

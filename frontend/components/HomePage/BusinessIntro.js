@@ -1,5 +1,3 @@
-import React from "react";
-
 function BusinessIntro() {
 	return (
 		<div className="business_intro_container">

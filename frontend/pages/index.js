@@ -1,11 +1,18 @@
-import Head from "next/head";
-import Image from "next/image";
-import Homepage from "../components/HomePage";
+import React from "react";
+import BusinessIntro from "../components/HomePage/BusinessIntro";
+import Lander from "../components/HomePage/Lander";
+import SmallIntroduction from "../components/HomePage/SmallIntroduction";
+import ContactUs from "../components/ContactUs";
 
-export default function Home() {
+function HomePage() {
 	return (
-		<>
-			<Homepage />
-		</>
+		<div className="home_page">
+			<Lander />
+			<SmallIntroduction />
+			<BusinessIntro />
+			<ContactUs />
+		</div>
 	);
 }
+
+export default HomePage;
