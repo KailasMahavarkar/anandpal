@@ -45,6 +45,10 @@ next
 .env
 .env.local
 
+# compressed
+.rar
+.zip
+
 
 yarn.lock
 package-json.lock
