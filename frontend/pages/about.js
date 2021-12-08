@@ -8,63 +8,66 @@ import {
 import { ANAND, PALLAVI } from "../data/about.data";
 import ContactUs from "../components/ContactUs";
 
-const getSocial = (name) => {
-	switch (name) {
-		case "facebook":
-			return faFacebook;
-		case "instagram":
-			return faInstagram;
-		case "linkedin":
-			return faLinkedin;
-		case "twitter":
-			return faTwitter;
-		default:
-			return null;
-	}
-};
+function About() {
+	const getSocial = (name) => {
+		switch (name) {
+			case "facebook":
+				return faFacebook;
+			case "instagram":
+				return faInstagram;
+			case "linkedin":
+				return faLinkedin;
+			case "twitter":
+				return faTwitter;
+			default:
+				return null;
+		}
+	};
 
-const AboutCard = ({ image, name, profession, social, InfoBlock }) => {
-	return (
-		<>
-			<div className="aboutus_card">
-				<div className="aboutus_card_image">
-					<img src={image} alt="" />
-				</div>
-				<div className="divider" />
-				<div className="aboutus_card_profession">
-					{profession.map((item, index) => {
-						return (
-							<span
-								className="inline aboutus_card_tag"
-								key={index}
-							>
-								{item}
-							</span>
-						);
-					})}
-				</div>
-				<div className="divider" />
-				<div className="aboutus_card_info">{<InfoBlock />} </div>
-				<div className="aboutus_card_social">
-					{social &&
-						Object.keys(social).map((item, index) => {
+	const AboutCard = ({ image, name, profession, social, InfoBlock }) => {
+		return (
+			<>
+				<div className="aboutus_card">
+					<div className="aboutus_card_image">
+						<img src={image} alt="" />
+					</div>
+					<div className="divider" />
+					<div className="aboutus_card_profession">
+						{profession.map((item, index) => {
 							return (
-								<div className="aboutus_card_social_item" key={index}>
-									<a href="">
-										<FontAwesomeIcon
-											icon={getSocial(item)}
-										/>
-									</a>
-								</div>
+								<span
+									className="inline aboutus_card_tag"
+									key={index}
+								>
+									{item}
+								</span>
 							);
 						})}
+					</div>
+					<div className="divider" />
+					<div className="aboutus_card_info">{<InfoBlock />} </div>
+					<div className="aboutus_card_social">
+						{social &&
+							Object.keys(social).map((item, index) => {
+								return (
+									<div
+										className="aboutus_card_social_item"
+										key={index}
+									>
+										<a href="">
+											<FontAwesomeIcon
+												icon={getSocial(item)}
+											/>
+										</a>
+									</div>
+								);
+							})}
+					</div>
 				</div>
-			</div>
-		</>
-	);
-};
+			</>
+		);
+	};
 
-function AboutUsContent() {
 	return (
 		<>
 			<div className="title__lander title__lander-about">About Us</div>
@@ -95,4 +98,4 @@ function AboutUsContent() {
 	);
 }
 
-export default AboutUsContent;
+export default About;

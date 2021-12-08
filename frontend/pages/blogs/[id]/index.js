@@ -40,9 +40,11 @@ const EditorPage = () => {
 	};
 
 	return (
-		<div className="editorjs__wrapper">
-			<div id="editorjs">
-				{loaded ? <Post data={editorData} /> : null}
+		<div className="editor-page">
+			<div className="editorjs__wrapper">
+				<div id="editorjs">
+					{loaded ? <Post data={editorData} /> : null}
+				</div>
 			</div>
 		</div>
 	);

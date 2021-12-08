@@ -11,9 +11,9 @@ const { composeWithDevTools } = require("redux-devtools-extension");
 const bindMiddleware = (middleware) => {
     // run only in dev environment
     if (process.env.NEXT_PUBLIC_MODE === "DEV") {
-		return composeWithDevTools(applyMiddleware(...middleware));
-	}
-	return bindMiddleware(...middleware);
+        return composeWithDevTools(applyMiddleware(...middleware));
+    }
+	return applyMiddleware(...middleware);
 };
 
 export const configureStore = () => {

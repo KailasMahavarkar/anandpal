@@ -114,10 +114,10 @@ input[type="email"] {
   color: yellowgreen; }
 
 input[type="submit"] {
-  background-color: #011936ff;
+  background-color: black;
   color: white;
   padding: 10px;
-  border: 1px solid #011936ff;
+  border: 1px solid black;
   transition: all 0.3s ease;
   cursor: pointer; }
   input[type="submit"]:hover {
@@ -169,7 +169,7 @@ textarea {
   .title__lander-checkout {
     background-color: #4472caff; }
   .title__lander-recent {
-    background-color: #1a304a; }
+    background-color: #1a1a1a; }
 
 @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   .w500 {
@@ -265,7 +265,7 @@ textarea {
 .navbar {
   display: flex;
   flex-direction: column;
-  background-color: #011936ff;
+  background-color: black;
   padding: 0 10px !important; }
   @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
     .navbar {
@@ -317,7 +317,7 @@ textarea {
       margin: 10px; }
       .navbar__item:hover {
         border-bottom: 3px solid #dd3311;
-        background-color: #011936ff;
+        background-color: black;
         color: white; } }
 
 .navbar__action {
@@ -370,8 +370,8 @@ textarea {
         display: none; } }
 
 .contactus_container {
-  border-top: 5px solid #4d5e72;
-  background-color: #fcfdfd;
+  border-top: 5px solid #4d4d4d;
+  background-color: #fcfcfc;
   padding: 30px; }
 
 .connect-with-us {
@@ -1021,7 +1021,6 @@ textarea {
 
 .shop-page {
   width: 100%;
-  height: 100%;
   min-height: 80vh; }
 
 .shopcard__button {
@@ -1235,7 +1234,7 @@ textarea {
       border-bottom: 1px solid #eee; }
     .recent-order-item div label {
       flex: 1;
-      color: #4d5e72;
+      color: #4d4d4d;
       font-weight: bold; }
     .recent-order-item div div {
       flex: 3; }
@@ -1251,6 +1250,7 @@ textarea {
 .blogs-container {
   width: 100%;
   height: 100%;
+  max-width: 80vw;
   min-height: 80vh; }
 
 .blogposts {
@@ -1351,10 +1351,21 @@ textarea {
         .blogpost__item__image > img {
           height: 300px; } }
 
+.editor-page {
+  display: flex;
+  justify-content: center;
+  min-height: 80vh; }
+
 .editorjs__wrapper {
   padding: 20px;
   margin: 40px;
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+    .editorjs__wrapper {
+      max-width: 80%; } }
 
 #editorjs {
   font-size: 20px; }
